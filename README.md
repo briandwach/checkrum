@@ -20,9 +20,9 @@ Inspection tracker for audio video technologies in conference rooms.  Technical 
 
 ## Usage
 
-[Deployed Application](https://github.com/briandwach/checkrum).
+[Deployed Application](https://checkrum.onrender.com)
 
-[Code Repository](https://github.com/briandwach/checkrum).
+[Code Repository](https://github.com/briandwach/checkrum)
 
 ## License
 This application is covered under the [MIT License](http://choosealicense.com/licenses/mit/).
