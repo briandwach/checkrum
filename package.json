@@ -1,7 +1,7 @@
 {
-  "name": "programming-thoughts",
+  "name": "Checkrum: Inspection Tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Inspection tracker for audio video technologies in conference rooms.",
   "main": "server/server.js",
   "scripts": {
     "start": "node server --ignore client",
@@ -11,9 +11,8 @@
     "build": "cd client && npm run build",
     "render-build":"npm install && npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Drew Hermanson, Charlotte Stowe, Brian Wach",
+  "license": "MIT",
   "devDependencies": {
     "concurrently": "^5.1.0"
   }
