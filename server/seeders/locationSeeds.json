@@ -1,0 +1,32 @@
+[
+    {
+        "locationName": "C3PO Town Hall",
+        "address": "5679 Chester Ave, Manchester, NH 03104",
+        "accessInstructions": "Loading dock and press buzzer",
+        "client": "Advanced Biotics"
+    },
+    {
+        "locationName": "R2D2 Laboratory",
+        "address": "5683 Fairfield Ave, Manchester, NH 03104",
+        "accessInstructions": "Go around back and call intercom",
+        "client": "Advanced Biotics"
+    },
+    {
+        "locationName": "Peterson Hall",
+        "address": "13 Main Drive, Chicago, IL 60606",
+        "accessInstructions": "Front entrance and visit welcome desk",
+        "client": "Banking Defined"
+    },
+    {
+        "locationName": "Office Quad A",
+        "address": "176 Molly Lane, San Diego, CA 92104",
+        "accessInstructions": "Parking garage and then call for elevator",
+        "client": "Legal for You"
+    },
+    {
+        "locationName": "West Bay Building",
+        "address": "15 Mall St, San Francisco, CA 92104",
+        "accessInstructions": "East entrance and call for parking sticker",
+        "client": "Legal for You"
+    }
+]

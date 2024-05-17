@@ -1,0 +1,41 @@
+[
+    {
+        "equipmentName": "Equipment Rack"
+    },
+    {
+        "equipmentName": "Room Booking Panel"
+    },
+    {
+        "equipmentName": "Room Controller Touch Panel"
+    },
+    {
+        "equipmentName": "Environmental Controls"
+    },
+    {
+        "equipmentName": "Displays"
+    },
+    {
+        "equipmentName": "Speakers"
+    },
+    {
+        "equipmentName": "Mics and Mute"
+    },
+    {
+        "equipmentName": "Camera Controls"
+    },
+    {
+        "equipmentName": "PC/Codec Hybrid Calls"
+    },
+    {
+        "equipmentName": "Laptop Integration Cables"
+    },
+    {
+        "equipmentName": "Laptop Hybrid Call"
+    },
+    {
+        "equipmentName": "VoIP Call"
+    },
+    {
+        "equipmentName": "Shutdown Automation"
+    }
+]

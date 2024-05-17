@@ -1,0 +1,117 @@
+[
+    {
+        "roomName": "3301",
+        "location": "C3P0 Town Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "3302",
+        "location": "C3P0 Town Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "3303",
+        "location": "C3P0 Town Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "3304",
+        "location": "C3P0 Town Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "Auditorium",
+        "location": "C3P0 Town Hall",
+        "inspectionCycleLength": "5"
+    },
+    {
+        "roomName": "VC Lab 1",
+        "location": "R2D2 Laboratory",
+        "inspectionCycleLength": "15"
+    },
+    {
+        "roomName": "VC Lab 2",
+        "location": "R2D2 Laboratory",
+        "inspectionCycleLength": "15"
+    },
+    {
+        "roomName": "51A",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "51B",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "51C",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "53A",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "53B",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "53C",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "53D",
+        "location": "Peterson Hall",
+        "inspectionCycleLength": "10"
+    },
+    {
+        "roomName": "Jefferson",
+        "location": "Office Quad A",
+        "inspectionCycleLength": "30"
+    },
+    {
+        "roomName": "Adams",
+        "location": "Office Quad A",
+        "inspectionCycleLength": "30"
+    },
+    {
+        "roomName": "Washington",
+        "location": "Office Quad A",
+        "inspectionCycleLength": "30"
+    },
+    {
+        "roomName": "Monroe",
+        "location": "Office Quad A",
+        "inspectionCycleLength": "30"
+    },
+    {
+        "roomName": "Divisible Room A",
+        "location": "West Bay Building",
+        "inspectionCycleLength": "45"
+    },
+    {
+        "roomName": "Divisible Room B",
+        "location": "West Bay Building",
+        "inspectionCycleLength": "45"
+    },
+    {
+        "roomName": "Cafeteria For You",
+        "location": "West Bay Building",
+        "inspectionCycleLength": "60"
+    },
+    {
+        "roomName": "5606F",
+        "location": "West Bay Building",
+        "inspectionCycleLength": "45"
+    },
+    {
+        "roomName": "5606G",
+        "location": "West Bay Building",
+        "inspectionCycleLength": "45"
+    }
+]
