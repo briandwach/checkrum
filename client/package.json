@@ -15,7 +15,10 @@
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.2"
+    "react-router-dom": "^6.11.2",
+    "tailwindcss": "^3.4.3",
+    "postcss": "^8.4.38",
+    "daisyui": "^4.11.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
