@@ -13,6 +13,12 @@ const locationSchema = new Schema({
     unique: false,
     trim: true
   },
+  client: {
+    type: String, 
+    required: true, 
+    unique: false,
+    trim: true
+  },
   accessInstructions: {
     type: String,
     unique: false,

@@ -1,116 +1,139 @@
 [
     {
         "roomName": "3301",
-        "location": "C3P0 Town Hall",
+        "client": "Advanced Biotics",
+        "location": "C3PO Town Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "3302",
-        "location": "C3P0 Town Hall",
+        "client": "Advanced Biotics",
+        "location": "C3PO Town Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "3303",
-        "location": "C3P0 Town Hall",
+        "client": "Advanced Biotics",
+        "location": "C3PO Town Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "3304",
-        "location": "C3P0 Town Hall",
+        "client": "Advanced Biotics",
+        "location": "C3PO Town Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "Auditorium",
-        "location": "C3P0 Town Hall",
+        "client": "Advanced Biotics",
+        "location": "C3PO Town Hall",
         "inspectionCycleLength": "5"
     },
     {
         "roomName": "VC Lab 1",
+        "client": "Advanced Biotics",
         "location": "R2D2 Laboratory",
         "inspectionCycleLength": "15"
     },
     {
         "roomName": "VC Lab 2",
+        "client": "Advanced Biotics",
         "location": "R2D2 Laboratory",
         "inspectionCycleLength": "15"
     },
     {
         "roomName": "51A",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "51B",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "51C",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "53A",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "53B",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "53C",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "53D",
+        "client": "Banking Defined",
         "location": "Peterson Hall",
         "inspectionCycleLength": "10"
     },
     {
         "roomName": "Jefferson",
+        "client": "Legal For You",
         "location": "Office Quad A",
         "inspectionCycleLength": "30"
     },
     {
         "roomName": "Adams",
+        "client": "Legal For You",
         "location": "Office Quad A",
         "inspectionCycleLength": "30"
     },
     {
         "roomName": "Washington",
+        "client": "Legal For You",
         "location": "Office Quad A",
         "inspectionCycleLength": "30"
     },
     {
         "roomName": "Monroe",
+        "client": "Legal For You",
         "location": "Office Quad A",
         "inspectionCycleLength": "30"
     },
     {
         "roomName": "Divisible Room A",
+        "client": "Legal For You",
         "location": "West Bay Building",
         "inspectionCycleLength": "45"
     },
     {
         "roomName": "Divisible Room B",
+        "client": "Legal For You",
         "location": "West Bay Building",
         "inspectionCycleLength": "45"
     },
     {
         "roomName": "Cafeteria For You",
+        "client": "Legal For You",
         "location": "West Bay Building",
         "inspectionCycleLength": "60"
     },
     {
         "roomName": "5606F",
+        "client": "Legal For You",
         "location": "West Bay Building",
         "inspectionCycleLength": "45"
     },
     {
         "roomName": "5606G",
+        "client": "Legal For You",
         "location": "West Bay Building",
         "inspectionCycleLength": "45"
     }

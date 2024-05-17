@@ -9,15 +9,27 @@ const roomSchema = new Schema({
     unique: true,
     trim: true,
   },
-  location: [
+  client: {
+    type: String,
+    required: true,
+    unique: false,
+    trim: true
+  },
+  location: {
+    type: String,
+    required: true,
+    unique: false,
+    trim: true
+  },
+  equipment: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Location'
-    }
+      ref: 'Equipment',
+    },
   ],
-  equipment: [equipmentSchema],
   lastInspectionDate: {
-    type: Number
+    type: Number, 
+    default: Date.now
   },
   inspectionCycleLength: {
     type: Number,
