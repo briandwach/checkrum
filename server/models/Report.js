@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose');
 
 const reportSchema = new Schema({
-  roomName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  }, 
+  roomName: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Room'
+    }
+  ], 
   assignedStaff: [
     {
         type: Schema.Types.ObjectId,
