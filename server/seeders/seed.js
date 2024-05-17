@@ -15,17 +15,17 @@ db.once('open', async () => {
     await cleanDB('Client', 'clients');
     await cleanDB('Location', 'locations');
     await cleanDB('Room', 'rooms');
-    // Collection has to be "equipment" it cannot plural
+    // Equipment collection is named without an "s" by default
     await cleanDB('Equipment', 'equipment');
 
     await User.create(userSeeds);
     await Equipment.create(equipmentSeeds);
     await Client.create(clientSeeds);
 
-    // Create locations and iteratively update references to client model
+    // Create locations and iteratively updates references to client model
     for (let i = 0; i < locationSeeds.length; i++) {
       const { _id, client } = await Location.create(locationSeeds[i]);
-      const clientAddLocation = await Client.findOneAndUpdate(
+      await Client.findOneAndUpdate(
         { businessName: client },
         {
           $addToSet: {
@@ -35,37 +35,38 @@ db.once('open', async () => {
       );
     }
 
-    // Create rooms and iteratively update references to location model
+    // Iteratively creates room documents and adds references to equipment and location
     for (let i = 0; i < roomSeeds.length; i++) {
       const { _id, location } = await Room.create(roomSeeds[i]);
 
-//  Have it add rooms to the array in order, 50/50 chance of skipping equipment
-
       const randomEquipment = equipmentRandomizer();
-      console.log(randomEquipment);
+
       for (let q = 0; q < randomEquipment.length; q++) {
         const { equipmentName } = randomEquipment[q];
+
         const equipmentData = await Equipment.findOne({ equipmentName: equipmentName });
-        const equipmentId = await JSON.parse(equipmentData);
-        console.log(equipmentId._id);
-        const roomAddEquipment = await Room.findOneAndUpdate(
-          { room: _id },
+        const equipmentId = equipmentData._id;
+
+        // Update room document with equipment object IDs
+        await Room.findOneAndUpdate(
+          { _id: _id },
           {
             $addToSet: {
-              equipment: equipmentId._id,
+              equipment: equipmentId,
+            },
+          }
+        );
+
+        // Update location model with room object ID
+        await Location.findOneAndUpdate(
+          { locationName: location },
+          {
+            $addToSet: {
+              rooms: _id,
             },
           }
         );
       }
-
-      const locationAddRoom = await Location.findOneAndUpdate(
-        { locationName: location },
-        {
-          $addToSet: {
-            rooms: _id,
-          },
-        }
-      );
     }
 
   } catch (err) {
@@ -73,6 +74,6 @@ db.once('open', async () => {
     process.exit(1);
   }
 
-  console.log('all done!');
+  console.log('Database successfully seeded!');
   process.exit(0);
 });

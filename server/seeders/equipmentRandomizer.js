@@ -1,25 +1,16 @@
 const equipmentSeeds = require('./equipmentSeeds.json');
 
-const equipmentRandomizer = () => {
-    
-    const equipmentRanTotal = (Math.floor(Math.random() * equipmentSeeds.length) + 1);
-    
-    console.log(equipmentRanTotal);
+const equipmentRandomizer = () => { 
 
-    const result = [];
-    const indexes = new Set();
+    const randomEquipmentArr = [];
 
-    while (indexes.size < equipmentRanTotal) {
-        const randomIndex = Math.floor(Math.random() * equipmentSeeds.length);
-        indexes.add(randomIndex);
+    for (var equipment of equipmentSeeds) {
+       if (Math.floor(Math.random() * 2)) {
+        randomEquipmentArr.push(equipment);
+       }
     }
-
-    indexes.forEach(index => {
-        result.push(equipmentSeeds[index]);
-    });
-
-    console.log(result);
-    return result;
+    
+    return randomEquipmentArr;
 };
 
 module.exports = equipmentRandomizer;
