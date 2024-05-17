@@ -39,7 +39,7 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <main className="flex flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
@@ -52,7 +52,7 @@ const Signup = () => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
                   placeholder="Your username"
                   name="username"
                   type="text"
@@ -60,7 +60,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -68,7 +68,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
                   placeholder="******"
                   name="password"
                   type="password"
