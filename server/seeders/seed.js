@@ -16,6 +16,7 @@ db.once('open', async () => {
     await cleanDB('Equipment', 'equipments');
     
     await User.create(userSeeds);
+    await Equipment.create(equipmentSeeds);
     await Client.create(clientSeeds);
 
     // Create locations and iteratively update references to client model
