@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const reportSchema = new Schema({
   roomName: [
@@ -14,9 +15,7 @@ const reportSchema = new Schema({
     }
   ],
   inspectionDate: {
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
-    unique: false
+    default: Number
   }
 });
 
