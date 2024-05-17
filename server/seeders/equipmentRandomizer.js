@@ -1,15 +1,25 @@
-const equipmentArr = [
-    "Equipment Rack",
-    "Room Booking Panel",
-    "Room Controller Touch Panel", 
-    "Environment Controls",
-    "Displays",
-    "Speakers",
-    "Mics and Mute",
-    "Camera Controls",
-    "PC/Codec Hybrid Calls",
-    "Laptop Integration Cables",
-    "Laptop Hybrid Call",
-    "VoIP Call",
-    "Shutdown Automation"
-];
+const equipmentSeeds = require('./equipmentSeeds.json');
+
+const equipmentRandomizer = () => {
+    
+    const equipmentRanTotal = (Math.floor(Math.random() * equipmentSeeds.length) + 1);
+    
+    console.log(equipmentRanTotal);
+
+    const result = [];
+    const indexes = new Set();
+
+    while (indexes.size < equipmentRanTotal) {
+        const randomIndex = Math.floor(Math.random() * equipmentSeeds.length);
+        indexes.add(randomIndex);
+    }
+
+    indexes.forEach(index => {
+        result.push(equipmentSeeds[index]);
+    });
+
+    console.log(result);
+    return result;
+};
+
+module.exports = equipmentRandomizer;
