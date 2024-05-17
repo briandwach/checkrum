@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const roomSchema = new Schema({
   roomName: {
@@ -42,7 +43,10 @@ const roomSchema = new Schema({
 
 /*
 roomSchema.virtual('overdueInspection').get( function(){
-  
+  let d1 = this.lastInspectionDate;
+  let d2 = new Date();
+  const diff = Math.abs(d1-d2);
+
 })
 //Calculate inspections due soon (next 30 days)--return due date
 
@@ -51,7 +55,6 @@ roomSchema.virtual('inspectionDueDate').get(
 
   }
 )
-
 */
 const Room = model('Room', roomSchema);
 
