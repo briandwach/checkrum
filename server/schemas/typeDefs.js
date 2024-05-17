@@ -1,3 +1,5 @@
+//Delete Thought and Comment typedefs
+
 const typeDefs = `
   type User {
     _id: ID
@@ -22,6 +24,42 @@ const typeDefs = `
     createdAt: String
   }
 
+  type Room {
+    _id: ID
+    roomName: String
+    location: [Location]
+    equipment: [Equipment]
+    lastInspectionDate: Date
+    inspectionCycleLength: Int
+  }
+
+  type Location {
+    _id: ID
+    locationName: String
+    address: String
+    accessInstructions: String
+    client: [Client]
+  }
+
+  type Client {
+    _id: ID
+    businessName: String
+    contactName: String
+    contactEmail: String
+    locations: [Location]
+  }
+
+  type Equipment {
+    equipmentName: String!
+  }
+
+  type Report {
+    _id: ID!
+    roomName: [Room]
+    assignedStaff: [User]
+    inspectionDate: Date
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -44,5 +82,8 @@ const typeDefs = `
     removeComment(thoughtId: ID!, commentId: ID!): Thought
   }
 `;
+
+//Remove queries: thoughts, thought, and me
+//Remove mutation: addThought, addComment, removeThought, removeComment
 
 module.exports = typeDefs;

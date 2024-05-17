@@ -16,7 +16,8 @@ const clientSchema = new Schema({
   contactEmail: {
     type: String,
     unique: false,
-    trim: true
+    trim: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   locations: [
     {

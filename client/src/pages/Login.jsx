@@ -54,7 +54,7 @@ const Login = (props) => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -62,7 +62,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
                   placeholder="******"
                   name="password"
                   type="password"
