@@ -29,7 +29,7 @@ const typeDefs = `
     roomName: String
     location: [Location]
     equipment: [Equipment]
-    lastInspectionDate: Date
+    lastInspectionDate: Int
     inspectionCycleLength: Int
   }
 
@@ -57,7 +57,7 @@ const typeDefs = `
     _id: ID!
     roomName: [Room]
     assignedStaff: [User]
-    inspectionDate: Date
+    inspectionDate: Int
   }
 
   type Auth {
