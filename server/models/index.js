@@ -11,4 +11,4 @@ const Thought = require('./Thought');
 
 
 // REMOVE THOUGHT BEFORE GO-LIVE
-module.exports = { User, Thought, Client, Equiment, Location, Room, Report };
+module.exports = { User, Thought, Client, Equipment, Location, Room, Report };
