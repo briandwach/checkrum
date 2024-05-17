@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const equipmentSchema = require('./Equipment');
 const dateFormat = require('../utils/dateFormat');
 
 const roomSchema = new Schema({
@@ -7,19 +8,14 @@ const roomSchema = new Schema({
     required: true,
     unique: true,
     trim: true,
-  }, 
+  },
   location: [
     {
-        type: Schema.Types.ObjectId,
-        ref: 'Location'
+      type: Schema.Types.ObjectId,
+      ref: 'Location'
     }
   ],
-  equipment: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+  equipment: [equipmentSchema],
   lastInspectionDate: {
     type: Number
   },

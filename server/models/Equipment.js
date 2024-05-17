@@ -1,6 +1,10 @@
-const { Schema, model } = require('mongoose');
+const { Schema, Types } = require('mongoose');
 
 const equipmentSchema = new Schema({
+  equipmentId: {
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId(),
+  },
   equipmentName: {
     type: String,
     required: true,
@@ -9,6 +13,4 @@ const equipmentSchema = new Schema({
   }, 
 });
 
-const Equipment = model('Equipment', equipmentSchema);
-
-module.exports = Equipment;
+module.exports = equipmentSchema;

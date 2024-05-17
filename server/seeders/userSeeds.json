@@ -1,52 +1,50 @@
 [
   {
-    "username": "Brian Kernighan",
-    "email": "bkernighan@techfriends.dev",
-    "password": "password01"
+    "username": "Brian Wach",
+    "email": "bwach@avinsights.com",
+    "password": "bwach123",
+    "role": "admin"
   },
   {
-    "username": "Max Kanat-Alexander",
-    "email": "mkanatalexander@techfriends.dev",
-    "password": "password02"
+    "username": "Charlotte Stowe",
+    "email": "cstowe@avinsights.com",
+    "password": "cstowe123",
+    "role": "admin"
   },
   {
-    "username": "Why The Lucky Stiff",
-    "email": "wtls@techfriends.dev",
-    "password": "password03"
+    "username": "Drew Hermanson",
+    "email": "dhermanson@avinsights.com",
+    "password": "dhermanson123",
+    "role": "admin"
   },
   {
-    "username": "Kent Beck",
-    "email": "kbeck@techfriends.dev",
-    "password": "password04"
+    "username": "Winnie Harlow",
+    "email": "wharlow@avinsights.com",
+    "password": "wharlow123",
+    "role": "staff"
   },
   {
-    "username": "Edward V. Berard",
-    "email": "evberard@techfriends.dev",
-    "password": "password05"
+    "username": "Prince Bowie Scar",
+    "email": "pbscar@avinsights.com",
+    "password": "pbscar123",
+    "role": "staff"
   },
   {
-    "username": "Alan Kay",
-    "email": "akay@techfriends.dev",
-    "password": "password06"
+    "username": "Yoshi Dino",
+    "email": "ydino@avinsights.com",
+    "password": "ydino123",
+    "role": "staff"
   },
   {
-    "username": "C.A.R. Hoare",
-    "email": "choare@techfriends.dev",
-    "password": "password07"
+    "username": "Princess Peach",
+    "email": "ppeach@avinsights.com",
+    "password": "ppeach123",
+    "role": "staff"
   },
   {
-    "username": "David Thomas",
-    "email": "dthomas@techfriends.dev",
-    "password": "password08"
-  },
-  {
-    "username": "Donald Knuth",
-    "email": "dknuth@techfriends.dev",
-    "password": "password09"
-  },
-  {
-    "username": "Lernantino",
-    "email": "lernantino@techfriends.dev",
-    "password": "password10"
+    "username": "Glitter Loaf",
+    "email": "gloaf@avinvestors.com",
+    "password": "gloaf123",
+    "role": "inactive"
   }
 ]
