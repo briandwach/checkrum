@@ -24,7 +24,7 @@ const clientSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Location',
     },
-  ],
+  ]
 });
 
 const Client = model('Client', clientSchema);

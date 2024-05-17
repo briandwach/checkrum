@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const equipmentSchema = require('./Reaction');
 const dateFormat = require('../utils/dateFormat');
 
 const roomSchema = new Schema({

@@ -18,11 +18,11 @@ const locationSchema = new Schema({
     unique: false,
     trim: true
   },
-  client: [
+  rooms: [
     {
-        type: Schema.Types.ObjectId,
-        ref: 'Client'
-    }
+      type: Schema.Types.ObjectId,
+      ref: 'Room',
+    },
   ]
 });
 
