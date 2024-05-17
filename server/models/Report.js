@@ -14,8 +14,8 @@ const reportSchema = new Schema({
     }
   ],
   inspectionDate: {
-    type: Date,
-    required: true, 
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
     unique: false
   }
 });
