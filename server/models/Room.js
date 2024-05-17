@@ -28,7 +28,7 @@ const roomSchema = new Schema({
     },
   ],
   lastInspectionDate: {
-    type: Number, 
+    type: Date, 
     default: Date.now
   },
   inspectionCycleLength: {
