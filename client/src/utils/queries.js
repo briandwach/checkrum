@@ -58,3 +58,18 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_CLIENT = gql`
+  query clients {
+    clients {
+      _id
+      businessName
+      contactName
+      contactEmail
+      locations {
+        _id
+        address
+      }
+    }
+  }
+`;

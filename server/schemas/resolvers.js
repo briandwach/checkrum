@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Thought, Client } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -22,6 +22,12 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    clients: async (parent, args, context) => {
+      if (context.user){
+        return Client.find().populate('businessName')
+      }
+      //throw AuthenticationError;
+    }
   },
 
   Mutation: {
@@ -110,6 +116,19 @@ const resolvers = {
           },
           { new: true }
         );
+      }
+      throw AuthenticationError;
+    },
+    addClient: async (parent, { businessName, contactName, contactEmail, locations }, context) => {
+      if (context.user) {
+        const client = await Client.create({
+          businessName, 
+          contactName, 
+          contactEmail,
+          locations
+        });
+
+        return client;
       }
       throw AuthenticationError;
     },
