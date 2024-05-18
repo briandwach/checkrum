@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import ThoughtList from '../components/ThoughtList';
 import ThoughtForm from '../components/ThoughtForm';
 
+import { Link } from 'react-router-dom';
+
 import { QUERY_THOUGHTS } from '../utils/queries';
 
 const Home = () => {
@@ -28,6 +30,7 @@ const Home = () => {
           )}
         </div>
       </div>
+      <Link to='/Admin'>Data Admin Page</Link>
     </main>
   );
 };

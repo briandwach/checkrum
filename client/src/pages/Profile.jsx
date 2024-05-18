@@ -1,6 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
+
 import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList';
 
@@ -62,6 +63,7 @@ const Profile = () => {
         )}
       </div>
     </div>
+
   );
 };
 
