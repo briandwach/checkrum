@@ -35,7 +35,7 @@ export default function DataAdmin ({ clientId }){
                     </ul>
             </details>
             <button className="btn btn-outline btn-accent" onClick={onClick}>Add a client</button>
-            {setNewClientForm? <AddClientForm /> : null}
+            {newClientForm? <AddClientForm /> : null}
             
             <h2> Location Information</h2>
             <label className="form-control w-full max-w-xs">
