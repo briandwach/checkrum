@@ -11,6 +11,7 @@ const Signup = () => {
     username: '',
     email: '',
     password: '',
+    role: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -75,6 +76,16 @@ const Signup = () => {
                   value={formState.password}
                   onChange={handleChange}
                 />
+                <select
+                  className="form-select w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
+                  name="role"
+                  value={formState.role}
+                  onChange={handleChange}
+                >
+                  <option value="">Select a role</option>
+                  <option value="manager">Manager</option>
+                  <option value="staff">Staff</option>
+                </select>
                 <button
                   className="btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}
