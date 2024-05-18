@@ -56,3 +56,17 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ADD_CLIENT = gql`
+  mutation addClient($businessName: String!, $contactName: String!, $contactEmail: String!, $locations: String) {
+    addClient(businessName: $businessName, contactName: $contactName, contactEmail: $contactEmail, locations: $locations) {
+      _id
+      businessName
+      contactName
+      contactEmail
+      locations {
+        _id
+      }
+    }
+  }
+`;

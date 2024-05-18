@@ -72,6 +72,7 @@ const typeDefs = `
     thoughts(username: String): [Thought]
     thought(thoughtId: ID!): Thought
     me: User
+    clients: [Client]
   }
 
   type Mutation {
@@ -81,6 +82,7 @@ const typeDefs = `
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
   }
 `;
 
