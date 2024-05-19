@@ -1,6 +1,8 @@
 const { User, Thought, Client, Equipment } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
+const seedDatabase = require('../seeders/seed.js');
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -31,8 +33,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, { username, email, password, role }) => {
+      const user = await User.create({ username, email, password, role });
       const token = signToken(user);
       return { token, user };
     },
@@ -140,7 +142,11 @@ const resolvers = {
         return equipment
       }
       throw AuthenticationError;
-    }
+    },
+    seed: async () => {
+        const result = await seedDatabase();
+        return result;
+    },
   },
 };
 
