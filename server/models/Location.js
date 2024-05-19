@@ -14,10 +14,8 @@ const locationSchema = new Schema({
     trim: true
   },
   client: {
-    type: String, 
-    required: true, 
-    unique: false,
-    trim: true
+    type: Schema.Types.ObjectId,
+    ref: 'Client'
   },
   accessInstructions: {
     type: String,

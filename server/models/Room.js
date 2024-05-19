@@ -9,17 +9,9 @@ const roomSchema = new Schema({
     unique: true,
     trim: true,
   },
-  client: {
-    type: String,
-    required: true,
-    unique: false,
-    trim: true
-  },
   location: {
-    type: String,
-    required: true,
-    unique: false,
-    trim: true
+    type: Schema.Types.ObjectId,
+    ref: 'Location'
   },
   equipment: [
     {
@@ -28,7 +20,7 @@ const roomSchema = new Schema({
     },
   ],
   lastInspectionDate: {
-    type: Date, 
+    type: Date,
     default: Date.now
   },
   inspectionCycleLength: {
@@ -37,12 +29,12 @@ const roomSchema = new Schema({
     unique: false
   },
 },
-{
-  toJSON: {
-    virtuals: true,
-  },
-  id: false
-});
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    id: false
+  });
 
 //Virtuals needed
 //Calculate inspections overdue--return date due

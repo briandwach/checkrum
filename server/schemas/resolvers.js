@@ -1,4 +1,4 @@
-const { User, Thought, Client, Equipment } = require('../models');
+const { User, Thought, Client, Room, Equipment } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const seedDatabase = require('../seeders/seed.js');
@@ -28,6 +28,12 @@ const resolvers = {
       if (context.user){
         return Client.find().populate('businessName')
       }
+      //throw AuthenticationError;
+    },
+    allRooms: async (parent, args, context) => {
+      //if (context.user){
+        return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      //}
       //throw AuthenticationError;
     }
   },
