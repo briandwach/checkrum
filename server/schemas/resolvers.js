@@ -1,4 +1,4 @@
-const { User, Thought, Client } = require('../models');
+const { User, Thought, Client, Equipment } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const seedDatabase = require('../seeders/seed.js');
@@ -131,6 +131,15 @@ const resolvers = {
         });
 
         return client;
+      }
+      throw AuthenticationError;
+    },
+    addEquipment: async (parent, {equipmentName}, context) =>{
+      if (context.user){
+        const equipment = await Equipment.create({
+          equipmentName
+        });
+        return equipment
       }
       throw AuthenticationError;
     },

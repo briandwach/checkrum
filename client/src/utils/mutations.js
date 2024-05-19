@@ -71,6 +71,14 @@ export const ADD_CLIENT = gql`
   }
 `;
 
+export const ADD_EQUIPMENT = gql`
+  mutation addEquipment($equipmentName: String!) {
+    addEquipment(equipmentName: $equipmentName) {
+      _id
+      equipmentName
+    }
+`;
+
 export const SEED = gql`
   mutation seed {
     seed 

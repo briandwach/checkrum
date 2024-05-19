@@ -12,6 +12,7 @@ import Staff from './pages/Staff';
 import Manager from './pages/Manager';
 import Error from './pages/Error';
 import Admin from './pages/Admin';
+import Equipment from './pages/Equipment.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       }, {
         path: '/admin',
         element: <Admin />
+      },
+      {
+        path: '/equipment',
+        element: <Equipment />
       }
     ]
   }

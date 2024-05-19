@@ -28,8 +28,7 @@ const AddClientForm = () => {
               location
             },
           });
-    
-          console.log(data);
+
           setShowBtn(false);
         } catch (err) {
           console.error(err);
@@ -50,6 +49,7 @@ const AddClientForm = () => {
       const showLocationForm = (event) => {
         const val = event.target;
         if (val){
+          console.log('Showing location form')
           return <AddLocationForm />
         }
       };

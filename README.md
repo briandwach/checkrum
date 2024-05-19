@@ -27,5 +27,8 @@ Inspection tracker for audio video technologies in conference rooms.  Technical 
 ## License
 This application is covered under the [MIT License](http://choosealicense.com/licenses/mit/).
 
+## Resources
+Font Awesome
+
 ## Questions
 Please contact us with any questions regarding this application at: checkrumproj@gmail.com
