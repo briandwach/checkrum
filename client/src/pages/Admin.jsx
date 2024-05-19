@@ -22,6 +22,7 @@ export default function DataAdmin ({ clientId }){
     const { client , clientQueryError } = useQuery(QUERY_CLIENT);
 
     const onClick = () => setNewClientForm(true);
+
     //const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
     // Select Existing Client
     // Add New Client
@@ -37,31 +38,6 @@ export default function DataAdmin ({ clientId }){
             <button className="btn btn-outline btn-accent" onClick={onClick}>Add a client</button>
             {newClientForm? <AddClientForm /> : null}
             
-            <h2> Location Information</h2>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Locations</span>
-                </div>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Location Address</span>
-                </div>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Access Instructions</span>
-                </div>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Room Name</span>
-                </div>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-            </label>
         </main>
     )
 }

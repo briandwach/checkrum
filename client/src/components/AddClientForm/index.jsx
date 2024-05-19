@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_CLIENT } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
+import AddLocationForm from '../AddLocationForm';
 
 const AddClientForm = () => {
 
@@ -12,6 +13,7 @@ const AddClientForm = () => {
     const [ contactName, setContactName ] = useState('');
     const [ contactEmail, setContactEmail ] = useState('');
     const [ location, setLocations ] = useState([]);
+    var [ showBtn, setShowBtn ] = useState(true);
 
     const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
 
@@ -27,7 +29,8 @@ const AddClientForm = () => {
             },
           });
     
-          console.log(data)
+          console.log(data);
+          setShowBtn(false);
         } catch (err) {
           console.error(err);
         }
@@ -44,7 +47,20 @@ const AddClientForm = () => {
 
       };
 
+      const showLocationForm = (event) => {
+        const val = event.target;
+        if (val){
+          return <AddLocationForm />
+        }
+      };
 
+      const showButton = () => {
+        if (showBtn == false) {
+          return <button className="btn btn-outline btn-accent" onClick={showLocationForm}>Add Location</button>
+        } else { 
+          return <button className="btn btn-outline btn-accent" onClick={handleFormSubmit} id="save-new-client">Save new client</button>
+        }
+      };
 
       return (
         <div>
@@ -68,7 +84,7 @@ const AddClientForm = () => {
                 </div>
                 <input type="text" placeholder="Type here" name='contactEmail' onChange={handleChange}  className="input input-bordered w-full max-w-xs" />
             </label>
-            <button className="btn btn-outline btn-accent" onClick={handleFormSubmit}>Save new client</button>
+            {showButton()}
         </div>
       )
 }
