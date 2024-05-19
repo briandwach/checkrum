@@ -6,7 +6,7 @@ import { QUERY_CLIENT } from '../utils/queries';
 
 import AddClientForm from '../components/AddClientForm';
 
-export default function DataAdmin ({ clientId }){
+export default function DataAdmin (){
     const [ businessName , setBusinessName ] = useState('');
     const [ contactName, setContactName ] = useState('');
     const [ contactEmail, setContactEmail ] = useState('');
@@ -19,7 +19,11 @@ export default function DataAdmin ({ clientId }){
     const [ inspectionCycleLength, setInspectionCycleLength ] = useState(0);
     const [ newClientForm, setNewClientForm ] = useState(false);
 
-    const { client , clientQueryError } = useQuery(QUERY_CLIENT);
+    const { loading, clientData } = useQuery(QUERY_CLIENT);
+
+    const clientList = clientData?.clients || {};
+
+    console.log(clientList);
 
     const onClick = () => setNewClientForm(true);
 

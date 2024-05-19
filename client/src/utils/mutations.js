@@ -77,6 +77,7 @@ export const ADD_EQUIPMENT = gql`
       _id
       equipmentName
     }
+  }
 `;
 
 export const SEED = gql`

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 //import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 import Auth from '../../utils/auth';
 import { ADD_EQUIPMENT } from '../../utils/mutations';
+import { QUERY_EQUIPMENT } from '../../utils/queries';
+
 
 const AddEquipmentForm = () => {
     const [ equipmentName, setEquipmentName ] = useState('');
@@ -11,6 +13,8 @@ const AddEquipmentForm = () => {
 
     const [ addEquipment, { error }] = useMutation(ADD_EQUIPMENT);
 
+    const {loading, list } = useQuery(QUERY_EQUIPMENT);
+    console.log(list);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();

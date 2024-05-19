@@ -73,3 +73,12 @@ export const QUERY_CLIENT = gql`
     }
   }
 `;
+
+export const QUERY_EQUIPMENT = gql`
+  query allEquipment {
+    equipment {
+      _id
+      equipmentName
+    }
+  }
+`;
