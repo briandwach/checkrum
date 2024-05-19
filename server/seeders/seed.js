@@ -23,9 +23,14 @@ const seedDatabase = async () => {
 
     // Create locations and iteratively updates references to client model
     for (let i = 0; i < locationSeeds.length; i++) {
-      const { _id, client } = await Location.create(locationSeeds[i]);
+      const { clientString } = locationSeeds[i];
+
+      const clientData = await Client.findOne({ businessName: clientString });
+      locationSeeds[i].client = clientData._id;
+
+      const { _id } = await Location.create(locationSeeds[i]);
       await Client.findOneAndUpdate(
-        { businessName: client },
+        { businessName: clientString },
         {
           $addToSet: {
             locations: _id,
@@ -36,7 +41,12 @@ const seedDatabase = async () => {
 
     // Iteratively creates room documents and adds references to equipment and location
     for (let i = 0; i < roomSeeds.length; i++) {
-      const { _id, location } = await Room.create(roomSeeds[i]);
+      const { locationString } = roomSeeds[i];
+
+      const locationData = await Location.findOne({ locationName: locationString });
+      roomSeeds[i].location = locationData._id;
+
+      const { _id } = await Room.create(roomSeeds[i]);
 
       const randomEquipment = equipmentRandomizer();
 
@@ -58,7 +68,7 @@ const seedDatabase = async () => {
 
         // Update location model with room object ID
         await Location.findOneAndUpdate(
-          { locationName: location },
+          { locationName: locationString },
           {
             $addToSet: {
               rooms: _id,

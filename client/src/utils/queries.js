@@ -82,3 +82,22 @@ export const QUERY_EQUIPMENT = gql`
     }
   }
 `;
+
+export const ALL_ROOMS = gql`
+query AllRooms {
+  allRooms {
+    roomName
+    location {
+      client {
+        businessName
+      }
+      locationName
+      address
+    }
+    equipment {
+      equipmentName
+    }
+    inspectionCycleLength
+  }
+}
+`;

@@ -28,7 +28,7 @@ const typeDefs = `
   type Room {
     _id: ID
     roomName: String
-    location: [Location]
+    location: Location
     equipment: [Equipment]
     lastInspectionDate: Int
     inspectionCycleLength: Int
@@ -39,7 +39,7 @@ const typeDefs = `
     locationName: String
     address: String
     accessInstructions: String
-    client: [Client]
+    client: Client
   }
 
   type Client {
@@ -75,6 +75,7 @@ const typeDefs = `
     me: User
     clients: [Client]
     equipmentItems: [Equipment]
+    allRooms: [Room]
   }
 
   type Mutation {
