@@ -12,7 +12,7 @@ const Staff = () => {
     //assigning the logged in user's role to authenticatedPerson
     const authenticatedPerson = Auth.getProfile().authenticatedPerson.role;
     // If user is not a staff, redirect to homepage
-    if (authenticatedPerson !== 'staff') {
+    if (authenticatedPerson !== 'staff' || authenticatedPerson !== 'admin') {
         // Redirect to homepage
         window.location.href = '/';
         return null;
