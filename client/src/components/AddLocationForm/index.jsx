@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Auth from '../../utils/auth';
 
-const AddLocationForm = ({clientId}) => {
+const AddLocationForm = () => {
 
     const [ locationName, setLocationName ] = useState('');
     const [ address, setLocationAddress ] = useState('');

@@ -30,7 +30,8 @@ const Home = () => {
           )}
         </div>
       </div>
-      <Link to='/Admin'>Data Admin Page</Link>
+      <Link to='/Admin'>Data Admin Page</Link><br />
+      <Link to='/Equipment'>Equipment Admin Page</Link>
     </main>
   );
 };

@@ -50,6 +50,7 @@ const typeDefs = `
   }
 
   type Equipment {
+    _id: ID
     equipmentName: String!
   }
 
@@ -82,6 +83,7 @@ const typeDefs = `
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
     addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
+    addEquipment(equipmentName: String!): Equipment
   }
 `;
 
