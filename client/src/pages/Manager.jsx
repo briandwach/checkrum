@@ -13,7 +13,7 @@ const Manager = () => {
     const authenticatedPerson = Auth.getProfile().authenticatedPerson.role;
 
     // If user is not a manager or admin, redirect to homepage. 
-    if (authenticatedPerson !== 'manager' || authenticatedPerson !== 'admin') {
+    if (authenticatedPerson !== 'manager' && authenticatedPerson !== 'admin') {
         // Redirect
         window.location.href = '/';
         return null;
