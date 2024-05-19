@@ -49,9 +49,7 @@ const ThoughtForm = () => {
   };
 
   return (
-    <div>
-      <h3>Hello World**THIS IS A TEST</h3>
-
+    <div>  
       {Auth.loggedIn() ? (
         <>
           <p
@@ -90,8 +88,9 @@ const ThoughtForm = () => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your thoughts. Please{' '}
-          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+          Please{' '}
+          <Link to="/login">login</Link> or <Link to="/signup">signup </Link>
+          to begin.
         </p>
       )}
     </div>
