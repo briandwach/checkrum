@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
 const AddLocationForm = () => {
-
+    console.log('Loaded add location form')
     const [ locationName, setLocationName ] = useState('');
     const [ address, setLocationAddress ] = useState('');
     const [ accessInstructions, setAccessInstructions ] = useState('');

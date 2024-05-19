@@ -74,6 +74,15 @@ export const QUERY_CLIENT = gql`
   }
 `;
 
+export const QUERY_EQUIPMENT = gql`
+  query allEquipment {
+    equipment {
+      _id
+      equipmentName
+    }
+  }
+`;
+
 export const ALL_ROOMS = gql`
 query AllRooms {
   allRooms {

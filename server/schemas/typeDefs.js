@@ -74,6 +74,7 @@ const typeDefs = `
     thought(thoughtId: ID!): Thought
     me: User
     clients: [Client]
+    equipmentItems: [Equipment]
     allRooms: [Room]
   }
 

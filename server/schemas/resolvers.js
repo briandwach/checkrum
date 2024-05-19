@@ -26,9 +26,14 @@ const resolvers = {
     },
     clients: async (parent, args, context) => {
       if (context.user){
-        return Client.find().populate('businessName')
+        return Client.find()
       }
       //throw AuthenticationError;
+    },
+    equipmentItems: async (parent, args, context) => {
+      if (context.user){
+        return Equipment.find()
+      }
     },
     allRooms: async (parent, args, context) => {
       //if (context.user){

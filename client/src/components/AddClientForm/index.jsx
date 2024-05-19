@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 import { ADD_CLIENT } from '../../utils/mutations';
+
 
 import Auth from '../../utils/auth';
 import AddLocationForm from '../AddLocationForm';
@@ -46,12 +47,10 @@ const AddClientForm = () => {
 
       };
 
-      const showLocationForm = (event) => {
-        const val = event.target;
-        if (val){
-          console.log('Showing location form')
-          return <AddLocationForm />
-        }
+      const showLocationForm = async (event) => {
+        console.log('Show Location Form')
+        event.preventDefault();
+        return <AddLocationForm />
       };
 
       const showButton = () => {
