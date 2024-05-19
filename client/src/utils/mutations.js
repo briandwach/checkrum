@@ -70,3 +70,9 @@ export const ADD_CLIENT = gql`
     }
   }
 `;
+
+export const SEED = gql`
+  mutation seed {
+    seed 
+  }
+`;
