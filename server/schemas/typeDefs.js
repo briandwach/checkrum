@@ -75,6 +75,7 @@ const typeDefs = `
     me: User
     clients: [Client]
     allRooms: [Room]
+    room(id: ID!): Room
   }
 
   type Mutation {

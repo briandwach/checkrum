@@ -74,21 +74,46 @@ export const QUERY_CLIENT = gql`
   }
 `;
 
-export const ALL_ROOMS = gql`
+export const QUERY_ALL_ROOMS = gql`
 query AllRooms {
   allRooms {
+    _id
     roomName
     location {
-      client {
-        businessName
-      }
+      _id
       locationName
       address
-    }
-    equipment {
-      equipmentName
+      accessInstructions
+      client {
+        _id
+        businessName
+      }
     }
     inspectionCycleLength
+  }
+}
+`;
+
+export const QUERY_SINGLE_ROOM = gql`
+query Room($id: ID!) {
+  room(id: $id) {
+    _id
+    roomName
+    location {
+      _id
+      locationName
+      address
+      accessInstructions
+      client {
+        _id
+        businessName
+      }
+    }
+    inspectionCycleLength
+    equipment {
+      _id
+      equipmentName
+    }
   }
 }
 `;

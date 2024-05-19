@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <Equipment />
       },
       {
-        path: '/Rooms',
+        path: '/rooms',
         element: <Rooms />
       }
     ]

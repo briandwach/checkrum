@@ -1,12 +1,12 @@
 import RoomCard from '../RoomCard';
 
 import { useQuery } from '@apollo/client';
-import { ALL_ROOMS } from '../../utils/queries';
+import { QUERY_ALL_ROOMS } from '../../utils/queries';
 
 
 const RoomList = () => {
 
-const { loading, data } = useQuery(ALL_ROOMS);
+const { loading, data } = useQuery(QUERY_ALL_ROOMS);
 
 if (loading) {
     return <div>Loading...</div>;

@@ -30,6 +30,12 @@ const resolvers = {
       }
       //throw AuthenticationError;
     },
+    room: async (parent, args, context) => {
+      //if (context.user){
+        return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      //}
+      //throw AuthenticationError;
+    },
     allRooms: async (parent, args, context) => {
       //if (context.user){
         return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
