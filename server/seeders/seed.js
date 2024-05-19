@@ -1,4 +1,3 @@
-const db = require('../config/connection');
 const { User, Client, Location, Room, Equipment } = require('../models');
 const userSeeds = require('./userSeeds.json');
 const clientSeeds = require('./clientSeeds.json');
@@ -9,7 +8,7 @@ const cleanDB = require('./cleanDB');
 
 const equipmentRandomizer = require('./equipmentRandomizer.js');
 
-db.once('open', async () => {
+const seedDatabase = async () => {
   try {
     await cleanDB('User', 'users');
     await cleanDB('Client', 'clients');
@@ -71,9 +70,10 @@ db.once('open', async () => {
 
   } catch (err) {
     console.error(err);
-    process.exit(1);
+    return ('Error seeding the database!');
   }
-
   console.log('Database successfully seeded!');
-  process.exit(0);
-});
+  return ('Database successfully seeded!');
+};
+
+module.exports = seedDatabase;

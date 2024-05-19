@@ -1,6 +1,8 @@
 const { User, Thought, Client } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
+const seedDatabase = require('../seeders/seed.js');
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -131,6 +133,10 @@ const resolvers = {
         return client;
       }
       throw AuthenticationError;
+    },
+    seed: async () => {
+        const result = await seedDatabase();
+        return result;
     },
   },
 };
