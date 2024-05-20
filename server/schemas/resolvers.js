@@ -35,6 +35,12 @@ const resolvers = {
         return Equipment.find()
       }
     },
+    room: async (parent, args, context) => {
+      //if (context.user){
+        return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      //}
+      //throw AuthenticationError;
+    },
     allRooms: async (parent, args, context) => {
       //if (context.user){
         return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
@@ -43,7 +49,13 @@ const resolvers = {
     },
     allStaff: async (parent, args, context) => {
       return User.find({ role: 'staff' }).populate('username');
-    }
+    },
+    roomEquipment: async (parent, args, context) => {
+      //if (context.user){
+        return Room.findById(args.id).populate('equipment');
+      //}
+      //throw AuthenticationError;
+    },
   },
 
   Mutation: {

@@ -1,13 +1,11 @@
-import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { RoomProvider } from '../contexts/RoomContext';
 
-import Auth from '../utils/auth';
 import RoomList from '../components/RoomList';
 
 const Rooms = () => {
 
     return (
-        <RoomList />
+            <RoomList />
     )
 
 }

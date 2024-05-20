@@ -76,6 +76,8 @@ const typeDefs = `
     clients: [Client]
     equipmentItems: [Equipment]
     allRooms: [Room]
+    room(id: ID!): Room
+    roomEquipment(id: ID!): Room
     allStaff: [User]
   }
 
