@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { ADD_EQUIPMENT } from '../../utils/mutations';
 import { QUERY_EQUIPMENT } from '../../utils/queries';
+import EquipmentList from './equipmentList';
 
 
 const AddEquipmentForm = () => {
@@ -52,6 +53,9 @@ const AddEquipmentForm = () => {
       </tr>
     </thead>
     <tbody>
+    <EquipmentList
+              items={items}
+            />
       <tr>
         <th>New Equipment</th>
         <td><input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" value={equipmentName} name="equipmentNameField" onChange={handleChange}/>
