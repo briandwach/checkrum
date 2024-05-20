@@ -13,13 +13,15 @@ const AddEquipmentForm = () => {
 
     const [ addEquipment, { error }] = useMutation(ADD_EQUIPMENT);
 
-    const {loading, list } = useQuery(QUERY_EQUIPMENT);
-    console.log(list);
+    const {loading, data } = useQuery(QUERY_EQUIPMENT);
+    
+    const items = data?.equipmentItems || [];
+    console.log(items)
+
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-        console.log(equipmentName);
         const { data } = await addEquipment({
             variables: {
               equipmentName

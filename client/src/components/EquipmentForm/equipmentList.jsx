@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client';
-
-import { QUERY_EQUIPMENT } from '../../utils/queries';
+import mongoose from 'mongoose';
+const Equipment = mongoose.model('Equipment', 'equipmentName')
+//import { QUERY_EQUIPMENT } from '../../utils/queries';
 
 const EquipmentList = ({ equipment }) => {
-    const [getEquipment, { error }]=useQuery(QUERY_EQUIPMENT);
+    const [getEquipment, { error }] = useQuery(QUERY_EQUIPMENT);
 
-    get
+console.log(Equipment)
 
   if (!equipment.length) {
     return <h3>No Equipment Yet</h3>;
