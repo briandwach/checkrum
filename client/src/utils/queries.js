@@ -75,8 +75,8 @@ export const QUERY_CLIENT = gql`
 `;
 
 export const QUERY_EQUIPMENT = gql`
-  query allEquipment {
-    equipment {
+  query equipmentItems {
+    equipmentItems {
       _id
       equipmentName
     }
