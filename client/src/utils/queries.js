@@ -126,3 +126,14 @@ query Room($id: ID!) {
   }
 }
 `;
+
+export const QUERY_SINGLE_ROOM_EQUIPMENT = gql`
+query RoomEquipment($id: ID!) {
+  roomEquipment(id: $id) {
+    equipment {
+      _id
+      equipmentName
+    }
+  }
+}
+`;

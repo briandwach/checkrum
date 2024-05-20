@@ -19,6 +19,7 @@ if (loading) {
               {data.allRooms.map((room) => (
                   <RoomCard
                       key={room.roomName}
+                      id={room._id}
                       name={room.roomName}
                       client={room.location.client.businessName}
                       location={room.location.locationName}

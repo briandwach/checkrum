@@ -46,7 +46,13 @@ const resolvers = {
         return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       //}
       //throw AuthenticationError;
-    }
+    },
+    roomEquipment: async (parent, args, context) => {
+      //if (context.user){
+        return Room.findById(args.id).populate('equipment');
+      //}
+      //throw AuthenticationError;
+    },
   },
 
   Mutation: {
