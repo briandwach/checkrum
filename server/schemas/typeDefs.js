@@ -76,6 +76,7 @@ const typeDefs = `
     clients: [Client]
     equipmentItems: [Equipment]
     allRooms: [Room]
+    allStaff: [User]
   }
 
   type Mutation {
@@ -88,6 +89,7 @@ const typeDefs = `
     addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
+    editUser(username: String, role: String!): User
   }
 `;
 

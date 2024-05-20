@@ -40,6 +40,9 @@ const resolvers = {
         return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       //}
       //throw AuthenticationError;
+    },
+    allStaff: async (parent, args, context) => {
+      return User.find({ role: 'staff' }).populate('username');
     }
   },
 
@@ -154,6 +157,15 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    editUser: async (parent, { username, role }, context) => {
+      const user = await User.findOneAndUpdate(
+      { username },
+      { role },
+      { new: true }
+      );
+      return user;
+    },
+
     seed: async () => {
         const result = await seedDatabase();
         return result;
