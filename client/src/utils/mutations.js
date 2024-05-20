@@ -85,3 +85,12 @@ export const SEED = gql`
     seed 
   }
 `;
+
+export const EDIT_USER = gql`
+  mutation Mutation($role: String!, $username: String) {
+    editUser(role: $role, username: $username) {
+      username
+      role
+    }
+  }
+`;

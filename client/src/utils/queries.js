@@ -137,3 +137,11 @@ query RoomEquipment($id: ID!) {
   }
 }
 `;
+
+export const ALL_STAFF = gql`
+query AllStaff {
+  allStaff {
+    username
+  }
+}
+`;

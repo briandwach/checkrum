@@ -47,6 +47,9 @@ const resolvers = {
       //}
       //throw AuthenticationError;
     },
+    allStaff: async (parent, args, context) => {
+      return User.find({ role: 'staff' }).populate('username');
+    },
     roomEquipment: async (parent, args, context) => {
       //if (context.user){
         return Room.findById(args.id).populate('equipment');
@@ -166,6 +169,15 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    editUser: async (parent, { username, role }, context) => {
+      const user = await User.findOneAndUpdate(
+      { username },
+      { role },
+      { new: true }
+      );
+      return user;
+    },
+
     seed: async () => {
         const result = await seedDatabase();
         return result;
