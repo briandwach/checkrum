@@ -92,3 +92,11 @@ query AllRooms {
   }
 }
 `;
+
+export const ALL_STAFF = gql`
+query AllStaff {
+  allStaff {
+    username
+  }
+}
+`;
