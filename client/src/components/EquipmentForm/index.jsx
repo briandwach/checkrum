@@ -17,8 +17,6 @@ const AddEquipmentForm = () => {
     const {loading, data } = useQuery(QUERY_EQUIPMENT);
     
     const items = data?.equipmentItems || [];
-    console.log(items)
-
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
