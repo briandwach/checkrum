@@ -12,10 +12,11 @@ function Inspection() {
     const [successCheckbox, setSuccessCheckbox] = useState({});
     const [errorCheckbox, setErrorCheckbox] = useState({});
     const [viewComment, setViewComment] = useState({});
+    const [commentText, setCommentText] = useState({});
 
     if (loading) {
         return <div>Loading...</div>;
-    } 
+    }
 
     const { room } = data;
     const { roomName: name, location, inspectionCycleLength: cycle, equipment } = room;
@@ -27,6 +28,14 @@ function Inspection() {
             ...prevState,
             [equipmentItemId]: !prevState[equipmentItemId]
         }));
+    };
+
+    //State logic if comment text is present for an equipment item
+    const commentPresent = (e, equipmentItemId) => {
+        setCommentText(prevState => ({
+            ...prevState,
+            [equipmentItemId]: e.target.value
+        }))
     };
 
     return (
@@ -45,30 +54,40 @@ function Inspection() {
                             <div className="flex">
                                 <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-success" 
-                                        checked={successCheckbox[equipmentItem._id] ? successCheckbox[equipmentItem._id] : false} 
-                                        onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
-                                        onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
+                                        <input type="checkbox" className="checkbox checkbox-success"
+                                            checked={successCheckbox[equipmentItem._id] ? successCheckbox[equipmentItem._id] : false}
+                                            onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                            onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                     </label>
                                 </div>
                                 <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-error" 
-                                        checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false} 
-                                        onClick={e => e.target.checked && setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
-                                        onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
+                                        <input type="checkbox" className="checkbox checkbox-error"
+                                            checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false}
+                                            onClick={e => e.target.checked && setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                            onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                     </label>
                                 </div>
                                 <button onClick={() => commentToggle(equipmentItem._id)}>
-                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
+                                    {commentText[equipmentItem._id] ? (
+                                        <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl`}></i>
+                                    ) : (
+                                        <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
+                                    )}
                                 </button>
                             </div>
                         </div>
-                        <textarea placeholder="Add comment here..." className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}></textarea>
+                        <textarea
+                            placeholder="Add comment here..."
+                            value={commentText[equipmentItem._id] ? commentText[equipmentItem._id] : ''}
+                            onChange={e => commentPresent(e, equipmentItem._id)}
+                            className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}>
+                        </textarea>
                     </div>
                 ))}
-                <br></br>
-                <div className="card-actions justify-end">
+                <p className="mt-3 font-bold">General Comments:</p>
+                <textarea className=" rounded-md" placeholder="Add comments here..."></textarea>
+                <div className="mt-1 card-actions justify-end">
                     <button className="btn btn-primary">Submit</button>
                 </div>
             </div>
