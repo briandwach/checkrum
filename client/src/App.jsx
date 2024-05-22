@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { RoomProvider } from './contexts/RoomContext';
+
 import { Outlet } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -42,9 +42,7 @@ function App() {
       <div className="flex-column justify-flex-start min-100-vh">
         <Header />
         <div className="container">
-          <RoomProvider>
             <Outlet />
-          </RoomProvider>
         </div>
         <Footer />
       </div>
