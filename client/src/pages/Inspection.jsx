@@ -20,7 +20,7 @@ function Inspection() {
     const { client: { businessName }, locationName, address } = location;
 
     const initialViewCommentState = equipment.reduce((acc, equipmentItem) => {
-        return { ...acc, [equipmentItem._id]: 'regular' };
+        return { ...acc, [equipmentItem._id]: '-slash' };
     }, {});
 
     const commentToggle = (equipmentItemId) => {
@@ -68,7 +68,7 @@ function Inspection() {
                                     </label>
                                 </div>
                                 <button onClick={() => commentToggle(equipmentItem._id)}>
-                                    <i className={`fa-${viewComment[equipmentItem._id] ? 'solid' : 'regular'} fa-comment fa-xl`}></i>
+                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
                                 </button>
                             </div>
                         </div>
