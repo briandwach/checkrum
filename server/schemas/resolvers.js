@@ -158,7 +158,21 @@ const resolvers = {
         const result = await seedDatabase();
         return result;
     },
+    removeEquipment: async (parent, { equipmentId }, context) => {
+      if (context.user) {
+        const equipment = await Equipment.findOneAndDelete({
+          _id: equipmentId,
+        });
+    }
   },
+    editEquipment: async (parent, {equipmentId, equipmetName}, context) => {
+      if (context.user){
+        const equipment = await Equipment.findOneAndUpdate({
+          _id: equipmentId,
+          equipmentName: equipmentName
+        })
+      }
+    }
 };
 
 module.exports = resolvers;

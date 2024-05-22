@@ -85,3 +85,21 @@ export const SEED = gql`
     seed 
   }
 `;
+
+export const REMOVE_EQUIPMENT = gql`
+  mutation removeEquipment($equipmentId: ID){
+    removeEquipment(equipmentId: $equipmentId){
+      _id
+      equipmentName
+    }
+  }
+`;
+
+export const EDIT_EQUIPMENT = gql`
+  mutation editEquipment($equipmentId: ID){
+    editEquipment(equipmentId: $equipmentId){
+      _id
+      equipmentName
+    }
+  }
+`;

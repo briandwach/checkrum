@@ -88,6 +88,7 @@ const typeDefs = `
     addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
+    removeEquipment(equipmentId: ID): Equipment
   }
 `;
 
