@@ -86,6 +86,22 @@ export const SEED = gql`
   }
 `;
 
+
+export const REMOVE_EQUIPMENT = gql`
+  mutation removeEquipment($equipmentId: ID){
+    removeEquipment(equipmentId: $equipmentId){
+      _id
+      equipmentName
+    }
+  }
+`;
+
+export const EDIT_EQUIPMENT = gql`
+  mutation editEquipment($equipmentId: ID){
+    editEquipment(equipmentId: $equipmentId){
+      _id
+      equipmentName
+
 export const EDIT_USER = gql`
   mutation Mutation($role: String!, $username: String) {
     editUser(role: $role, username: $username) {
