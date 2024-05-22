@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 
 import { useMutation} from '@apollo/client'
 
-import { REMOVE_EQUIPMENT } from '../../utils/mutations';
+//BW commenting this out for now so app runs
+// \\import { REMOVE_EQUIPMENT } from '../../utils/mutations';
 
 const EquipmentList = ({ items }) => {
  ////   const [getEquipment, { error }] = useQuery(QUERY_EQUIPMENT);
 
-const [removeEquipment, { error }] = useMutation(REMOVE_EQUIPMENT)
+ //BW commenting this out for now so app runs
+//const [removeEquipment, { error }] = useMutation(REMOVE_EQUIPMENT)
 
 const handleRemoveEquipment = async (equipmentId) => {
   try {
