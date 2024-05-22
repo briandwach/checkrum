@@ -1,12 +1,12 @@
 import RoomCard from '../RoomCard';
 
 import { useQuery } from '@apollo/client';
-import { ALL_ROOMS } from '../../utils/queries';
+import { QUERY_ALL_ROOMS } from '../../utils/queries';
 
 
 const RoomList = () => {
 
-const { loading, data } = useQuery(ALL_ROOMS);
+const { loading, data } = useQuery(QUERY_ALL_ROOMS);
 
 if (loading) {
     return <div>Loading...</div>;
@@ -19,6 +19,7 @@ if (loading) {
               {data.allRooms.map((room) => (
                   <RoomCard
                       key={room.roomName}
+                      id={room._id}
                       name={room.roomName}
                       client={room.location.client.businessName}
                       location={room.location.locationName}

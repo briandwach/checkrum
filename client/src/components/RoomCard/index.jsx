@@ -1,4 +1,6 @@
-function RoomCard({ name, client, location, address, cycle }) {
+import { Link } from 'react-router-dom';
+
+function RoomCard({ id, name, client, location, address, cycle }) {
     return (
         <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
             <div className="card-body">
@@ -9,7 +11,9 @@ function RoomCard({ name, client, location, address, cycle }) {
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Inspect</button>
+                    <Link to={`/Inspection/${id}`}>
+                        <button className="btn btn-primary">Inspect</button>
+                    </Link>
                 </div>
             </div>
         </div>

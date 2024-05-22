@@ -1,4 +1,6 @@
 import Auth from '../utils/auth';
+import ManagerNav from '../components/ManagerNav';
+
 
 
 const Manager = () => {
@@ -22,6 +24,7 @@ const Manager = () => {
     return (
         <div>
         <h1>Manager Page</h1>
+        <ManagerNav></ManagerNav>
         </div>
     );
     }

@@ -14,6 +14,7 @@ import Error from './pages/Error';
 import Admin from './pages/Admin';
 import Equipment from './pages/Equipment.jsx';
 import Rooms from './pages/Rooms.jsx';
+import Inspection from './pages/Inspection.jsx';
 
 const router = createBrowserRouter([
   {
@@ -54,8 +55,12 @@ const router = createBrowserRouter([
         element: <Equipment />
       },
       {
-        path: '/Rooms',
+        path: '/rooms',
         element: <Rooms />
+      },
+      {
+        path: '/inspection/:id',
+        element: <Inspection />
       }
     ]
   }
