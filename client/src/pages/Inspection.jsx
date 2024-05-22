@@ -12,6 +12,19 @@ function Inspection() {
         return <div>Loading...</div>;
     }
 
+    // Toggles checkboxes so only pass or fail can be checked at a time
+    const resultToggle = (e) => {
+        const clickedCheckbox = e.target;
+
+        if (clickedCheckbox.classList.contains('checkbox-success')) {
+            const otherCheckbox = clickedCheckbox.parentElement.parentElement.nextElementSibling.querySelector('.checkbox-error');
+            otherCheckbox.checked = false;
+        } else if (clickedCheckbox.classList.contains('checkbox-error')) {
+            const otherCheckbox = clickedCheckbox.parentElement.parentElement.previousElementSibling.querySelector('.checkbox-success');
+            otherCheckbox.checked = false;
+        }
+    };
+
     const { room } = data;
     const { roomName: name, location, inspectionCycleLength: cycle, equipment } = room;
     const { client: { businessName }, locationName, address } = location;
@@ -30,16 +43,17 @@ function Inspection() {
                         <div className="p-2 flex justify-between">
                             <h2 className="card-title">{equipmentItem.equipmentName}</h2>
                             <div className="flex">
-                                <div className="form-control">
+                                <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-success" />
+                                        <input type="checkbox" className="checkbox checkbox-success" onClick={resultToggle}/>
                                     </label>
                                 </div>
-                                <div className="form-control">
+                                <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-error" />
+                                        <input type="checkbox" className="checkbox checkbox-error"  onClick={resultToggle}/>
                                     </label>
                                 </div>
+                                <button><i className="fa-regular fa-comment-dots fa-xl"></i></button>
                             </div>
                         </div>
                     </div>
