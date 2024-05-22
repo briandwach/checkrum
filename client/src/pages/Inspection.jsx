@@ -9,6 +9,8 @@ function Inspection() {
         variables: { id: id },
     });
 
+    const [successCheckbox, setSuccessCheckbox] = useState({});
+    const [errorCheckbox, setErrorCheckbox] = useState({});
     const [viewComment, setViewComment] = useState({});
 
     if (loading) {
@@ -19,28 +21,12 @@ function Inspection() {
     const { roomName: name, location, inspectionCycleLength: cycle, equipment } = room;
     const { client: { businessName }, locationName, address } = location;
 
-    const initialViewCommentState = equipment.reduce((acc, equipmentItem) => {
-        return { ...acc, [equipmentItem._id]: '-slash' };
-    }, {});
-
+    //State logic to toggle viewing an equipment comment box
     const commentToggle = (equipmentItemId) => {
         setViewComment((prevState) => ({
             ...prevState,
             [equipmentItemId]: !prevState[equipmentItemId]
         }));
-    };
-
-    // Toggles checkboxes so only pass or fail can be checked at a time
-    const resultToggle = (e) => {
-        const clickedCheckbox = e.target;
-
-        if (clickedCheckbox.classList.contains('checkbox-success')) {
-            const otherCheckbox = clickedCheckbox.parentElement.parentElement.nextElementSibling.querySelector('.checkbox-error');
-            otherCheckbox.checked = false;
-        } else if (clickedCheckbox.classList.contains('checkbox-error')) {
-            const otherCheckbox = clickedCheckbox.parentElement.parentElement.previousElementSibling.querySelector('.checkbox-success');
-            otherCheckbox.checked = false;
-        }
     };
 
     return (
@@ -59,12 +45,18 @@ function Inspection() {
                             <div className="flex">
                                 <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-success" onClick={resultToggle} />
+                                        <input type="checkbox" className="checkbox checkbox-success" 
+                                        checked={successCheckbox[equipmentItem._id] ? successCheckbox[equipmentItem._id] : false} 
+                                        onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                        onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                     </label>
                                 </div>
                                 <div className="form-control" >
                                     <label className="cursor-pointer label">
-                                        <input type="checkbox" className="checkbox checkbox-error" onClick={resultToggle} />
+                                        <input type="checkbox" className="checkbox checkbox-error" 
+                                        checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false} 
+                                        onClick={e => e.target.checked && setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                        onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                     </label>
                                 </div>
                                 <button onClick={() => commentToggle(equipmentItem._id)}>
@@ -72,7 +64,7 @@ function Inspection() {
                                 </button>
                             </div>
                         </div>
-                        <textarea className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}></textarea>
+                        <textarea placeholder="Add comment here..." className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}></textarea>
                     </div>
                 ))}
                 <br></br>
