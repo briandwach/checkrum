@@ -7,9 +7,9 @@ const ReadOnlyRow = ({ item, handleEditClick }) => {
     const [removeEquipment, { removeError }] = useMutation(REMOVE_EQUIPMENT);
 
     const handleRemoveEquipment = async (equipmentId) => {
-        event.preventDefault();
+        //event.preventDefault();
         try {
-          console.log('Deletinig equipment...');
+          console.log('Deleting equipment...');
             const { data } = await removeEquipment({
             variables: { equipmentId },
             });
