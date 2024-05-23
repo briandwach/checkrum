@@ -4,7 +4,7 @@ const dateFormat = require('../utils/dateFormat');
 const resultSchema = new Schema({
     reportId: {
         type: Schema.Types.ObjectId,
-        ref: 'Equipment'
+        ref: 'Report'
     },
     equipmentId: {
         type: Schema.Types.ObjectId,
