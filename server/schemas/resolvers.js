@@ -25,25 +25,25 @@ const resolvers = {
       throw AuthenticationError;
     },
     clients: async (parent, args, context) => {
-      if (context.user){
+      if (context.user) {
         return Client.find({})
       }
       //throw AuthenticationError;
     },
     equipmentItems: async () => {
       //if (context.user){
-        return Equipment.find()
-     // }
+      return Equipment.find()
+      // }
     },
     room: async (parent, args, context) => {
       //if (context.user){
-        return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       //}
       //throw AuthenticationError;
     },
     allRooms: async (parent, args, context) => {
       //if (context.user){
-        return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       //}
       //throw AuthenticationError;
     },
@@ -52,7 +52,7 @@ const resolvers = {
     },
     roomEquipment: async (parent, args, context) => {
       //if (context.user){
-        return Room.findById(args.id).populate('equipment');
+      return Room.findById(args.id).populate('equipment');
       //}
       //throw AuthenticationError;
     },
@@ -150,8 +150,8 @@ const resolvers = {
     addClient: async (parent, { businessName, contactName, contactEmail, locations }, context) => {
       if (context.user) {
         const client = await Client.create({
-          businessName, 
-          contactName, 
+          businessName,
+          contactName,
           contactEmail,
           locations
         });
@@ -160,8 +160,8 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    addEquipment: async (parent, {equipmentName}, context) =>{
-      if (context.user){
+    addEquipment: async (parent, { equipmentName }, context) => {
+      if (context.user) {
         const equipment = await Equipment.create({
           equipmentName
         });
@@ -171,32 +171,33 @@ const resolvers = {
     },
     editUser: async (parent, { username, role }, context) => {
       const user = await User.findOneAndUpdate(
-      { username },
-      { role },
-      { new: true }
+        { username },
+        { role },
+        { new: true }
       );
       return user;
     },
 
     seed: async () => {
-        const result = await seedDatabase();
-        return result;
+      const result = await seedDatabase();
+      return result;
     },
     removeEquipment: async (parent, { equipmentId }, context) => {
       if (context.user) {
         const equipment = await Equipment.findOneAndDelete({
           _id: equipmentId,
         });
-    }
-  },
-    editEquipment: async (parent, {equipmentId, equipmetName}, context) => {
-      if (context.user){
+      }
+    },
+    editEquipment: async (parent, { equipmentId, equipmetName }, context) => {
+      if (context.user) {
         const equipment = await Equipment.findOneAndUpdate({
           _id: equipmentId,
           equipmentName: equipmentName
         })
       }
     }
-};
+  }
+}
 
 module.exports = resolvers;

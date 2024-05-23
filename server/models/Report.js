@@ -19,6 +19,10 @@ const reportSchema = new Schema({
   }
 });
 
+// Array of result model documents
+
+// General comments string
+
 const Report = model('Report', reportSchema);
 
 module.exports = Report;

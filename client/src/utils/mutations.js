@@ -101,6 +101,9 @@ export const EDIT_EQUIPMENT = gql`
     editEquipment(equipmentId: $equipmentId){
       _id
       equipmentName
+    }
+  }
+`;
 
 export const EDIT_USER = gql`
   mutation Mutation($role: String!, $username: String) {
