@@ -57,9 +57,19 @@ const typeDefs = `
 
   type Report {
     _id: ID!
-    roomName: [Room]
-    assignedStaff: [User]
+    roomId: Room
+    assignedStaff: User
+    results: [Result]
+    generalComments: String
     inspectionDate: Int
+  }
+
+  type Result {
+    _id: ID!
+    reportId: Report
+    equipmentId: Equipment
+    result: Boolean
+    comment: String
   }
 
   type Auth {
