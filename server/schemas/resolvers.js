@@ -189,14 +189,16 @@ const resolvers = {
         });
     }
   },
-    editEquipment: async (parent, {equipmentId, equipmetName}, context) => {
+    editEquipment: async (parent, {equipmentId, equipmentName}, context) => {
       if (context.user){
         const equipment = await Equipment.findOneAndUpdate({
-          _id: equipmentId,
-          equipmentName: equipmentName
+          _id: equipmentId
+        }, {
+          $set: {equipmentName: equipmentName}
         })
       }
     }
-};
+}
 
+}
 module.exports = resolvers;

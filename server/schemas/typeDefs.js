@@ -93,7 +93,7 @@ const typeDefs = `
     seed: String
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
-    editEquipment(equipmentId: ID): Equipment
+    editEquipment(equipmentId: ID, equipmentName: String): Equipment
   }
 `;
 
