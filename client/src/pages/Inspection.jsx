@@ -60,7 +60,7 @@ function Inspection() {
         const failResults = Object.values(errorCheckbox).reduce((acc, currentValue) => acc + !!currentValue, 0);
 
         if ((passResults + failResults) < equipment.length) {
-            setErrorMessage('Missing inspection results for one or more equipment categories!');
+            setErrorMessage('Missing inspection results for one or more equipment categories.');
             // We want to exit out of this code block if something is wrong so that the user can correct it
             return;
         }
@@ -75,12 +75,12 @@ function Inspection() {
         }
 
         if (missingComments > 0) {
-            setErrorMessage('Failed equipment categories require a comment!');
+            setErrorMessage('Failed equipment categories require a comment.');
             // We want to exit out of this code block if something is wrong so that the user can correct it
             return;
         }
 
-        setErrorMessage('Inspection report successfully submitted!');
+        setErrorMessage('Inspection report successfully submitted.');
 
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
@@ -153,8 +153,8 @@ function Inspection() {
                             className=" rounded-md">
                         </textarea>
                         {errorMessage && (
-                            <div className="mb-3">
-                                <p className="error-text">{errorMessage}</p>
+                            <div className="mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200">
+                                <p className="p-1 font-semibold">{errorMessage}</p>
                             </div>)}
                         <div className="mt-1 card-actions justify-end">
                             <button className="btn btn-primary">Submit</button>
