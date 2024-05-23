@@ -2,18 +2,26 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const reportSchema = new Schema({
-  roomName: [
+  roomId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Room'
+  },
+  assignedStaff:
+  {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  results: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Room'
-    }
-  ], 
-  assignedStaff: [
-    {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+      ref: 'Result',
+    },
   ],
+  generalComments: {
+    type: String,
+    unique: false,
+    trim: true
+  },
   inspectionDate: {
     default: Number
   }
