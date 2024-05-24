@@ -4,12 +4,11 @@ import { useQuery, useMutation } from '@apollo/client';
 
 import { QUERY_CLIENT } from '../utils/queries';
 
-import AddClientForm from '../components/AddClientForm';
+//import NewClientForm from '../components/AddClientForm/index';
+import AddClientForm from '../components/AddClientForm/index';
+import EditClientForm from '../components/EditClientForm';
 
 export default function DataAdmin (){
-    const [ businessName , setBusinessName ] = useState('');
-    const [ contactName, setContactName ] = useState('');
-    const [ contactEmail, setContactEmail ] = useState('');
     const [ location, setLocations ] = useState([]);
     const [ address, setAddress ] = useState('');
     const [ accessInstructions, setAccessInstructions ] = useState('');
@@ -17,30 +16,32 @@ export default function DataAdmin (){
     const [ equipment, setEquipment ] = useState([]);
     const [ lastInspectionDate, setInspectionDate ] = useState(0);
     const [ inspectionCycleLength, setInspectionCycleLength ] = useState(0);
-    const [ newClientForm, setNewClientForm ] = useState(false);
 
     const { loading, clientData } = useQuery(QUERY_CLIENT);
 
     const clientList = clientData?.clients || {};
+    
+    // Button Logic
+    const [ editClientForm, setEditClientForm ] = useState( false );
+    const [ newClientForm, setNewClientForm] = useState( false );
 
-    console.log(clientList);
-
-    const onClick = () => setNewClientForm(true);
-
-    //const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
-    // Select Existing Client
-    // Add New Client
+    const handleButtonChange = async (event) => {
+        const { name, value } = event.target;
+        
+        switch (name){
+            case 'editClientButton': await setEditClientForm(true); await setNewClientForm(false); break;
+            case 'newClientButton': await setEditClientForm(false); await setNewClientForm(true); break; 
+        }
+    }
 
     return (
         <main>
-            <details className="dropdown">
-                <summary className="m-1 btn">Edit a client</summary>
-                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                    placeholder text
-                    </ul>
-            </details>
-            <button className="btn btn-outline btn-accent" onClick={onClick}>Add a client</button>
-            {newClientForm? <AddClientForm /> : null}
+            <button type="button" className="m-1 btn" name="editClientButton" onClick={handleButtonChange}>Edit a client</button>
+            <button type="button" className="btn btn-outline btn-accent" name="newClientButton" onClick={handleButtonChange}>Add a client</button>
+            {newClientForm === true ? <AddClientForm /> : null}
+            {editClientForm === true ? <EditClientForm /> : null}
+
+            {console.log('Edit Client: ' + editClientForm + '; New Client: ' + newClientForm)}
             
         </main>
     )
