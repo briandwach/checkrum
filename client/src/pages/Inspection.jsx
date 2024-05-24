@@ -3,12 +3,23 @@ import { QUERY_SINGLE_ROOM } from '../utils/queries';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
+import { useMutation } from '@apollo/client';
+import { ADD_RESULT } from '../utils/mutations';
+
 function Inspection() {
+
+    // Pulls room objectId from url parameter to use for room data query
     const { id } = useParams();
+
+    // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
     const { loading, data } = useQuery(QUERY_SINGLE_ROOM, {
         variables: { id: id },
     });
 
+    // Defines mutation for creating Result documents
+    const [addResult, { error }] = useMutation(ADD_RESULT);
+
+    // Defining state variables for UI and inspection data
     const [successCheckbox, setSuccessCheckbox] = useState({});
     const [errorCheckbox, setErrorCheckbox] = useState({});
     const [viewComment, setViewComment] = useState({});
@@ -20,6 +31,7 @@ function Inspection() {
         return <div>Loading...</div>;
     }
 
+    // Destructure data from QUERY_SINGLE_ROOM
     const { room } = data;
     const { roomName: name, location, inspectionCycleLength: cycle, equipment } = room;
     const { client: { businessName }, locationName, address } = location;
@@ -32,7 +44,13 @@ function Inspection() {
         }));
     };
 
-    //State logic if comment text is present for an equipment item
+    // Force comment box to stay open after fail has been selected for equipment item
+    const viewCommentForceWithFail = (equipmentItemId) => {
+    setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItemId]: false }));
+    setViewComment(prevState => ({ ...prevState, [equipmentItemId]: true }));
+    };
+
+    //State logic that changes comment icon if comment text is present for an equipment item
     const commentPresent = (e, equipmentItemId) => {
         setCommentText(prevState => ({
             ...prevState,
@@ -41,11 +59,11 @@ function Inspection() {
     };
 
     //Function to return an array of all properties in an object with the value of true
-    function getFailedEquipmentIds(errorCheckboxObj) {
+    function getEquipmentIds(checkboxObj) {
         const trueProperties = [];
 
-        for (const key in errorCheckboxObj) {
-            if (errorCheckboxObj[key] === true) {
+        for (const key in checkboxObj) {
+            if (checkboxObj[key] === true) {
                 trueProperties.push(key);
             }
         }
@@ -53,34 +71,82 @@ function Inspection() {
         return trueProperties;
     }
 
+    // Functions for taking inspection input form user and executing database mutations
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        // Below two lines get total of pass and fail checkmarks
         const passResults = Object.values(successCheckbox).reduce((acc, currentValue) => acc + !!currentValue, 0);
         const failResults = Object.values(errorCheckbox).reduce((acc, currentValue) => acc + !!currentValue, 0);
 
+        // Error message on form submission if not all equipment have pass or fail
         if ((passResults + failResults) < equipment.length) {
             setErrorMessage('Missing inspection results for one or more equipment categories.');
-            // We want to exit out of this code block if something is wrong so that the user can correct it
+            // Exits code block if something is wrong so that the user can correct it
             return;
         }
 
-        const failedEquipmentIdsArr = getFailedEquipmentIds(errorCheckbox);
-        let missingComments = 0;
+        // Gets array of Equipment objectId for equipment that is marked as failed
+        const failedEquipmentIdsArr = getEquipmentIds(errorCheckbox);
 
+        // Determines the total of failed equipment with out a comment (failed equipment requires a comment)
+        let missingComments = 0;
         for (const failedId of failedEquipmentIdsArr) {
             if (!commentText[failedId]) {
                 missingComments++
             }
         }
 
+        // Checks if amount of missing comments for failed equipment is above zero then sets error message
         if (missingComments > 0) {
             setErrorMessage('Failed equipment categories require a comment.');
-            // We want to exit out of this code block if something is wrong so that the user can correct it
+            // Exits code block if something is wrong so that the user can correct it
             return;
         }
 
-        setErrorMessage('Inspection report successfully submitted.');
+        // Creates an array of all Equipment objectIds in the report
+        const equipmentIdsArr = [];
+        equipment.forEach(obj => {
+            equipmentIdsArr.push(obj._id); // Extracting the 'name' property from each object
+        });
+
+        // Creates a variable result object to send to graphQL mutation when iterating through result creation
+        let resultArr = [];
+        for (var equipmentId of equipmentIdsArr) {
+            let result = false;
+            let comment = '';
+
+            if (successCheckbox[equipmentId]) {
+                result = true;
+            };
+
+            if (commentText[equipmentId]) {
+                comment = commentText[equipmentId];
+            };
+
+            resultArr.push({
+                reportId: room._id,
+                equipmentId: equipmentId,
+                result: result,
+                comment: comment
+            })
+        };
+
+        console.log(resultArr);
+
+        // Iterates through result objections and calls mutation to create result documents
+        for (const result of resultArr) {
+            try {
+                const resultData = await addResult({
+                    variables: { ...result }
+                });
+                console.log(resultData.data);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        setErrorMessage('Inspection report successfully submitted.  Check console to review data.');
 
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
@@ -122,10 +188,23 @@ function Inspection() {
                                                     name="errorCheckbox"
                                                     className="checkbox checkbox-error"
                                                     checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false}
-                                                    onClick={e => e.target.checked && setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                                    onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
                                                     onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                             </label>
                                         </div>
+                                        {errorCheckbox[equipmentItem._id] ? (
+                                        <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
+                                            {viewComment[equipmentItem._id] ? (
+                                            <i className={`fa-regular fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots' : ' fa-fade'}`} 
+                                            style={{color: commentText[equipmentItem._id] ? 'black' : 'red'}}>
+                                            </i>
+                                            ) : (
+                                                <i className={`fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots fa-solid' : ' fa-fade fa-regular'}`} 
+                                                style={{color: commentText[equipmentItem._id] ? 'black' : 'red'}}>
+                                                </i>
+                                            )}
+                                        </button>
+                                        ) : (
                                         <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
                                             {commentText[equipmentItem._id] ? (
                                                 <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl`}></i>
@@ -133,10 +212,11 @@ function Inspection() {
                                                 <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
                                             )}
                                         </button>
+                                        )}
                                     </div>
                                 </div>
                                 <textarea
-                                    placeholder="Add comment here..."
+                                    placeholder={`${errorCheckbox[equipmentItem._id] ? 'Comment required...' : 'Add comment here...'}`}
                                     name="equipmentComment"
                                     value={commentText[equipmentItem._id] ? commentText[equipmentItem._id] : ''}
                                     onChange={e => commentPresent(e, equipmentItem._id)}

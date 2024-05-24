@@ -105,6 +105,7 @@ const typeDefs = `
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
     addLocation(locationName: String, address: String, accessInstructions: String, client: String): Location
+    addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
   }
 `;
 
