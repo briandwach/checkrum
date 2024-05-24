@@ -80,6 +80,22 @@ export const ADD_EQUIPMENT = gql`
   }
 `;
 
+export const ADD_RESULT = gql`
+mutation Mutation($reportId: ID!, $equipmentId: ID!, $result: Boolean!, $comment: String) {
+  addResult(reportId: $reportId, equipmentId: $equipmentId, result: $result, comment: $comment) {
+    _id
+    equipmentId {
+      _id
+    }
+    reportId {
+      _id
+    }
+    result
+    comment
+  }
+}
+`;
+
 export const SEED = gql`
   mutation seed {
     seed 
