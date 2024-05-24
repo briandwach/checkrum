@@ -7,19 +7,24 @@ import { ADD_CLIENT } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 import AddLocationForm from '../AddLocationForm';
+import ClientCard from '../AddClientForm/ClientCard';
+import NewClientForm from '../AddClientForm/AddNewClient';
 
 const AddClientForm = () => {
 
-    const [ businessName , setBusinessName ] = useState('');
+    /* const [ businessName , setBusinessName ] = useState('');
     const [ contactName, setContactName ] = useState('');
-    const [ contactEmail, setContactEmail ] = useState('');
+    const [ contactEmail, setContactEmail ] = useState('');*/
     const [ location, setLocations ] = useState([]);
     var [ showBtn, setShowBtn ] = useState(true);
-
-    const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
+    const [ showLocationBtn, setShowLocationBtn ] = useState(false);
+    const [ newClient, setNewClient ] = useState(false);
+ 
+    /* const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+
         try {
           const { data } = await addClient({
             variables: {
@@ -31,6 +36,7 @@ const AddClientForm = () => {
           });
 
           setShowBtn(false);
+          setNewClient(false);
         } catch (err) {
           console.error(err);
         }
@@ -45,45 +51,28 @@ const AddClientForm = () => {
             case 'contactEmail': setContactEmail(value); break;
         }
 
-      };
+      }; */
 
       const showLocationForm = async (event) => {
-        console.log('Show Location Form')
-        event.preventDefault();
-        return <AddLocationForm />
+        //event.preventDefault();
+        await setShowLocationBtn(true);
+        console.log(showLocationBtn);
       };
 
-      const showButton = () => {
+    /*  const showButton = () => {
         if (showBtn == false) {
-          return <button className="btn btn-outline btn-accent" onClick={showLocationForm}>Add Location</button>
+          return <><button type="button" className="btn btn-outline btn-accent" onClick={showLocationForm}>Add Location</button>
+          <AddLocationForm /></>
         } else { 
-          return <button className="btn btn-outline btn-accent" onClick={handleFormSubmit} id="save-new-client">Save new client</button>
+          return <button type="button" className="btn btn-outline btn-accent" onClick={handleFormSubmit} id="save-new-client">Save new client</button>
         }
-      };
+      }; */
 
       return (
         <div>
-            <h1>Add a new client</h1>
-            <h2> Client Information </h2>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Business Name</span>
-                </div>
-                <input type="text" placeholder="Type here" name='businessName' onChange={handleChange} className="input input-bordered w-full max-w-xs" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Contact Name</span>
-                </div>
-                <input type="text" placeholder="Type here" name='contactName' onChange={handleChange}  className="input input-bordered w-full max-w-xs" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text">Contact Email Address</span>
-                </div>
-                <input type="text" placeholder="Type here" name='contactEmail' onChange={handleChange}  className="input input-bordered w-full max-w-xs" />
-            </label>
-            {showButton()}
+
+          { newClient === false ? <NewClientForm/> : <ClientCard />}
+           
         </div>
       )
 }

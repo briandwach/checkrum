@@ -147,14 +147,9 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    addClient: async (parent, { businessName, contactName, contactEmail, locations }, context) => {
+    addClient: async (parent, { businessName, contactName, contactEmail }, context) => {
       if (context.user) {
-        const client = await Client.create({
-          businessName,
-          contactName,
-          contactEmail,
-          locations
-        });
+        const client = await Client.create({ businessName, contactName, contactEmail });
 
         return client;
       }
@@ -196,7 +191,19 @@ const resolvers = {
         }, {
           $set: {equipmentName: equipmentName}
         })
+        return equipment
       }
+    },
+    addLocation: async (parent, { locationName }, context) => {
+      if (context.user) {
+        const location = await Location.create({
+          locationName,
+          address,
+          accessInstructions,
+          client
+        })
+      }
+      return location
     }
   }
 }
