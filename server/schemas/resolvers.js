@@ -1,4 +1,5 @@
-const { User, Thought, Client, Room, Equipment, Location, Result } = require('../models');
+const { User, Thought, Client, Room, Equipment, Location, Result, Report } = require('../models');
+
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const seedDatabase = require('../seeders/seed.js');
@@ -58,6 +59,16 @@ const resolvers = {
     }, 
     getClient: async (parent, { businessName }) => {
       return Client.findOne({ businessName: businessName });
+    },
+    allLocations: async (parent, args, context) => {
+      return Location.find().populate('locationName');
+    },
+    roomByLocation: async (parent, args, context) => {
+      const location = await Location.findOne({ locationName: args.name });
+      return Room.find({ location: location._id }).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+    },
+    allReports: async (parent, args, context) => {
+      return Report.find().populate('roomId').populate('assignedStaff');
     },
   },
 
@@ -211,8 +222,20 @@ const resolvers = {
         })
       }
       return location
+    },
+    createReport: async (parent, { roomId, assignedStaff }, context) => {
+
+      const user = await User.findOne({ username: assignedStaff });
+      if (!user) {
+        throw new Error('User not found');
+      }
+      const report = await Report.create({
+        roomId,
+        assignedStaff: user._id
+      });
+      return report;
     }
   }
-}
+};
 
 module.exports = resolvers;

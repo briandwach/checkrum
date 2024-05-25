@@ -129,3 +129,11 @@ export const EDIT_USER = gql`
     }
   }
 `;
+
+export const CREATE_REPORT = gql`
+  mutation createReport($roomId: String, $assignedStaff: String) {
+    createReport(roomId: $roomId, assignedStaff: $assignedStaff) {
+      _id
+    }
+  }
+`;

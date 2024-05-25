@@ -89,6 +89,9 @@ const typeDefs = `
     room(id: ID!): Room
     roomEquipment(id: ID!): Room
     allStaff: [User]
+    allLocations: [Location]
+    roomByLocation(name: String!): [Room]
+    allReports: [Report]
     getClient: Client
   }
 
@@ -105,6 +108,7 @@ const typeDefs = `
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
+    createReport(roomId: String, assignedStaff: String): Report
     addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
   }

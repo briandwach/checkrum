@@ -141,7 +141,39 @@ query RoomEquipment($id: ID!) {
 export const ALL_STAFF = gql`
 query AllStaff {
   allStaff {
+    _id
     username
+  }
+}
+`;
+
+
+export const ALL_LOCATIONS = gql`
+query AllLocations {
+  allLocations {
+    locationName
+  }
+}
+`;
+
+export const ROOM_BY_LOCATION = gql`
+query RoomByLocation($name: String!) {
+  roomByLocation(name: $name) {
+    _id
+    roomName
+  }
+}
+`;
+
+export const ALL_REPORTS = gql`
+query AllReports {
+  allReports {
+    assignedStaff {
+      username
+    }
+    roomId {
+      roomName
+    }
   }
 }
 `;
@@ -162,4 +194,5 @@ export const QUERY_SINGLE_CLIENT = gql`
       }
     }
   }
+
 `;
