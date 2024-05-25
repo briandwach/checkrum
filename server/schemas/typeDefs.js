@@ -94,6 +94,8 @@ const typeDefs = `
     allReports: [Report]
     getClient: Client
     locations: [Location]
+    assignedReportsByStaff(assignedStaff: ID!): [Report]
+    roomInfoByReportId(id: ID!): Report
   }
 
   type Mutation {

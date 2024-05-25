@@ -210,3 +210,51 @@ query locations {
   }
 }
 `;
+
+export const ASSIGNED_REPORTS_BY_STAFF = gql`
+query Query($assignedStaff: ID!) {
+  assignedReportsByStaff(assignedStaff: $assignedStaff) {
+    _id
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      inspectionCycleLength
+    }
+  }
+}
+`;
+
+export const ROOM_INFO_BY_REPORT_ID = gql`
+query Query($id: ID!) {
+  roomInfoByReportId(id: $id) {
+    _id
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      inspectionCycleLength
+      equipment {
+        _id
+        equipmentName
+      }
+    }
+  }
+}
+`;

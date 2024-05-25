@@ -1,7 +1,8 @@
-import { useQuery } from '@apollo/client';
-import { QUERY_SINGLE_ROOM } from '../utils/queries';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+
+import { useQuery } from '@apollo/client';
+import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
 import { ADD_RESULT } from '../utils/mutations';
@@ -12,7 +13,7 @@ function Inspection() {
     const { id } = useParams();
 
     // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
-    const { loading, data } = useQuery(QUERY_SINGLE_ROOM, {
+    const { loading, data } = useQuery(ROOM_INFO_BY_REPORT_ID, {
         variables: { id: id },
     });
 
@@ -32,8 +33,8 @@ function Inspection() {
     }
 
     // Destructure data from QUERY_SINGLE_ROOM
-    const { room } = data;
-    const { roomName: name, location, inspectionCycleLength: cycle, equipment } = room;
+    const { roomInfoByReportId } = data;
+    const { roomName: name, location, inspectionCycleLength: cycle, equipment } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
     //State logic to toggle viewing an equipment comment box
@@ -125,7 +126,7 @@ function Inspection() {
             };
 
             resultArr.push({
-                reportId: room._id,
+                reportId: id,
                 equipmentId: equipmentId,
                 result: result,
                 comment: comment
