@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import SeedButton from '../SeedButton';
+import DbButtons from '../DbButtons';
 
 const Footer = () => {
   const location = useLocation();
@@ -20,7 +20,7 @@ const Footer = () => {
         <h4 className="text-white text-lg mb-3">
         &copy; Copyright 2024
         </h4>
-        <SeedButton />
+        <DbButtons />
       </div>
     </footer>
   );

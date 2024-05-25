@@ -3,6 +3,7 @@ const { User, Thought, Client, Room, Equipment, Location, Result, Report } = req
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const seedDatabase = require('../seeders/seed.js');
+const cleanReportsAndResults = require('../seeders/cleanReportsAndResults.js');
 
 const resolvers = {
   Query: {
@@ -199,11 +200,16 @@ const resolvers = {
       );
       return user;
     },
-
+    // DB Seeding and collection cleaning mutations
     seed: async () => {
       const result = await seedDatabase();
       return result;
     },
+    cleanReportsAndResults: async () => {
+      const result = await cleanReportsAndResults();
+      return result;
+    },
+    // --------------------------------------------------------------
     removeEquipment: async (parent, { equipmentId }, context) => {
       if (context.user) {
         const equipment = await Equipment.findOneAndDelete({

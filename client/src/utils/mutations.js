@@ -102,6 +102,12 @@ export const SEED = gql`
   }
 `;
 
+export const CLEAN_REPORTS_AND_RESULTS = gql`
+  mutation cleanReportsAndResults {
+    cleanReportsAndResults
+  }
+`;
+
 
 export const REMOVE_EQUIPMENT = gql`
   mutation removeEquipment($equipmentId: ID){
