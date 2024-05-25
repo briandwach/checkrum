@@ -70,6 +70,9 @@ const resolvers = {
     allReports: async (parent, args, context) => {
       return Report.find().populate('roomId').populate('assignedStaff');
     },
+    locations: async (parent, args, context) => {
+      return Location.find();
+    },
     assignedReportsByStaff: async (parent, args, context) => {
       return Report.find({ assignedStaff: args.assignedStaff}).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
     },

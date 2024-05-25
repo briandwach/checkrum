@@ -197,6 +197,20 @@ export const QUERY_SINGLE_CLIENT = gql`
 
 `;
 
+export const QUERY_LOCATION = gql`
+query locations {
+  locations {
+    _id
+    locationName
+    address
+    accessInstructions
+    client {
+      _id
+    }
+  }
+}
+`;
+
 export const ASSIGNED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   assignedReportsByStaff(assignedStaff: $assignedStaff) {
