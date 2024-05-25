@@ -11,68 +11,36 @@ import ClientCard from '../AddClientForm/ClientCard';
 import NewClientForm from '../AddClientForm/AddNewClient';
 
 const AddClientForm = () => {
-
-    /* const [ businessName , setBusinessName ] = useState('');
-    const [ contactName, setContactName ] = useState('');
-    const [ contactEmail, setContactEmail ] = useState('');*/
     const [ location, setLocations ] = useState([]);
     var [ showBtn, setShowBtn ] = useState(true);
     const [ showLocationBtn, setShowLocationBtn ] = useState(false);
-    const [ newClient, setNewClient ] = useState(false);
- 
-    /* const [addClient, { addClientError }] = useMutation(ADD_CLIENT);
+    const [ newClient, setNewClient ] = useState(true);
+    const [ clientName, setClientName ] = useState('');
+    const [ addLocationButton, setAddLocationButton ] = useState( false );
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
+    //TO DO
+    //Add button to add new client after form is completed
 
-        try {
-          const { data } = await addClient({
-            variables: {
-              businessName,
-              contactName,
-              contactEmail,
-              location
-            },
-          });
-
-          setShowBtn(false);
-          setNewClient(false);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
-      const handleChange = (event) => {
-        const { name, value } = event.target;
     
-        switch(name){
-            case 'businessName': setBusinessName(value); break;
-            case 'contactName': setContactName(value); break;
-            case 'contactEmail': setContactEmail(value); break;
-        }
-
-      }; */
-
-      const showLocationForm = async (event) => {
-        //event.preventDefault();
-        await setShowLocationBtn(true);
-        console.log(showLocationBtn);
+    const showLocationForm = async (event) => {
+      await setShowLocationBtn(true);
+      console.log(showLocationBtn);
       };
 
-    /*  const showButton = () => {
-        if (showBtn == false) {
-          return <><button type="button" className="btn btn-outline btn-accent" onClick={showLocationForm}>Add Location</button>
-          <AddLocationForm /></>
-        } else { 
-          return <button type="button" className="btn btn-outline btn-accent" onClick={handleFormSubmit} id="save-new-client">Save new client</button>
-        }
-      }; */
+      const handleAddLocation = async (event) => {
+        await setAddLocationButton( true );
+      }
 
       return (
         <div>
 
-          { newClient === false ? <NewClientForm/> : <ClientCard />}
-           
+          { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} setClientName={setClientName}/> : null}
+           { newClient === false? <ClientCard clientName={clientName} /> : null }
+           { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location heere</button>: null}
+           { addLocationButton === true? <AddLocationForm />: null}
+           {console.log(clientName)}
+           {console.log(addLocationButton)}
+
         </div>
       )
 }

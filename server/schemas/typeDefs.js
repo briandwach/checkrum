@@ -92,6 +92,7 @@ const typeDefs = `
     allLocations: [Location]
     roomByLocation(name: String!): [Room]
     allReports: [Report]
+    getClient: Client
   }
 
   type Mutation {
@@ -101,14 +102,15 @@ const typeDefs = `
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
-    addClient(businessName: String!, contactName: String!, contactEmail: String!): Client
+    addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
-    addLocation(locationName: String, address: String, accessInstructions: String, client: String): Location
     createReport(roomId: String, assignedStaff: String): Report
+    addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
+    addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
   }
 `;
 

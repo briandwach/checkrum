@@ -4,11 +4,13 @@ const dateFormat = require('../utils/dateFormat');
 const resultSchema = new Schema({
     reportId: {
         type: Schema.Types.ObjectId,
-        ref: 'Report'
+        ref: 'Report',
+        required: true
     },
     equipmentId: {
         type: Schema.Types.ObjectId,
-        ref: 'Equipment'
+        ref: 'Equipment',
+        required: true
     },
     result: {
         type: Boolean,

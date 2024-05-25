@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation} from '@apollo/client';
+import { set, useForm } from 'react-hook-form';
+import { useMutation , useQuery, useLazyQuery } from '@apollo/client';
 import { ADD_CLIENT } from '../../utils/mutations';
+//import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
 
-const NewClientForm = () => {
+import AddLocationForm from '../AddLocationForm';
+import ClientCard from './ClientCard';
+
+const NewClientForm = ({setNewClient, newClient, setClientName}) => {
     const { register, handleSubmit } = useForm();
-    const [ addClient, { data, loading, error }] = useMutation(ADD_CLIENT);
+    const [ savedClientCard, setSavedClientCard ] = useState( false );
+    const [ addClient, { loading: addClientLoading, data: addClientData, error: addClientError }] = useMutation(ADD_CLIENT);
+    //const [getNewClientId, { data: clientData, loading: clientLoading }] = useLazyQuery(QUERY_SINGLE_CLIENT);
+
+
 
     const onSubmitClient = async (val) => {
         const clientObj = val;
-        console.log({...clientObj})
         try {
             const { data } = await addClient({
                 variables: { ...clientObj }
             })
+            setNewClient(false);
+            var newClientName = Object.values(clientObj)[0]
+            setClientName(newClientName)
        } catch (err){
             console.log(err);
         }
@@ -21,12 +31,21 @@ const NewClientForm = () => {
     }
 
     return(
+      <>
         <form className="new-client" onSubmit={handleSubmit(onSubmitClient)}>
-            <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Business Name" className="input input-bordered w-full max-w-xs" />
-            <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Contact Name" className="input input-bordered w-full max-w-xs" />
-            <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Contact Email Address"  className="input input-bordered w-full max-w-xs"/>
-            <button type="Submit">Submit</button>
+          <h3>Add New Client</h3>
+            <label className="input flex items-center gap-2">
+              <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Business Name" className="input input-bordered w-full max-w-xs" />
+            </label>
+            <label className="input flex items-center gap-2">
+              <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Contact Name" className="input input-bordered w-full max-w-xs" />  
+            </label>
+            <label className="input flex items-center gap-2">
+              <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Contact Email Address" className="input input-bordered w-full max-w-xs"/>
+            </label>
+            {newClient === true? <button type="Submit" className="btn btn-outline btn-accent">Submit</button> : null} 
         </form>
+      </>
     )
 }
 

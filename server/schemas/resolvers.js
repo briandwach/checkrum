@@ -1,4 +1,5 @@
-const { User, Thought, Client, Room, Equipment, Location, Report } = require('../models');
+const { User, Thought, Client, Room, Equipment, Location, Result, Report } = require('../models');
+
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const seedDatabase = require('../seeders/seed.js');
@@ -55,6 +56,9 @@ const resolvers = {
       return Room.findById(args.id).populate('equipment');
       //}
       //throw AuthenticationError;
+    }, 
+    getClient: async (parent, { businessName }) => {
+      return Client.findOne({ businessName: businessName });
     },
     allLocations: async (parent, args, context) => {
       return Location.find().populate('locationName');
@@ -157,9 +161,9 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    addClient: async (parent, { businessName, contactName, contactEmail }, context) => {
+    addClient: async (parent, { businessName, contactName, contactEmail, locations }, context) => {
       if (context.user) {
-        const client = await Client.create({ businessName, contactName, contactEmail });
+        const client = await Client.create({ businessName, contactName, contactEmail, locations });
 
         return client;
       }
@@ -173,6 +177,10 @@ const resolvers = {
         return equipment
       }
       throw AuthenticationError;
+    },
+    addResult: async (parent, { reportId, equipmentId, result, comment }) => {
+      const resultAdded = await Result.create({ reportId, equipmentId, result, comment });
+      return resultAdded;
     },
     editUser: async (parent, { username, role }, context) => {
       const user = await User.findOneAndUpdate(
@@ -194,7 +202,7 @@ const resolvers = {
         });
     }
   },
-    editEquipment: async (parent, { equipmentId, equipmetName }, context) => {
+    editEquipment: async (parent, { equipmentId, equipmentName }, context) => {
       if (context.user) {
         const equipment = await Equipment.findOneAndUpdate({
           _id: equipmentId
