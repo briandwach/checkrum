@@ -2,7 +2,7 @@ import { QUERY_CLIENT } from "../../utils/queries";
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 
-
+import ClientLocations from "./ClientLocations";
 
 
 const UpdateClientForm = () => { 
@@ -10,6 +10,15 @@ const UpdateClientForm = () => {
     const [selectedClientId, setSelectedClientId] = useState(null);
 
     const { loading, data } = useQuery(QUERY_CLIENT);
+
+    const handleClientChange = (event) => {
+        setSelectedClientId(event.target.value)
+    }
+
+    const handleClientSubmit = (event) => {
+        console.log(selectedClientId);
+        event.preventDefault()
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -20,28 +29,31 @@ const UpdateClientForm = () => {
     return (
         <div>
             <h1>Select a Client to Update</h1>
-            <select>
+            <form onSubmit={handleClientSubmit}>
+            <select onChange={handleClientChange}>
                 {data.clients.map((client) => (
                     <option key={client._id} value={client._id}>
                         {client.businessName}
                     </option>
                 ))}
             </select>
+            </form>
             <div>
                 {data.clients.map((client) => (
                     <div key={client._id}>
                         {client._id === selectedClientId && (
-                            <div>
-                                <h2>{client.businessName}</h2>
-                                <p>{client.address}</p>
-                                <p>{client.city}</p>
-                                <p>{client.state}</p>
-                                <p>{client.zip}</p>
+                            <div className="card w-11/12 bg-primary text-primary-content">
+                            <div className="card-body">
+                                <h2 className="card-title">{client.businessName}</h2>
+                                <p>{client.contactName}</p>
+                                <p><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
+                            </div>
                             </div>
                         )}
                     </div>
                 ))}
             </div>
+            {selectedClientId? <ClientLocations selectedClientId = {selectedClientId} /> : null}
         </div>
     );
 
