@@ -9,13 +9,6 @@ import AddClientForm from '../components/AddClientForm/index';
 import EditClientForm from '../components/EditClientForm';
 
 export default function DataAdmin (){
-    const [ location, setLocations ] = useState([]);
-    const [ address, setAddress ] = useState('');
-    const [ accessInstructions, setAccessInstructions ] = useState('');
-    const [ roomName, setRoomName ] = useState([]);
-    const [ equipment, setEquipment ] = useState([]);
-    const [ lastInspectionDate, setInspectionDate ] = useState(0);
-    const [ inspectionCycleLength, setInspectionCycleLength ] = useState(0);
 
     const { loading, clientData } = useQuery(QUERY_CLIENT);
 

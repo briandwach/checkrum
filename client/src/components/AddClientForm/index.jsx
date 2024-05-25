@@ -15,7 +15,7 @@ const AddClientForm = () => {
     var [ showBtn, setShowBtn ] = useState(true);
     const [ showLocationBtn, setShowLocationBtn ] = useState(false);
     const [ newClient, setNewClient ] = useState(true);
-    const [ clientName, setClientName ] = useState('');
+    const [ clientIdData, setClientIdData ] = useState('');
     const [ addLocationButton, setAddLocationButton ] = useState( false );
 
     //TO DO
@@ -29,18 +29,22 @@ const AddClientForm = () => {
 
       const handleAddLocation = async (event) => {
         await setAddLocationButton( true );
+        localStorage.setItem("clientId", '');
+      }
+
+      const handleSetClientIdData = (newIdData) => {
+        setClientIdData(newIdData)
       }
 
       return (
         <div>
 
-          { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} setClientName={setClientName}/> : null}
-           { newClient === false? <ClientCard clientName={clientName} /> : null }
-           { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location heere</button>: null}
-           { addLocationButton === true? <AddLocationForm />: null}
-           {console.log(clientName)}
-           {console.log(addLocationButton)}
-
+          { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
+          { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
+          { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location heere</button>: null}
+          { addLocationButton === true? <AddLocationForm setClientIdData={setClientIdData} />: null}
+          {console.log(addLocationButton)}
+          {console.log(clientIdData)}
         </div>
       )
 }

@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
+import { set } from "react-hook-form";
 
 
-const ClientCard = ({clientName}) => {
-  const clientNameVal = clientName;
+const ClientCard = ({clientIdData}) => {
+  const [clientIdVal, setClientIdVal] = useState();
+ // const clientNameVal = clientName;
   //const [ addLocationButton, setAddLocationButton ] = useState( false );
   const { loading, data, error } = useQuery(QUERY_SINGLE_CLIENT, 
     {
-      variables: {businessName: "Legal For You"}, 
-      fetchPolicy: "network-only"
+      variables: {_id: clientIdData}, 
     });
     if (loading){
       return <p>Loading...</p>
     }
-    const clientId = data?._id || [];
-    
-  const getClientData = () => {
-    console.log(clientId);
-  }
+
+    const handleClientIdData = (val) => {
+      setClientIdVal(val)
+    }
 
   /* const handleAddLocation = async (event) => {
     event.preventDefault();
@@ -67,9 +67,7 @@ const ClientCard = ({clientName}) => {
   </div>
 </div>
 # Using Accordion and Join together
-{console.log(clientName)}
-{console.log(data)}
-{getClientData()}
+{console.log(clientIdData)}
 </div>
         </>
     )
