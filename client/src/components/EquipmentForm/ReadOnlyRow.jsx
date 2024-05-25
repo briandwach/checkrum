@@ -25,8 +25,8 @@ return (
      <tr key={item._id}>
             <th></th>
             <td key={item._id} name={item._id}>{item.equipmentName}</td>
-            <td><button><i className="fa-solid fa-trash-can" onClick={() => handleRemoveEquipment(item._id)}></i></button>
-            <button><i className="fa-solid fa-pencil" onClick={(event) => handleEditClick(event, item)}></i></button>
+            <td><button type="button" ><i className="fa-solid fa-trash-can" onClick={() => handleRemoveEquipment(item._id)}></i></button>
+            <button type="button" ><i className="fa-solid fa-pencil" onClick={(event) => handleEditClick(event, item)}></i></button>
             </td>
     </tr>
     </>

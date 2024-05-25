@@ -104,7 +104,7 @@ const typeDefs = `
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
-    addLocation(locationName: String, address: String, accessInstructions: String, client: String): Location
+    addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
   }
 `;
