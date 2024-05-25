@@ -196,3 +196,25 @@ export const QUERY_SINGLE_CLIENT = gql`
   }
 
 `;
+
+export const ASSIGNED_REPORTS_BY_STAFF = gql`
+query Query($assignedStaff: ID!) {
+  assignedReportsByStaff(assignedStaff: $assignedStaff) {
+    _id
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      inspectionCycleLength
+    }
+  }
+}
+`;

@@ -1,7 +1,5 @@
 import Auth from '../utils/auth';
 
-
-
 const Staff = () => {
     // If user is not logged in, redirect to login page
     if (Auth.loggedIn() == false ) {

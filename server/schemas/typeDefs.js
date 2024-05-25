@@ -93,6 +93,7 @@ const typeDefs = `
     roomByLocation(name: String!): [Room]
     allReports: [Report]
     getClient: Client
+    assignedReportsByStaff(assignedStaff: ID!): [Report]
   }
 
   type Mutation {
