@@ -55,6 +55,9 @@ const resolvers = {
       return Room.findById(args.id).populate('equipment');
       //}
       //throw AuthenticationError;
+    }, 
+    getClient: async (parent, { businessName }) => {
+      return Client.findOne({ businessName: businessName });
     },
   },
 
@@ -147,9 +150,9 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    addClient: async (parent, { businessName, contactName, contactEmail }, context) => {
+    addClient: async (parent, { businessName, contactName, contactEmail, locations }, context) => {
       if (context.user) {
-        const client = await Client.create({ businessName, contactName, contactEmail });
+        const client = await Client.create({ businessName, contactName, contactEmail, locations });
 
         return client;
       }
@@ -188,7 +191,7 @@ const resolvers = {
         });
     }
   },
-    editEquipment: async (parent, { equipmentId, equipmetName }, context) => {
+    editEquipment: async (parent, { equipmentId, equipmentName }, context) => {
       if (context.user) {
         const equipment = await Equipment.findOneAndUpdate({
           _id: equipmentId

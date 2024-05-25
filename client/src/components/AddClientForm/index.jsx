@@ -15,6 +15,7 @@ const AddClientForm = () => {
     var [ showBtn, setShowBtn ] = useState(true);
     const [ showLocationBtn, setShowLocationBtn ] = useState(false);
     const [ newClient, setNewClient ] = useState(true);
+    const [ clientName, setClientName ] = useState('');
 
       const showLocationForm = async (event) => {
         await setShowLocationBtn(true);
@@ -24,8 +25,9 @@ const AddClientForm = () => {
       return (
         <div>
 
-          { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient}/> : null}
-           { newClient === false? <ClientCard /> : null }
+          { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} setClientName={setClientName}/> : null}
+           { newClient === false? <ClientCard clientName={clientName} /> : null }
+           {console.log(clientName)}
         </div>
       )
 }
