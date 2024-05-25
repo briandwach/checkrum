@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_LOCATION } from '../../utils/queries';
 
 const ClientLocations = ({selectedClientId}) => {
-    const { loading, data } = useQuery(QUERY_LOCATION)
+    const { loading, data } = useQuery(QUERY_LOCATION);
 
     if (loading) {
         return <div>Loading...</div>;
