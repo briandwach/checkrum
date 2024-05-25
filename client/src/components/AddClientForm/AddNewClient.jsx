@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
-import { useMutation , useQuery, useLazyQuery } from '@apollo/client';
+import { useMutation , useQuery, useLazyQuery, InMemoryCache } from '@apollo/client';
 import { ADD_CLIENT } from '../../utils/mutations';
 //import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
 
 import AddLocationForm from '../AddLocationForm';
 import ClientCard from './ClientCard';
 
-const NewClientForm = ({setNewClient, newClient, setClientName}) => {
+const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
     const { register, handleSubmit } = useForm();
     const [ savedClientCard, setSavedClientCard ] = useState( false );
-    const [ addClient, { loading: addClientLoading, data: addClientData, error: addClientError }] = useMutation(ADD_CLIENT);
+    const [ clientId, setClientId] = useState('');
+
+    const [ addClient, { loading: addClientLoading, data: addClientData, error: addClientError }] = useMutation(ADD_CLIENT, {
+      onCompleted({ addClient }){if (addClient){localStorage.setItem("clientId", addClient._id)}}
+    });
+   // });c
     //const [getNewClientId, { data: clientData, loading: clientLoading }] = useLazyQuery(QUERY_SINGLE_CLIENT);
 
 
@@ -20,15 +25,25 @@ const NewClientForm = ({setNewClient, newClient, setClientName}) => {
         try {
             const { data } = await addClient({
                 variables: { ...clientObj }
-            })
+            });
+            //const clientIdData = localStorage.getItem("clientId");
+            console.log(clientId);
             setNewClient(false);
-            var newClientName = Object.values(clientObj)[0]
-            setClientName(newClientName)
+            //var newClientName = Object.values(clientObj)[0];
+            //setClientName(newClientName)
+            //sendClientData(clientId)
+            //setClientIdData(clientId)
        } catch (err){
             console.log(err);
         }
 
     }
+
+    useEffect(() => {
+      let result = localStorage.getItem("clientId");
+      setClientId(result);
+      handleSetClientIdData(result);
+        }, [])
 
     return(
       <>
