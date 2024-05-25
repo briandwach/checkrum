@@ -196,3 +196,17 @@ export const QUERY_SINGLE_CLIENT = gql`
   }
 
 `;
+
+export const QUERY_LOCATION = gql`
+query locations {
+  locations {
+    _id
+    locationName
+    address
+    accessInstructions
+    client {
+      _id
+    }
+  }
+}
+`;

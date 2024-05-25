@@ -70,6 +70,9 @@ const resolvers = {
     allReports: async (parent, args, context) => {
       return Report.find().populate('roomId').populate('assignedStaff');
     },
+    locations: async (parent, args, context) => {
+      return Location.find();
+    },
   },
 
   Mutation: {
