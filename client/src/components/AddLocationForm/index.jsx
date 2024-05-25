@@ -10,6 +10,28 @@ const AddLocationForm = () => {
     console.log('Loaded add location form')
    // const [ addLocation, {data, loading, error}] = useMutation();
 
+    //TO DO: 
+    // Close form after submit
+    // Add submit mutation 
+    // Pass setAddLocation up to parent
+
+    /*
+        const onSubmitLocation = async (val) => {
+        const locationObj = val;
+        try {
+            const { data } = await addLocation({
+                variables: { ...locationObj }
+            })
+            setAddLocation(false);
+       } catch (err){
+            console.log(err);
+        }
+
+    }
+
+
+    */
+
    const { register, handleSubmit } = useForm();
 
   const onSubmitLocation =  (val) => {
