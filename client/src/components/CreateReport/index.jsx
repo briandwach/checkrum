@@ -8,14 +8,18 @@ import { CREATE_REPORT } from "../../utils/mutations";
 
 const CreateReport = () => {
 
+    //Queries to pull all the users with staff role and the locations to populate drop downs.
     const { loading, data } = useQuery(ALL_STAFF);
     const { loading: loadingLocation, data: dataLocation } = useQuery(ALL_LOCATIONS);   
 
-
+    //state to manager the selected staff and location from dropdown
     const [selectedStaff, setSelectedStaff] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('');
+    //runs the query to get the rooms based on the location selected, passes location name from handleSubmit function
     const [loadRooms, { loading: loadingRoom, data: dataRoom }] = useLazyQuery(ROOM_BY_LOCATION);
-    const [createReport] = useMutation(CREATE_REPORT);
+    //mutation to create the report, create report runs from handleSendReports
+    const [createReport, {loading: loadingMutation }] = useMutation(CREATE_REPORT);
+    const [reportStatus, setReportStatus] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,13 +31,19 @@ const CreateReport = () => {
             const checkbox = document.getElementById(`checkbox-${room._id}`);
             if (checkbox.checked) {
                 console.log(room._id, selectedStaff);
+                setReportStatus('Creating Report...');
                 createReport({ variables: { roomId: room._id, assignedStaff: selectedStaff } });
+                setReportStatus('Report Created!'); 
             }
+            setTimeout(() => {
+                setReportStatus('');
+            }, 3000);
         });
     };
 
     return (
         <div>
+            {/* loading terinary operator otherwise will cause loading errors even on the smallest load times */}
             {loading || loadingLocation ? (
                 <p>Loading...</p>
             ) : (
@@ -69,7 +79,7 @@ const CreateReport = () => {
                                 </option>
                             ))}
                         </select>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Search for Rooms </button>
                     </form>
                 </div>
             )}
@@ -77,20 +87,25 @@ const CreateReport = () => {
             {loadingRoom ? (
                 <p>Loading rooms...</p>
             ) : (
-                <div>
-                    {dataRoom && dataRoom.roomByLocation.map((room) => (
-                        <div key={room.id}>
-                            <div className="card w-96 m-2 bg-primary text-primary-content">
-                                <div className="card-body">
-                                    <h2 className="card-title">Room: {room.roomName} Due: 01/01/1999
-                                    <input id={`checkbox-${room._id}`} type="checkbox" className="checkbox checkbox-success" />
-                                    </h2>
+                dataRoom && (
+                    <>
+                        <div>
+                            {dataRoom.roomByLocation.map((room) => (
+                                <div key={room.id}>
+                                    <div className="card w-96 m-2 bg-primary text-primary-content">
+                                        <div className="card-body">
+                                            <h2 className="card-title">Room: {room.roomName} Due: 01/01/1999
+                                            <input id={`checkbox-${room._id}`} type="checkbox" className="checkbox checkbox-success" />
+                                            </h2>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
+                            <button onClick={handleSendReports}>Create Report</button>
                         </div>
-                    ))}
-                    <button onClick={handleSendReports}>Create Report</button>
-                </div>
+                        <h2>{reportStatus}</h2>
+                    </>
+                )
             )}
         </div>
     );
