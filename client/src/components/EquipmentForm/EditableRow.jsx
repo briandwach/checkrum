@@ -47,7 +47,7 @@ const EditableRow = ({item, editFormData, setEditFormData}) => {
                 <input type="text" defaultValue={item.equipmentName} onChange={(event) => handleFormEditChange(event)}></input>
             </td>
             <td>
-                <button onClick={() => handleEditFormSubmit({state})}>
+                <button type="button" onClick={() => handleEditFormSubmit({state})}>
                     <i className="fa-solid fa-floppy-disk"></i>
                 </button>
             </td>
