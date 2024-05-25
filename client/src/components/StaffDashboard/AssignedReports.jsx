@@ -1,4 +1,4 @@
-import RoomCard from '../RoomCard';
+import ReportCard from '../ReportCard';
 
 import { useQuery } from '@apollo/client';
 import { ASSIGNED_REPORTS_BY_STAFF } from '../../utils/queries';
@@ -18,9 +18,15 @@ if (loading) {
   return (
       <div>
           <h1 className="ml-3 text-3xl font-bold">Assigned Inspections</h1>
+
+            {assignedReportsByStaff.length < 1 ? (
+                <div>
+                <p  className="m-3">You currently have no assigned inspections.</p>
+                </div>
+            ) : (
           <div className="">
               {assignedReportsByStaff.map((report) => (
-                  <RoomCard
+                  <ReportCard
                       key={report._id}
                       id={report._id}
                       name={report.roomId.roomName}
@@ -31,6 +37,7 @@ if (loading) {
                   />
               ))}
           </div>
+            )}
       </div>
   );
 }

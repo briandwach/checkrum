@@ -218,3 +218,29 @@ query Query($assignedStaff: ID!) {
   }
 }
 `;
+
+export const ROOM_INFO_BY_REPORT_ID = gql`
+query Query($id: ID!) {
+  roomInfoByReportId(id: $id) {
+    _id
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      inspectionCycleLength
+      equipment {
+        _id
+        equipmentName
+      }
+    }
+  }
+}
+`;
