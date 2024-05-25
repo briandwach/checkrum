@@ -145,3 +145,21 @@ query AllStaff {
   }
 }
 `;
+
+export const QUERY_SINGLE_CLIENT = gql`
+  query getClient($businessName: String!) {
+    getClient(businessName: $businessName) {
+      _id
+      businessName
+      contactName
+      contactEmail
+      locations {
+        _id
+        locationName
+        address
+        accessInstructions
+        client
+      }
+    }
+  }
+`;

@@ -1,14 +1,27 @@
-import React from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
 
 
-
-const ClientCard = () => {
+const ClientCard = ({clientName}) => {
+  const clientNameVal = clientName;
   const [ addLocationButton, setAddLocationButton ] = useState( false );
-
+  const { loading: clientLoading , data: clientData, error: clientError } = useQuery(QUERY_SINGLE_CLIENT, 
+    {
+      variables: { clientNameVal },
+      notifyOnNetworkStatusChange: true
+    });
+    if (clientLoading){
+      return <p>Loading...</p>
+    }
+    const clientId = clientData?._id || [];
+    
+  const getClientData = () => {
+    console.log(clientId);
+  }
   //TO DO
   // Get this location's _id
-  // Render each location associated with client as  
+  // Render each location associated with client as accordian with button to add room under location 
 
     return (
         <>
@@ -50,6 +63,9 @@ const ClientCard = () => {
   </div>
 </div>
 # Using Accordion and Join together
+{console.log(clientName)}
+{console.log(clientData)}
+{getClientData()}
 
 </div>
         </>

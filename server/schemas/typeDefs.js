@@ -89,6 +89,7 @@ const typeDefs = `
     room(id: ID!): Room
     roomEquipment(id: ID!): Room
     allStaff: [User]
+    getClient: Client
   }
 
   type Mutation {
@@ -98,7 +99,7 @@ const typeDefs = `
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
-    addClient(businessName: String!, contactName: String!, contactEmail: String!): Client
+    addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
     removeEquipment(equipmentId: ID): Equipment

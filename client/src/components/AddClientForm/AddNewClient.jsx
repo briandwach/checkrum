@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 import { set, useForm } from 'react-hook-form';
-import { useMutation} from '@apollo/client';
+import { useMutation , useQuery, useLazyQuery } from '@apollo/client';
 import { ADD_CLIENT } from '../../utils/mutations';
+//import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
 
 import AddLocationForm from '../AddLocationForm';
 import ClientCard from './ClientCard';
 
-const NewClientForm = ({setNewClient, newClient}) => {
+const NewClientForm = ({setNewClient, newClient, setClientName}) => {
     const { register, handleSubmit } = useForm();
     const [ savedClientCard, setSavedClientCard ] = useState( false );
-    const [ addClient, { data, loading, error }] = useMutation(ADD_CLIENT);
+    const [ addClient, { loading: addClientLoading, data: addClientData, error: addClientError }] = useMutation(ADD_CLIENT);
+    //const [getNewClientId, { data: clientData, loading: clientLoading }] = useLazyQuery(QUERY_SINGLE_CLIENT);
+
+
 
     const onSubmitClient = async (val) => {
         const clientObj = val;
-        console.log({...clientObj})
         try {
             const { data } = await addClient({
                 variables: { ...clientObj }
             })
             setNewClient(false);
-            console.log(newClient)
+            var newClientName = Object.values(clientObj)[0]
+            setClientName(newClientName)
        } catch (err){
             console.log(err);
         }
