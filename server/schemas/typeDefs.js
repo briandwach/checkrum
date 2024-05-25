@@ -89,6 +89,9 @@ const typeDefs = `
     room(id: ID!): Room
     roomEquipment(id: ID!): Room
     allStaff: [User]
+    allLocations: [Location]
+    roomByLocation(name: String!): [Room]
+    allReports: [Report]
   }
 
   type Mutation {
@@ -105,6 +108,7 @@ const typeDefs = `
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
     addLocation(locationName: String, address: String, accessInstructions: String, client: String): Location
+    createReport(roomId: String, assignedStaff: String): Report
   }
 `;
 
