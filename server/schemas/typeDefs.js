@@ -1,6 +1,9 @@
 //Delete Thought and Comment typedefs
 
 const typeDefs = `
+
+scalar DateTime
+
   type User {
     _id: ID
     username: String
@@ -30,7 +33,7 @@ const typeDefs = `
     roomName: String
     location: Location
     equipment: [Equipment]
-    lastInspectionDate: Int
+    lastInspectionDate: DateTime
     inspectionCycleLength: Int
   }
 
@@ -61,7 +64,7 @@ const typeDefs = `
     assignedStaff: User
     results: [Result]
     generalComments: String
-    inspectionDate: Int
+    inspectionDate: DateTime
   }
 
   type Result {
@@ -115,6 +118,7 @@ const typeDefs = `
     createReport(roomId: String, assignedStaff: String): Report
     addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
+    submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
   }
 `;
 

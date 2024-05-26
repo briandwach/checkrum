@@ -57,7 +57,7 @@ const resolvers = {
       return Room.findById(args.id).populate('equipment');
       //}
       //throw AuthenticationError;
-    }, 
+    },
     getClient: async (parent, { businessName }) => {
       return Client.findOne({ businessName: businessName });
     },
@@ -75,10 +75,10 @@ const resolvers = {
       return Location.find();
     },
     assignedReportsByStaff: async (parent, args, context) => {
-      return Report.find({ assignedStaff: args.assignedStaff}).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ assignedStaff: args.assignedStaff }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
     },
     roomInfoByReportId: async (parent, { id }, context) => {
-      return Report.findById(id).populate({ path: 'roomId', populate: [ { path: 'location', populate: { path: 'client' } }, { path: 'equipment'} ] });
+      return Report.findById(id).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });
     }
   },
 
@@ -215,14 +215,14 @@ const resolvers = {
         const equipment = await Equipment.findOneAndDelete({
           _id: equipmentId,
         });
-    }
-  },
+      }
+    },
     editEquipment: async (parent, { equipmentId, equipmentName }, context) => {
       if (context.user) {
         const equipment = await Equipment.findOneAndUpdate({
           _id: equipmentId
         }, {
-          $set: {equipmentName: equipmentName}
+          $set: { equipmentName: equipmentName }
         })
         return equipment
       }
@@ -249,6 +249,19 @@ const resolvers = {
         assignedStaff: user._id
       });
       return report;
+    },
+    submitReport: async (parent, { reportId, results, generalComments, inspectionDate }, context) => {
+      if (context.user) {
+        const report = await Report.findByIdAndUpdate(
+          reportId,
+          {
+            $set: { generalComments: generalComments, inspectionDate: inspectionDate },
+            $addToSet: { results: { $each: results } }
+          },
+          { new: true }
+        );
+        return report;
+      }
     }
   }
 };

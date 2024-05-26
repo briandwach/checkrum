@@ -143,3 +143,16 @@ export const CREATE_REPORT = gql`
     }
   }
 `;
+
+export const SUBMIT_REPORT = gql`
+mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String) {
+  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments) {
+    _id
+    results {
+      _id
+    }
+    generalComments
+    inspectionDate
+  }
+}
+`;

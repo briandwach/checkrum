@@ -6,6 +6,7 @@ import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
 import { ADD_RESULT } from '../utils/mutations';
+import { SUBMIT_REPORT } from '../utils/mutations';
 
 function Inspection() {
 
@@ -17,8 +18,9 @@ function Inspection() {
         variables: { id: id },
     });
 
-    // Defines mutation for creating Result documents
+    // Defines mutations for creating Result documents and submitting Report
     const [addResult, { error }] = useMutation(ADD_RESULT);
+    const [submitReport] = useMutation(SUBMIT_REPORT);
 
     // Defining state variables for UI and inspection data
     const [successCheckbox, setSuccessCheckbox] = useState({});
@@ -27,6 +29,7 @@ function Inspection() {
     const [commentText, setCommentText] = useState({});
     const [generalComments, setGeneralComments] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [messageStyle, setMessageStyle] = useState('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
 
     if (loading) {
         return <div>Loading...</div>;
@@ -133,25 +136,45 @@ function Inspection() {
             })
         };
 
-        console.log(resultArr);
+        // Preps to collect array of result document objectIds
+        let resultIdsArr = [];
 
-        // Iterates through result objections and calls mutation to create result documents
+        // Iterates through result objects and calls mutation to create result documents
         for (const result of resultArr) {
             try {
-                const resultData = await addResult({
+                const { data } = await addResult({
                     variables: { ...result }
                 });
-                console.log(resultData.data);
+                resultIdsArr.push(data.addResult._id);
             } catch (e) {
                 console.error(e);
             }
         };
 
-        setErrorMessage('Inspection report successfully submitted.  Check console to review data.');
+        
+
+        // Submits report by updating Report document with array of Result documents, generalComments, and inspectionDate
+        try {
+            const { data } = await submitReport({
+                variables: { 
+                    reportId: id,
+                    results: resultIdsArr,
+                    generalComments: generalComments,
+                    inspectionDate: Date.now()
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        };
+
+        setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
+        setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
 
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
+            setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
             setErrorMessage('');
+            window.location.href = '/staff';
         }, 4000);
     };
 
@@ -234,7 +257,7 @@ function Inspection() {
                             className=" rounded-md">
                         </textarea>
                         {errorMessage && (
-                            <div className="mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200">
+                            <div className={messageStyle}>
                                 <p className="p-1 font-semibold">{errorMessage}</p>
                             </div>)}
                         <div className="mt-1 card-actions justify-end">
