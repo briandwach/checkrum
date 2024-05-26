@@ -29,7 +29,6 @@ const AddClientForm = () => {
 
       const handleAddLocation = async (event) => {
         await setAddLocationButton( true );
-        localStorage.setItem("clientId", '');
       }
 
       const handleSetClientIdData = (newIdData) => {

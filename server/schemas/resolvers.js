@@ -235,16 +235,22 @@ const resolvers = {
         return equipment
       }
     },
-    addLocation: async (parent, { locationName, address, accessInstructions, client }, context) => {
-      if (context.user) {
+    addLocation: async (parent, { clientId, locationName, address, accessInstructions }, context) => {
+      //if (context.user) {
         const location = await Location.create({
           locationName,
           address,
-          accessInstructions,
-          client
-        })
-      }
-      return location
+          accessInstructions
+        });
+
+        await Client.findOneAndUpdate(
+          { _id: clientId },
+          { $addToSet: { locations: location._id } }
+        );
+
+        return location;
+      //throw AuthenticationError;
+      //('You need to be logged in!');
     },
     createReport: async (parent, { roomId, assignedStaff }, context) => {
 
