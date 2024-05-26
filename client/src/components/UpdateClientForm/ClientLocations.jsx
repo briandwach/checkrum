@@ -3,9 +3,11 @@ import { useQuery } from '@apollo/client';
 
 import { QUERY_LOCATION } from '../../utils/queries';
 
+import LocationRooms from './LocationRooms';
+
 const ClientLocations = ({selectedClientId}) => {
     const { loading, data } = useQuery(QUERY_LOCATION);
-
+    const [ locationId, setLocationId] = useState('');
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -30,10 +32,11 @@ const ClientLocations = ({selectedClientId}) => {
                    <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                     </div>
-                    <div className="collapse-content"> 
+                    <div className="collapse-content" key={location._id}> 
                         <b>Address: </b> {location.address} <br/>
                         <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
-                        <h3>Rooms in {location.locationName}: </h3>
+                        <h3>Rooms in {location.locationName}: </h3><br />
+                        <LocationRooms locationId = {location._id}/>
                     </div>
                     </div>
                 </>

@@ -78,6 +78,9 @@ const resolvers = {
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       return Report.findById(id).populate({ path: 'roomId', populate: [ { path: 'location', populate: { path: 'client' } }, { path: 'equipment'} ] });
+    },
+    rooms: async (parent, args, context) => {
+      return Room.find();
     }
   },
 
