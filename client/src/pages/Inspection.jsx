@@ -113,7 +113,6 @@ function Inspection() {
             const { data } = await deleteReportResults({
                 variables: { reportId: id }
             });
-            console.log(data);
         } catch (e) {
             console.error(e);
         };
