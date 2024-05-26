@@ -102,6 +102,12 @@ export const SEED = gql`
   }
 `;
 
+export const CLEAN_REPORTS_AND_RESULTS = gql`
+  mutation cleanReportsAndResults {
+    cleanReportsAndResults
+  }
+`;
+
 
 export const REMOVE_EQUIPMENT = gql`
   mutation removeEquipment($equipmentId: ID){
@@ -136,4 +142,25 @@ export const CREATE_REPORT = gql`
       _id
     }
   }
+`;
+
+export const SUBMIT_REPORT = gql`
+mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String) {
+  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments) {
+    _id
+    results {
+      _id
+    }
+    generalComments
+    inspectionDate
+  }
+}
+`;
+
+export const DELETE_REPORT_RESULTS = gql`
+mutation Mutation($reportId: ID!) {
+  deleteReportResults(reportId: $reportId) {
+    deletedCount
+  }
+}
 `;

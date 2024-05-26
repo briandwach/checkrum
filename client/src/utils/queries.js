@@ -255,6 +255,9 @@ query Query($id: ID!) {
         equipmentName
       }
     }
+  }
+}
+`;
 
 export const QUERY_ROOM = gql`
 query rooms {

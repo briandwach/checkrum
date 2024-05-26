@@ -1,6 +1,9 @@
 //Delete Thought and Comment typedefs
 
 const typeDefs = `
+
+scalar DateTime
+
   type User {
     _id: ID
     username: String
@@ -30,7 +33,7 @@ const typeDefs = `
     roomName: String
     location: Location
     equipment: [Equipment]
-    lastInspectionDate: Int
+    lastInspectionDate: DateTime
     inspectionCycleLength: Int
   }
 
@@ -61,7 +64,7 @@ const typeDefs = `
     assignedStaff: User
     results: [Result]
     generalComments: String
-    inspectionDate: Int
+    inspectionDate: DateTime
   }
 
   type Result {
@@ -70,6 +73,10 @@ const typeDefs = `
     equipmentId: Equipment
     result: Boolean
     comment: String
+  }
+
+  type DeleteReportResultsResponse {
+    deletedCount: Int!
   }
 
   type Auth {
@@ -109,12 +116,15 @@ const typeDefs = `
     addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
+    cleanReportsAndResults: String
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
     createReport(roomId: String, assignedStaff: String): Report
     addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
+    deleteReportResults(reportId: ID!): DeleteReportResultsResponse
+    submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
   }
 `;
 
