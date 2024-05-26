@@ -99,7 +99,7 @@ scalar DateTime
     allLocations: [Location]
     roomByLocation(name: String!): [Room]
     allReports: [Report]
-    getClient: Client
+    getClient(id: ID): Client
     locations: [Location]
     rooms: [Room]
     assignedReportsByStaff(assignedStaff: ID!): [Report]
