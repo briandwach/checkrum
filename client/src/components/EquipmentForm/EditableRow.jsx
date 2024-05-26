@@ -3,8 +3,17 @@ import { useMutation } from "@apollo/client";
 import { EDIT_EQUIPMENT } from "../../utils/mutations";
 
 
-const EditableRow = ({item, editFormData, setEditFormData}) => {
-    const [editEquipment, editError ] = useMutation(EDIT_EQUIPMENT);
+const EditableRow = ({item, editFormData, setEditFormData, setEditEquipmentItem}) => {
+
+        const [state, updateState] = useState({ _id: item._id, equipmentName: item.equipmentName});
+
+        const handleFormEditChange = (event) => {
+            const fieldValue = event.target.value;
+            updateState({ _id: item._id, equipmentName: fieldValue});
+            console.log(state);
+        }
+
+        const [editEquipment, editError ] = useMutation(EDIT_EQUIPMENT);
 
         const handleEditFormSubmit = async ({equipmentId, equipmentName}) => {
             console.log('Editing Item')
@@ -12,33 +21,13 @@ const EditableRow = ({item, editFormData, setEditFormData}) => {
               const { data } = await editEquipment({
                 variables: {
                   equipmentId: state._id, 
-                  equipmentName: state.equipmentName}
+                  equipmentName: state.equipmentName
+                }
               })
-              console.log('Edited equipment')
+              setEditEquipmentItem(null);
             } catch(err){
               console.log(err)
             }
-        }
-
-       /* const handleEditFormChange = (event) => {
-            event.preventDefault();
-            const fieldName = event.target.getAttribute('defaultValue');
-            const fieldValue = event.target.value;
-
-            const newFormData = { ...editFormData };
-            newFormData[fieldName] = fieldValue;
-            setEditFormData(newFormData);
-
-        }; */
-
-        const initialState = { _id: item._id, equipmentName: item.equipmentName};
-        const [state, updateState] = useReducer(( state, updates) => ({...state, ...updates}), initialState)
-
-        const handleFormEditChange = (event) => {
-            //event.preventDefault();
-            const fieldValue = event.target.value;
-            updateState({equipmentName: fieldValue});
-            console.log(state);
         }
 
     return (
