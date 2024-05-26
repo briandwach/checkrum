@@ -23,7 +23,7 @@ const reportSchema = new Schema({
     trim: true
   },
   inspectionDate: {
-    default: Number
+    type: Date
   }
 });
 
