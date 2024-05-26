@@ -10,7 +10,7 @@ const AddEquipmentForm = () => {
     const [ equipmentName, setEquipmentName ] = useState('');
     const [ addEquipment, { error }] = useMutation(ADD_EQUIPMENT);
     const { loading, data } = useQuery(QUERY_EQUIPMENT, {
-        pollInterval: 1000,
+       pollInterval: 2000,
     });
 
     const [editEquipmentItem, setEditEquipmentItem] = useState(null);
@@ -100,7 +100,7 @@ const AddEquipmentForm = () => {
                         {items && items.map((item) => (
                             <Fragment>
                                 { editEquipmentItem === item._id? 
-                                <EditableRow item = {item } editFormData={editFormData} handleEditFormChange={handleEditFormChange} setEditFormData={setEditFormData}/> : 
+                                <EditableRow item = {item } editFormData={editFormData} handleEditFormChange={handleEditFormChange} setEditFormData={setEditFormData} setEditEquipmentItem={setEditEquipmentItem} /> : 
                                 <ReadOnlyRow item = { item } handleEditClick={handleEditClick}/> }
                             </Fragment>
                         ))}
