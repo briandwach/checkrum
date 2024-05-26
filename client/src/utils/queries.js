@@ -98,6 +98,7 @@ query AllRooms {
         businessName
       }
     }
+    lastInspectionDate
     inspectionCycleLength
   }
 }
@@ -227,6 +228,30 @@ query Query($assignedStaff: ID!) {
         locationName
         address
       }
+      lastInspectionDate
+      inspectionCycleLength
+    }
+  }
+}
+`;
+
+export const COMPLETED_REPORTS_BY_STAFF = gql`
+query Query($assignedStaff: ID!) {
+  completedReportsByStaff(assignedStaff: $assignedStaff) {
+    _id
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      lastInspectionDate
       inspectionCycleLength
     }
   }
@@ -249,6 +274,7 @@ query Query($id: ID!) {
         locationName
         address
       }
+      lastInspectionDate
       inspectionCycleLength
       equipment {
         _id

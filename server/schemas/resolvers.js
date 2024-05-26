@@ -75,7 +75,10 @@ const resolvers = {
       return Location.find();
     },
     assignedReportsByStaff: async (parent, args, context) => {
-      return Report.find({ assignedStaff: args.assignedStaff }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+    },
+    completedReportsByStaff: async (parent, args, context) => {
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       return Report.findById(id).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });
@@ -271,6 +274,16 @@ const resolvers = {
       if (context.user) {
         const numberDeleted = await Result.deleteMany({ reportId: reportId });
         return numberDeleted;
+      }
+    },
+    updateRoomLastInspectionDate: async (parent, { roomId, lastInspectionDate }, context) => {
+      if (context.user) {
+        const room = await Room.findOneAndUpdate({
+          _id: roomId
+        }, {
+          $set: { lastInspectionDate: lastInspectionDate }
+        })
+        return room;
       }
     }
   }

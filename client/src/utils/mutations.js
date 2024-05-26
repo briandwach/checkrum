@@ -164,3 +164,12 @@ mutation Mutation($reportId: ID!) {
   }
 }
 `;
+
+export const UPDATE_ROOM_LAST_INSPECTION_DATE = gql`
+mutation Mutation($roomId: ID!, $lastInspectionDate: DateTime!) {
+  updateRoomLastInspectionDate(roomId: $roomId, lastInspectionDate: $lastInspectionDate) {
+    _id
+    lastInspectionDate
+  }
+}
+`;

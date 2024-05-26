@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+const { format } = require("date-fns");
 
 const reportSchema = new Schema({
   roomId: {
@@ -23,9 +23,21 @@ const reportSchema = new Schema({
     trim: true
   },
   inspectionDate: {
-    type: Date
+    type: Date,
+    get: formatTime
   }
+},
+{
+  toJSON: {
+    getters: true
+  },
+  id: false
 });
+
+// Getter function to return timestamp in an easier format to read
+function formatTime(createdAt) {
+  return format(createdAt, "PPpp");
+}
 
 const Report = model('Report', reportSchema);
 

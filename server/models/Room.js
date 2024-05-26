@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const equipmentSchema = require('./Equipment');
-const dateFormat = require('../utils/dateFormat');
+const { format } = require("date-fns");
 
 const roomSchema = new Schema({
   roomName: {
@@ -21,7 +21,8 @@ const roomSchema = new Schema({
   ],
   lastInspectionDate: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    get: formatTime
   },
   inspectionCycleLength: {
     type: Number,
@@ -32,9 +33,15 @@ const roomSchema = new Schema({
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false
   });
+
+// Getter function to return timestamp in an easier format to read
+function formatTime(createdAt) {
+  return format(createdAt, "PPpp");
+}
 
 //Virtuals needed
 //Calculate inspections overdue--return date due
