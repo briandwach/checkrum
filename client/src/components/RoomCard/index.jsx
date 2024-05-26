@@ -1,7 +1,7 @@
 // import { Link } from 'react-router-dom';
 import dateToLocale from '../../utils/dateTimeTools';
 
-function RoomCard({ id, name, client, location, address, cycle, lastInspected }) {
+function RoomCard({ id, name, client, location, address, cycle, lastInspected, overdue }) {
     return (
         <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
             <div className="card-body">
@@ -12,6 +12,9 @@ function RoomCard({ id, name, client, location, address, cycle, lastInspected })
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
                 <p><span className="font-bold">Last Inspected: </span>{dateToLocale(lastInspected)}</p>
+                <p className={overdue ? "text-red-500" : "" }>
+                    <span className="font-bold">Overdue: </span>{overdue ? 'True' : 'False'}
+                </p>
             </div>
         </div>
     );

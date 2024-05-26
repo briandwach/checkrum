@@ -35,6 +35,7 @@ scalar DateTime
     equipment: [Equipment]
     lastInspectionDate: DateTime
     inspectionCycleLength: Int
+    overdueInspection: Boolean
   }
 
   type Location {

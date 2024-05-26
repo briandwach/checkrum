@@ -26,6 +26,7 @@ if (loading) {
                       address={room.location.address}
                       cycle={room.inspectionCycleLength}
                       lastInspected={room.lastInspectionDate}
+                      overdue={room.overdueInspection}
                   />
               ))}
           </div>
