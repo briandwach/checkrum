@@ -7,32 +7,19 @@ const ReportTab = () => {
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
+    const handleTabChange = (event) => {
+        setSelectedOption(event.target.getAttribute("aria-label"));
     };
 
     return (
-    <div>
-        <nav style={{ display: "flex", width: "100%"}}>
-                <button
-                    className="btn btn-outline btn-secondary"
-                    onClick={() => handleOptionClick("Create Report")}
-                    style={{ backgroundColor: selectedOption === "Create Report" ? "darkgray" : "" }}
-                >
-                    Create Report
-                </button>
-                <button 
-                    className="btn btn-outline btn-secondary"
-                    onClick={() => handleOptionClick("See Ongoing")}
-                    style={{ backgroundColor: selectedOption === "See Ongoing" ? "darkgray" : "" }}
-                >
-                    See Ongoing Reports
-                </button>
-            </nav>
+        <div className="relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create Report" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="See Ongoing" onChange={handleTabChange} />
+            </div>
             {selectedOption === "Create Report" && <CreateReport />}
             {selectedOption === "See Ongoing" && <OngoingReports />}
-    </div>
-            
+        </div>       
     );
 }
 
