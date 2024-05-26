@@ -41,7 +41,7 @@ const Header = () => {
                   <>
                     <li>
                       <Link className="btn btn-sm btn-info m-2" to="/login">
-                        Logout
+                        Login
                       </Link>
                     </li>
                     <li>
