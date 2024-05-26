@@ -38,7 +38,7 @@ function Inspection() {
 
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = data;
-    const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment } = roomInfoByReportId.roomId;
+    const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
     //State logic to toggle viewing an equipment comment box
@@ -194,8 +194,6 @@ function Inspection() {
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
         setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
-
-        debugger;
         
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
@@ -214,7 +212,9 @@ function Inspection() {
                         <p><span className="font-bold">Client: </span>{businessName}</p>
                         <p><span className="font-bold">Location: </span>{locationName}</p>
                         <p>{address}</p>
+                        <br></br>
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
+                        <p><span className="font-bold">Last Inspected: </span>{lastInspected}</p>
                         <br></br>
                         {equipment.map((equipmentItem) => (
                             <div key={equipmentItem._id} className="card card-compact bg-base-100 bg-slate-200 shadow-xl">

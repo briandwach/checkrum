@@ -25,6 +25,7 @@ if (loading) {
                       location={room.location.locationName}
                       address={room.location.address}
                       cycle={room.inspectionCycleLength}
+                      lastInspected={room.lastInspectionDate}
                   />
               ))}
           </div>

@@ -98,6 +98,7 @@ query AllRooms {
         businessName
       }
     }
+    lastInspectionDate
     inspectionCycleLength
   }
 }
@@ -273,6 +274,7 @@ query Query($id: ID!) {
         locationName
         address
       }
+      lastInspectionDate
       inspectionCycleLength
       equipment {
         _id

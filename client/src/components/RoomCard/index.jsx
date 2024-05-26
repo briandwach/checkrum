@@ -1,6 +1,6 @@
 // import { Link } from 'react-router-dom';
 
-function RoomCard({ id, name, client, location, address, cycle }) {
+function RoomCard({ id, name, client, location, address, cycle, lastInspected }) {
     return (
         <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
             <div className="card-body">
@@ -10,6 +10,7 @@ function RoomCard({ id, name, client, location, address, cycle }) {
                 <p>{address}</p>
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
+                <p><span className="font-bold">Last Inspected: </span>{lastInspected}</p>
             </div>
         </div>
     );
