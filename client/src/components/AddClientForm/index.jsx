@@ -42,7 +42,7 @@ const AddClientForm = () => {
           { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
           { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
           { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location heere</button>: null}
-          { addLocationButton === true? <AddLocationForm setClientIdData={setClientIdData} />: null}
+          { addLocationButton === true? <AddLocationForm clientIdData={clientIdData} />: null}
           {console.log(addLocationButton)}
           {console.log(clientIdData)}
         </div>
