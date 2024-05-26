@@ -5,16 +5,19 @@ import { set } from "react-hook-form";
 
 
 const ClientCard = ({clientIdData}) => {
+
+  //Setting client ID just submitted and querying client data based on ID
   const [clientIdVal, setClientIdVal] = useState();
- // const clientNameVal = clientName;
-  //const [ addLocationButton, setAddLocationButton ] = useState( false );
+  const clientCardId = localStorage.getItem("clientId");
   const { loading, data, error } = useQuery(QUERY_SINGLE_CLIENT, 
     {
-      variables: {_id: clientIdData}, 
+      variables: { id: clientCardId }, 
     });
     if (loading){
       return <p>Loading...</p>
     }
+
+    console.log(data);
 
     const handleClientIdData = (val) => {
       setClientIdVal(val)
@@ -32,41 +35,13 @@ const ClientCard = ({clientIdData}) => {
         <>
         <div className="card w-11/12 bg-primary text-primary-content">
   <div className="card-body">
-    <h2 className="card-title"> [Client Name Here]</h2>
-    <p>[Client Contact]</p>
-    <p>[Client Email Address]</p>
+    <h2 className="card-title"> {data.getClient.businessName}</h2>
+    <p>{data.getClient.contactName}</p>
+    <p>{data.getClient.contactEmail}</p>
     <p>Locations</p>
     <div className="card-actions justify-end">
     </div>
   </div>
-  <div className="collapse collapse-plus">
-  <input type="radio" name="my-accordion-3" defaultChecked /> 
-  <div className="collapse-title text-xl font-medium">
-    Click to open this one and close others
-  </div>
-  <div className="collapse-content"> 
-    <p>hello</p>
-  </div>
-</div>
-<div className="collapse collapse-plus">
-  <input type="radio" name="my-accordion-3" /> 
-  <div className="collapse-title text-xl font-medium">
-    Click to open this one and close others
-  </div>
-  <div className="collapse-content"> 
-    <p>hello</p>
-  </div>
-</div>
-<div className="collapse collapse-plus">
-  <input type="radio" name="my-accordion-3" /> 
-  <div className="collapse-title text-xl font-medium">
-    Click to open this one and close others
-  </div>
-  <div className="collapse-content"> 
-    <p>hello</p>
-  </div>
-</div>
-# Using Accordion and Join together
 {console.log(clientIdData)}
 </div>
         </>

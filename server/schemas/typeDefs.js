@@ -100,7 +100,7 @@ scalar DateTime
     allLocations: [Location]
     roomByLocation(name: String!): [Room]
     allReports: [Report]
-    getClient: Client
+    getClient(id: ID): Client
     locations: [Location]
     rooms: [Room]
     assignedReportsByStaff(assignedStaff: ID!): [Report]
@@ -123,7 +123,7 @@ scalar DateTime
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
     createReport(roomId: String, assignedStaff: String): Report
-    addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
+    addLocation(locationName: String, address: String, accessInstructions: String, client: [ID]): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report

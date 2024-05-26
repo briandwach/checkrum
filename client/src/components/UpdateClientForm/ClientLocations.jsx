@@ -22,8 +22,6 @@ const ClientLocations = ({selectedClientId}) => {
 
     return (
         <>
-        {console.log(data.locations)}
-        {console.log(reduced)}
         <h3>Locations</h3>
             {reduced.map((location) => (
                 <>
