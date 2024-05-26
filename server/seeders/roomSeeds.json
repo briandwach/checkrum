@@ -12,12 +12,12 @@
     {
         "roomName": "3303",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "5"
     },
     {
         "roomName": "3304",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "5"
     },
     {
         "roomName": "Auditorium",

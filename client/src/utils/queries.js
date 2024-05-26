@@ -100,6 +100,7 @@ query AllRooms {
     }
     lastInspectionDate
     inspectionCycleLength
+    overdueInspection
   }
 }
 `;
