@@ -2,46 +2,17 @@
 
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    spacing: {
-      px: '1px',
-      0: '0',
-      0.5: '0.125rem',
-      1: '0.25rem',
-      1.5: '0.375rem',
-      2: '0.5rem',
-      2.5: '0.625rem',
-      3: '0.75rem',
-      3.5: '0.875rem',
-      4: '1rem',
-      5: '1.25rem',
-      6: '1.5rem',
-      7: '1.75rem',
-      8: '2rem',
-      9: '2.25rem',
-      10: '2.5rem',
-      11: '2.75rem',
-      12: '3rem',
-      14: '3.5rem',
-      16: '4rem',
-      20: '5rem',
-      24: '6rem',
-      28: '7rem',
-      32: '8rem',
-      36: '9rem',
-      40: '10rem',
-      44: '11rem',
-      48: '12rem',
-      52: '13rem',
-      56: '14rem',
-      60: '15rem',
-      64: '16rem',
-      72: '18rem',
-      80: '20rem',
-      96: '24rem',
-    },
-    extend: {},
-  },
   plugins: [require('daisyui'),],
+  daisyui: {
+    themes: true, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "dark", // name of one of the included themes for dark mode
+    base: true, // applies background color and foreground color for root element by default
+    styled: true, // include daisyUI colors and design decisions for all components
+    utils: true, // adds responsive and modifier utility classes
+    prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
+    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    themeRoot: ":root", // The element that receives theme color CSS variables
+    defaultTheme: "light", // Set the default theme here
+  }, 
 }
 

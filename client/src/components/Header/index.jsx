@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Auth from '../../utils/auth';
 
@@ -7,6 +8,11 @@ const Header = () => {
     event.preventDefault();
     Auth.logout();
   };
+
+  useEffect(() => {
+    const htmlTag = document.querySelector('html');
+    htmlTag.dataset.theme = 'business';
+  }, []);
 
   return (
     <header className="bg-primary text-light mb-4 py-3 flex flex-wrap justify-center items-center">
