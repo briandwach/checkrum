@@ -10,7 +10,6 @@ const cleanReportsAndResults = async () => {
     return ('Error clearing collections!');
   }
   console.log('Collections successfully cleared!');
-  console.log('We got here!!!');
   return ('Collections successfully cleared!');
 };
 

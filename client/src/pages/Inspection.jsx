@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
-import { ADD_RESULT, SUBMIT_REPORT, DELETE_REPORT_RESULTS } from '../utils/mutations';
+import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
 
 function Inspection() {
 
@@ -21,6 +21,7 @@ function Inspection() {
     const [addResult, { error }] = useMutation(ADD_RESULT);
     const [submitReport] = useMutation(SUBMIT_REPORT);
     const [deleteReportResults] = useMutation(DELETE_REPORT_RESULTS);
+    const [updateRoomLastInspectionDate] = useMutation(UPDATE_ROOM_LAST_INSPECTION_DATE);
 
     // Defining state variables for UI and inspection data
     const [successCheckbox, setSuccessCheckbox] = useState({});
@@ -37,7 +38,7 @@ function Inspection() {
 
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = data;
-    const { roomName: name, location, inspectionCycleLength: cycle, equipment } = roomInfoByReportId.roomId;
+    const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
     //State logic to toggle viewing an equipment comment box
@@ -161,6 +162,8 @@ function Inspection() {
             }
         };
 
+        // Prepping to save time of 
+        let date = '';
 
         // Submits report by updating Report document with array of Result documents, generalComments, and inspectionDate
         try {
@@ -172,15 +175,28 @@ function Inspection() {
                     inspectionDate: Date.now()
                 }
             });
+            date = data.submitReport.inspectionDate;
         } catch (e) {
             console.error(e);
         };
 
-
+        // After inspection report is submitted, updates the room document with the latest inspection date
+        try {
+            const { data } = await updateRoomLastInspectionDate({
+                variables: {
+                    roomId: roomId,
+                    lastInspectionDate: date
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        };
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
         setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
 
+        debugger;
+        
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
             setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');

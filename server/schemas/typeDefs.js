@@ -103,6 +103,7 @@ scalar DateTime
     locations: [Location]
     rooms: [Room]
     assignedReportsByStaff(assignedStaff: ID!): [Report]
+    completedReportsByStaff(assignedStaff: ID!): [Report]
     roomInfoByReportId(id: ID!): Report
   }
 
@@ -125,6 +126,7 @@ scalar DateTime
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
+    updateRoomLastInspectionDate(roomId: ID!, lastInspectionDate: DateTime!): Room
   }
 `;
 

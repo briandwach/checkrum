@@ -1,11 +1,11 @@
 import ReportCard from '../ReportCard';
 
 import { useQuery } from '@apollo/client';
-import { ASSIGNED_REPORTS_BY_STAFF } from '../../utils/queries';
+import { COMPLETED_REPORTS_BY_STAFF } from '../../utils/queries';
 
-const AssignedReports = ({ assignedStaff }) => {
+const CompletedReports = ({ assignedStaff }) => {
 
-const { loading, data } = useQuery(ASSIGNED_REPORTS_BY_STAFF, {
+const { loading, data } = useQuery(COMPLETED_REPORTS_BY_STAFF, {
     variables: { assignedStaff }
 });
 
@@ -13,19 +13,19 @@ if (loading) {
     return <div>Loading...</div>;
   }
 
-  const { assignedReportsByStaff } = data;
+  const { completedReportsByStaff } = data;
 
   return (
       <div>
-          <h1 className="ml-3 text-3xl font-bold text-center">Assigned Inspections</h1>
+          <h1 className="ml-3 text-3xl font-bold text-center">Recently Completed</h1>
 
-            {assignedReportsByStaff.length < 1 ? (
+            {completedReportsByStaff.length < 1 ? (
                 <div>
-                <p  className="m-3">You currently have no assigned inspections.</p>
+                <p  className="m-3">No inspections have recently been completed.</p>
                 </div>
             ) : (
           <div className="">
-              {assignedReportsByStaff.map((report) => (
+              {completedReportsByStaff.map((report) => (
                   <ReportCard
                       key={report._id}
                       id={report._id}
@@ -35,7 +35,7 @@ if (loading) {
                       address={report.roomId.location.address}
                       cycle={report.roomId.inspectionCycleLength}
                       lastInspected={report.roomId.lastInspectionDate}
-                      completed={false}
+                      completed={true}
                   />
               ))}
           </div>
@@ -44,4 +44,4 @@ if (loading) {
   );
 }
 
-export default AssignedReports;
+export default CompletedReports;
