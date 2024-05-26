@@ -84,7 +84,7 @@ const resolvers = {
       return Report.findById(id).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });
     },
     rooms: async (parent, args, context) => {
-      return Room.find();
+      return await Room.find().populate('equipment');
     }
   },
 
@@ -235,7 +235,7 @@ const resolvers = {
         return equipment
       }
     },
-    addLocation: async (parent, { locationName }, context) => {
+    addLocation: async (parent, { locationName, address, accessInstructions, client }, context) => {
       if (context.user) {
         const location = await Location.create({
           locationName,
