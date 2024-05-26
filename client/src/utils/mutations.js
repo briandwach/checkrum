@@ -156,3 +156,11 @@ mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $
   }
 }
 `;
+
+export const DELETE_REPORT_RESULTS = gql`
+mutation Mutation($reportId: ID!) {
+  deleteReportResults(reportId: $reportId) {
+    deletedCount
+  }
+}
+`;

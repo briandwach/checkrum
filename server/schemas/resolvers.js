@@ -255,12 +255,17 @@ const resolvers = {
         const report = await Report.findByIdAndUpdate(
           reportId,
           {
-            $set: { generalComments: generalComments, inspectionDate: inspectionDate },
-            $addToSet: { results: { $each: results } }
+            $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results }
           },
           { new: true }
         );
         return report;
+      }
+    },
+    deleteReportResults: async (parent, { reportId }, context) => {
+      if (context.user) {
+        const numberDeleted = await Result.deleteMany({ reportId: reportId });
+        return numberDeleted;
       }
     }
   }

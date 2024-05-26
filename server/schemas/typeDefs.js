@@ -75,6 +75,10 @@ scalar DateTime
     comment: String
   }
 
+  type DeleteReportResultsResponse {
+    deletedCount: Int!
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -118,6 +122,7 @@ scalar DateTime
     createReport(roomId: String, assignedStaff: String): Report
     addLocation(locationName: String, address: String, accessInstructions: String, client: ID): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
+    deleteReportResults(reportId: ID!): DeleteReportResultsResponse
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
   }
 `;

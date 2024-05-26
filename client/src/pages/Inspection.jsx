@@ -5,8 +5,7 @@ import { useQuery } from '@apollo/client';
 import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
-import { ADD_RESULT } from '../utils/mutations';
-import { SUBMIT_REPORT } from '../utils/mutations';
+import { ADD_RESULT, SUBMIT_REPORT, DELETE_REPORT_RESULTS } from '../utils/mutations';
 
 function Inspection() {
 
@@ -21,6 +20,7 @@ function Inspection() {
     // Defines mutations for creating Result documents and submitting Report
     const [addResult, { error }] = useMutation(ADD_RESULT);
     const [submitReport] = useMutation(SUBMIT_REPORT);
+    const [deleteReportResults] = useMutation(DELETE_REPORT_RESULTS);
 
     // Defining state variables for UI and inspection data
     const [successCheckbox, setSuccessCheckbox] = useState({});
@@ -50,8 +50,8 @@ function Inspection() {
 
     // Force comment box to stay open after fail has been selected for equipment item
     const viewCommentForceWithFail = (equipmentItemId) => {
-    setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItemId]: false }));
-    setViewComment(prevState => ({ ...prevState, [equipmentItemId]: true }));
+        setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItemId]: false }));
+        setViewComment(prevState => ({ ...prevState, [equipmentItemId]: true }));
     };
 
     //State logic that changes comment icon if comment text is present for an equipment item
@@ -108,6 +108,17 @@ function Inspection() {
             return;
         }
 
+        // Deletes previously submitted results for the report on last submission
+        try {
+            const { data } = await deleteReportResults({
+                variables: { reportId: id }
+            });
+            console.log(data);
+        } catch (e) {
+            console.error(e);
+        };
+
+
         // Creates an array of all Equipment objectIds in the report
         const equipmentIdsArr = [];
         equipment.forEach(obj => {
@@ -151,12 +162,11 @@ function Inspection() {
             }
         };
 
-        
 
         // Submits report by updating Report document with array of Result documents, generalComments, and inspectionDate
         try {
             const { data } = await submitReport({
-                variables: { 
+                variables: {
                     reportId: id,
                     results: resultIdsArr,
                     generalComments: generalComments,
@@ -166,6 +176,8 @@ function Inspection() {
         } catch (e) {
             console.error(e);
         };
+
+
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
         setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
@@ -217,25 +229,25 @@ function Inspection() {
                                             </label>
                                         </div>
                                         {errorCheckbox[equipmentItem._id] ? (
-                                        <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
-                                            {viewComment[equipmentItem._id] ? (
-                                            <i className={`fa-regular fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots' : ' fa-fade'}`} 
-                                            style={{color: commentText[equipmentItem._id] ? 'black' : 'red'}}>
-                                            </i>
-                                            ) : (
-                                                <i className={`fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots fa-solid' : ' fa-fade fa-regular'}`} 
-                                                style={{color: commentText[equipmentItem._id] ? 'black' : 'red'}}>
-                                                </i>
-                                            )}
-                                        </button>
+                                            <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
+                                                {viewComment[equipmentItem._id] ? (
+                                                    <i className={`fa-regular fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots' : ' fa-fade'}`}
+                                                        style={{ color: commentText[equipmentItem._id] ? 'black' : 'red' }}>
+                                                    </i>
+                                                ) : (
+                                                    <i className={`fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots fa-solid' : ' fa-fade fa-regular'}`}
+                                                        style={{ color: commentText[equipmentItem._id] ? 'black' : 'red' }}>
+                                                    </i>
+                                                )}
+                                            </button>
                                         ) : (
-                                        <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
-                                            {commentText[equipmentItem._id] ? (
-                                                <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl`}></i>
-                                            ) : (
-                                                <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
-                                            )}
-                                        </button>
+                                            <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
+                                                {commentText[equipmentItem._id] ? (
+                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl`}></i>
+                                                ) : (
+                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
+                                                )}
+                                            </button>
                                         )}
                                     </div>
                                 </div>
