@@ -219,8 +219,10 @@ const resolvers = {
         const equipment = await Equipment.findOneAndUpdate({
           _id: equipmentId
         }, {
-          $set: {equipmentName: equipmentName}
-        })
+          equipmentName: equipmentName
+        },
+        { new: true}
+      )
         return equipment
       }
     },

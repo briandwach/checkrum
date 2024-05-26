@@ -113,8 +113,8 @@ export const REMOVE_EQUIPMENT = gql`
 `;
 
 export const EDIT_EQUIPMENT = gql`
-  mutation editEquipment($equipmentId: ID){
-    editEquipment(equipmentId: $equipmentId){
+  mutation editEquipment($equipmentId: ID, $equipmentName: String){
+    editEquipment(equipmentId: $equipmentId, equipmentName: $equipmentName){
       _id
       equipmentName
     }
