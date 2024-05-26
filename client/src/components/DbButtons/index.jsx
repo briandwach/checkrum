@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import { SEED } from '../../utils/mutations';
@@ -44,15 +45,34 @@ const DbButtons = () => {
     };
 
     return (
-        <div>
-            <button className="btn btn-sm btn-info m-2" onClick={seedButton}>
-                Reset & Seed DB
-            </button>
-            <button className="btn btn-sm btn-info m-2" onClick={cleanButton}>
-                Clear Collections
-            </button>
-            {dbMessage && <p className="text-white">{dbMessage}</p>}
-        </div>
+        <>
+            <div>
+                <button className="btn btn-sm btn-info m-2" onClick={seedButton}>
+                    Reset & Seed DB
+                </button>
+                <button className="btn btn-sm btn-info m-2" onClick={cleanButton}>
+                    Clear Collections
+                </button>
+                {dbMessage && <p className="text-white">{dbMessage}</p>}
+            </div>
+            <div>
+                <button className="btn btn-sm btn-info m-2">
+                    <Link to='/Staff'>Staff Page</Link>
+                </button>
+                <button className="btn btn-sm btn-info m-2">
+                    <Link to='/Manager'>Manager Page</Link>
+                </button>
+                <button className="btn btn-sm btn-info m-2">
+                    <Link to='/Admin'>Data Admin Page</Link>
+                </button>
+                <button className="btn btn-sm btn-info m-2">
+                    <Link to='/Equipment'>Equipment Admin Page</Link>
+                </button>
+                <button className="btn btn-sm btn-info m-2">
+                    <Link to='/Rooms'>All Rooms Page</Link>
+                </button>
+            </div>
+        </>
     );
 };     
   

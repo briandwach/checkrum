@@ -2,35 +2,26 @@ import { useState } from "react";
 import ReportTab from "../ReportTab";
 import Maintain from "../Maintain";
 
+
 const ManagerNav = () => {
     const [selectedOption, setSelectedOption] = useState(null);
+    
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
+    const handleTabChange = (event) => {
+        setSelectedOption(event.target.getAttribute("aria-label"));
     };
 
+  
     return (
-        <div>
-            <nav style={{ display: "flex", width: "100%"}}>
-                <button
-                    className="btn btn-outline btn-primary"
-                    onClick={() => handleOptionClick("Reports")}
-                    style={{ backgroundColor: selectedOption === "Reports" ? "darkgray" : "" }}
-                >
-                    Reports
-                </button>
-                <button 
-                    className="btn btn-outline btn-primary"
-                    onClick={() => handleOptionClick("Maintain")}
-                    style={{ backgroundColor: selectedOption === "Maintain" ? "darkgray" : "" }}
-                >
-                    Maintain
-                </button>
-            </nav>
+        <div className="relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Reports" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Maintain" onChange={handleTabChange} />
+            </div>
             {selectedOption === "Reports" && <ReportTab />}
             {selectedOption === "Maintain" && <Maintain />}
         </div>
     );
-}
+};
 
 export default ManagerNav;
