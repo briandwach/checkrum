@@ -25,6 +25,9 @@ const Staff = () => {
 
     const [selectedOption, setSelectedOption] = useState("Assigned");
 
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+console.log("User's timezone: ", userTimeZone);
+
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     };

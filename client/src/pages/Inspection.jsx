@@ -7,6 +7,8 @@ import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
 
+import dateToLocale from '../utils/dateTimeTools';
+
 function Inspection() {
 
     // Pulls room objectId from url parameter to use for room data query
@@ -214,7 +216,7 @@ function Inspection() {
                         <p>{address}</p>
                         <br></br>
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
-                        <p><span className="font-bold">Last Inspected: </span>{lastInspected}</p>
+                        <p><span className="font-bold">Last Inspected: </span>{dateToLocale(lastInspected)}</p>
                         <br></br>
                         {equipment.map((equipmentItem) => (
                             <div key={equipmentItem._id} className="card card-compact bg-base-100 bg-slate-200 shadow-xl">
