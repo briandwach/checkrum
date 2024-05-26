@@ -210,3 +210,21 @@ query locations {
   }
 }
 `;
+
+export const QUERY_ROOM = gql`
+query rooms {
+  rooms {
+    _id
+    roomName
+    location {
+      _id
+    }
+    equipment {
+      _id
+      equipmentName
+    }
+    lastInspectionDate
+    inspectionCycleLength
+  }
+}
+`;

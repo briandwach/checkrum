@@ -52,7 +52,7 @@ const typeDefs = `
 
   type Equipment {
     _id: ID
-    equipmentName: String!
+    equipmentName: String
   }
 
   type Report {
@@ -94,6 +94,7 @@ const typeDefs = `
     allReports: [Report]
     getClient: Client
     locations: [Location]
+    rooms: [Room]
   }
 
   type Mutation {

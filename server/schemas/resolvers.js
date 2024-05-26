@@ -73,6 +73,9 @@ const resolvers = {
     locations: async (parent, args, context) => {
       return Location.find();
     },
+    rooms: async (parent, args, context) => {
+      return Room.find();
+    }
   },
 
   Mutation: {

@@ -13,7 +13,7 @@ const Header = () => {
       <div className="container flex flex-wrap justify-between lg:justify-center items-center mx-auto">
         <div>
           <Link className="text-light" to="/">
-            <h1 className="justify-center text-white text-2xl font-bold">Checkrum: Inspection Tracker</h1>
+            <h1 className="justify-center text-white text-2xl font-bold">Checkrūm: Inspection Tracker</h1>
           </Link>
         </div>
         <div>
