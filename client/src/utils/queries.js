@@ -180,8 +180,8 @@ query AllReports {
 `;
 
 export const QUERY_SINGLE_CLIENT = gql`
-  query getClient($businessName: String!) {
-    getClient(businessName: $businessName) {
+  query getClient($id: ID) {
+    getClient(id: $id) {
       _id
       businessName
       contactName
@@ -191,7 +191,6 @@ export const QUERY_SINGLE_CLIENT = gql`
         locationName
         address
         accessInstructions
-        client
       }
     }
   }

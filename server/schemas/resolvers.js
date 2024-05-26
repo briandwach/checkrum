@@ -58,8 +58,8 @@ const resolvers = {
       //}
       //throw AuthenticationError;
     },
-    getClient: async (parent, { businessName }) => {
-      return Client.findOne({ businessName: businessName });
+    getClient: async (parent, { id }) => {
+      return Client.findOne({ _id: id});
     },
     allLocations: async (parent, args, context) => {
       return Location.find().populate('locationName');
