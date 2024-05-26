@@ -55,7 +55,7 @@ scalar DateTime
 
   type Equipment {
     _id: ID
-    equipmentName: String!
+    equipmentName: String
   }
 
   type Report {
@@ -101,6 +101,7 @@ scalar DateTime
     allReports: [Report]
     getClient: Client
     locations: [Location]
+    rooms: [Room]
     assignedReportsByStaff(assignedStaff: ID!): [Report]
     roomInfoByReportId(id: ID!): Report
   }
