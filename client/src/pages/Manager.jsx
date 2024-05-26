@@ -4,6 +4,7 @@ import ManagerNav from '../components/ManagerNav';
 
 
 const Manager = () => {
+    
     // If user is not logged in, redirect to login page
     if (Auth.loggedIn() === false) {
         // Redirect to login page
