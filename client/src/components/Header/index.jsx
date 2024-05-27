@@ -8,8 +8,13 @@ const Header = () => {
     Auth.logout();
   };
 
-  const userRole = Auth.getProfile().authenticatedPerson.role;
+  let userRole = '';
 
+  try {
+  userRole = Auth.getProfile().authenticatedPerson.role;
+  } catch {
+  userRole = 'Guest';
+  }
 
   useEffect(() => {
     const htmlTag = document.querySelector('html');

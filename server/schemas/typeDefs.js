@@ -43,6 +43,7 @@ scalar DateTime
     locationName: String
     address: String
     accessInstructions: String
+    client: Client
     rooms: [Room]
   }
 
