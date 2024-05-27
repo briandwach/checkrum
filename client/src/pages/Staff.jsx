@@ -28,31 +28,19 @@ const Staff = () => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 console.log("User's timezone: ", userTimeZone);
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
+    const handleTabChange = (event) => {
+        setSelectedOption(event.target.getAttribute("aria-label"));
     };
 
     return (
-        <div>
-            <nav style={{ display: "flex", width: "100%"}}>
-                <button
-                    className="btn btn-outline btn-primary w-3/6"
-                    onClick={() => handleOptionClick("Assigned")}
-                    style={{ backgroundColor: selectedOption === "Assigned" ? "darkgray" : "" }}
-                >
-                    Assigned
-                </button>
-                <button 
-                    className="btn btn-outline btn-primary w-3/6"
-                    onClick={() => handleOptionClick("Completed")}
-                    style={{ backgroundColor: selectedOption === "Completed" ? "darkgray" : "" }}
-                >
-                    Completed
-                </button>         
-            </nav>
+        <div className="relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Assigned Reports" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Completed Reports" onChange={handleTabChange} />
+            </div>
             <br></br>
-            {selectedOption === "Assigned" && <AssignedReports assignedStaff={assignedStaff} />}
-            {selectedOption === "Completed" && <CompletedReports assignedStaff={assignedStaff} />}
+            {selectedOption === "Assigned Reports" && <AssignedReports assignedStaff={assignedStaff} />}
+            {selectedOption === "Completed Reports" && <CompletedReports assignedStaff={assignedStaff} />}
         </div>
 
         // <div>
