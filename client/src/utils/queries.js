@@ -306,6 +306,22 @@ query Query($id: ID!) {
 }
 `;
 
+export const RESULT_DATA_BY_REPORT_ID = gql`
+query Query($id: ID!) {
+  resultDataByReportId(id: $id) {
+    _id
+    results {
+      equipmentId {
+        _id
+      }
+      result
+      comment
+    }
+    generalComments
+  }
+}
+`;
+
 export const QUERY_ROOM = gql`
 query rooms {
   rooms {

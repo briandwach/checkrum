@@ -119,6 +119,7 @@ scalar DateTime
     assignedReportsByStaff(assignedStaff: ID!): [Report]
     completedReportsByStaff(assignedStaff: ID!): [Report]
     roomInfoByReportId(id: ID!): Report
+    resultDataByReportId(id: ID!): Report
     locationsRevised: [Client]
   }
 

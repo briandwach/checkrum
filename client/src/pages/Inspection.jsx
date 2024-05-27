@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useQuery } from '@apollo/client';
-import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
+import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
 import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
@@ -15,8 +15,12 @@ function Inspection() {
     const { id } = useParams();
 
     // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
-    const { loading, data } = useQuery(ROOM_INFO_BY_REPORT_ID, {
-        variables: { id: id },
+    const { loading: roomLoading, data: roomData } = useQuery(ROOM_INFO_BY_REPORT_ID, {
+        variables: { id: id }
+    });
+
+    const { loading: resultLoading, data: resultData } = useQuery(RESULT_DATA_BY_REPORT_ID, {
+        variables: { id: id }
     });
 
     // Defines mutations for creating Result documents and submitting Report
@@ -34,12 +38,34 @@ function Inspection() {
     const [errorMessage, setErrorMessage] = useState('');
     const [messageStyle, setMessageStyle] = useState('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
 
-    if (loading) {
+    // Pulls previous resultData if it exists and uses the information to set the state of the input fields
+    useEffect(() => {
+        if (resultData) {
+            if (resultData.resultDataByReportId.generalComments) {
+            setGeneralComments(resultData.resultDataByReportId.generalComments);
+            };
+
+            const results = resultData.resultDataByReportId.results;
+        
+            const setResultStates = (results) => {
+                for (const result of results) {
+                    const equipId = result.equipmentId._id;
+                    const { comment, result: checkState } = result;
+                    setSuccessCheckbox(prevState => ({ ...prevState, [equipId]: checkState }));
+                    setErrorCheckbox(prevState => ({ ...prevState, [equipId]: !checkState }));
+                    setCommentText(prevState => ({ ...prevState, [equipId]: comment }));
+                }
+            };
+            setResultStates(results);
+        }
+    }, [resultData]);
+
+    if (roomLoading || resultLoading) {
         return <div>Loading...</div>;
     }
 
     // Destructure data from QUERY_SINGLE_ROOM
-    const { roomInfoByReportId } = data;
+    const { roomInfoByReportId } = roomData;
     const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
@@ -196,7 +222,7 @@ function Inspection() {
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
         setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
-        
+
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
             setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
@@ -229,7 +255,7 @@ function Inspection() {
                                                     type="checkbox"
                                                     name="successCheckbox"
                                                     className="checkbox checkbox-success"
-                                                    checked={successCheckbox[equipmentItem._id] ? successCheckbox[equipmentItem._id] : false}
+                                                    checked={successCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
                                                     onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                             </label>
@@ -240,7 +266,7 @@ function Inspection() {
                                                     type="checkbox"
                                                     name="errorCheckbox"
                                                     className="checkbox checkbox-error"
-                                                    checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false}
+                                                    checked={errorCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
                                                     onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
                                             </label>
@@ -271,7 +297,7 @@ function Inspection() {
                                 <textarea
                                     placeholder={`${errorCheckbox[equipmentItem._id] ? 'Comment required...' : 'Add comment here...'}`}
                                     name="equipmentComment"
-                                    value={commentText[equipmentItem._id] ? commentText[equipmentItem._id] : ''}
+                                    value={commentText[equipmentItem._id]}
                                     onChange={e => commentPresent(e, equipmentItem._id)}
                                     className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}>
                                 </textarea>
