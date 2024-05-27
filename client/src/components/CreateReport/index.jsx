@@ -18,7 +18,7 @@ const CreateReport = () => {
     //runs the query to get the rooms based on the location selected, passes location name from handleSubmit function
     const [loadRooms, { loading: loadingRoom, data: dataRoom }] = useLazyQuery(ROOM_BY_LOCATION);
     //mutation to create the report, create report runs from handleSendReports
-    const [createReport, {loading: loadingMutation }] = useMutation(CREATE_REPORT);
+    const [createReport] = useMutation(CREATE_REPORT);
     const [reportStatus, setReportStatus] = useState('');
 
     const handleSubmit = (e) => {
@@ -48,25 +48,25 @@ const CreateReport = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-                    <h1>Create Report</h1>
 
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="staff">Select Staff:</label>
                         <select
+                            className="select select-bordered w-full max-w-xs"
                             id="staff"
                             name="staff"
                             value={selectedStaff}
                             onChange={(e) => setSelectedStaff(e.target.value)}
                         >
-                            <option value="">Assign to:</option>
+                            <option value="">Assign Staff:</option>
                             {data.allStaff.map((staff) => (
                                 <option key={staff.id} value={staff.id}>
                                     {staff.username}
                                 </option>
                             ))}
                         </select>
-                        <label htmlFor="location">Select Location:</label>
+
                         <select
+                            className="select select-bordered w-full max-w-xs"
                             id="location"
                             name="location"
                             value={selectedLocation}

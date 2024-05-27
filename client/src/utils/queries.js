@@ -145,6 +145,7 @@ query AllStaff {
   allStaff {
     _id
     username
+    role
   }
 }
 `;

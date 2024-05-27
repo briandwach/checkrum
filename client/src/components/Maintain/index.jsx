@@ -7,39 +7,21 @@ const Maintain = () => {
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
+    const handleTabChange = (event) => {
+        setSelectedOption(event.target.getAttribute("aria-label"));
     };
 
     return (
-        <div>
-        <nav style={{ display: "flex", width: "100%"}}>
-                <button
-                    className="btn btn-outline btn-secondary"
-                    onClick={() => handleOptionClick("View Staff")}
-                    style={{ backgroundColor: selectedOption === "View Staff" ? "darkgray" : "" }}
-                >
-                    View Staff
-                </button>
-                <button 
-                    className="btn btn-outline btn-secondary"
-                    onClick={() => handleOptionClick("Add Client")}
-                    style={{ backgroundColor: selectedOption === "Add Client" ? "darkgray" : "" }}
-                >
-                    Add Client
-                </button>
-                <button 
-                    className="btn btn-outline btn-secondary"
-                    onClick={() => handleOptionClick("Edit Client")}
-                    style={{ backgroundColor: selectedOption === "Edit Client" ? "darkgray" : "" }}
-                >
-                    Edit Client
-                </button>
-            </nav>
+        <div className="relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "20px"}}> 
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="View Staff" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Edit Client" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Add Client" onChange={handleTabChange} />
+            </div>
             {selectedOption === "View Staff" && <ViewStaff />}
             {selectedOption === "Edit Client" && <UpdateClientForm />}
             {selectedOption === "Add Client" && <AddClientForm />}
-    </div>
+        </div>
     );
 }
 
