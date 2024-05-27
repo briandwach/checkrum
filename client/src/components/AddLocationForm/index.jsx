@@ -9,28 +9,20 @@ import { ADD_LOCATION } from '../../utils/mutations'
 import Auth from '../../utils/auth';
 
 const AddLocationForm = ({clientIdData}) => {
-    console.log('Loaded add location form')
    const [ addLocation, {data, loading, error}] = useMutation(ADD_LOCATION);
 
    console.log(ADD_LOCATION);
-    const idVal = localStorage.getItem("clientId");
-    console.log(idVal);
+   //Retrive client _id from local storage
 
     //TO DO: 
     // Close form after submit
     // Add submit mutation 
     // Pass setAddLocation up to parent
 
-    //const clientIdObj = new mongoose.Types.ObjectId('66537ee598691088e7148210');
-
-    //console.log(clientIdObj);
-    //console.log(clientIdObj.toString());
-
-        const onSubmitLocation = async (val) => {
+    const onSubmitLocation = async (val) => {
         var clientIdVal = await localStorage.getItem("clientId");
         console.log(clientIdVal);
         const locationObj = val;
-        //locationObj.clientId = new mongoose.Types.ObjectId(clientIdVal);
         locationObj.clientId = clientIdVal;
         console.log(locationObj);
        try {

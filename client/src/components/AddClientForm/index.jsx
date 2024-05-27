@@ -9,6 +9,7 @@ import Auth from '../../utils/auth';
 import AddLocationForm from '../AddLocationForm';
 import ClientCard from '../AddClientForm/ClientCard';
 import NewClientForm from '../AddClientForm/AddNewClient';
+import LocationAccordian from './LocationAccordian';
 
 const AddClientForm = () => {
     const [ location, setLocations ] = useState([]);
@@ -41,7 +42,8 @@ const AddClientForm = () => {
           { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
           { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
           { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location heere</button>: null}
-          { addLocationButton === true? <AddLocationForm clientIdData={clientIdData} />: null}
+          { addLocationButton === true ? <AddLocationForm clientIdData={clientIdData} />: null}
+          { newClient === false? <LocationAccordian /> : null}
           {console.log(addLocationButton)}
           {console.log(clientIdData)}
         </div>
