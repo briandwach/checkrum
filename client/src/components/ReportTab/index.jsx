@@ -13,12 +13,14 @@ const ReportTab = () => {
 
     return (
         <div className="relative"> 
-            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "20px"}}> 
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create Report" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="See Ongoing" onChange={handleTabChange} />
             </div>
+            <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
             {selectedOption === "Create Report" && <CreateReport />}
             {selectedOption === "See Ongoing" && <OngoingReports />}
+            </div>
         </div>       
     );
 }

@@ -13,7 +13,7 @@ const Maintain = () => {
 
     return (
         <div className="relative"> 
-            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "20px"}}> 
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="View Staff" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Edit Client" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Add Client" onChange={handleTabChange} />
