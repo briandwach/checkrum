@@ -5,7 +5,7 @@ import { toZonedTime, format } from 'date-fns-tz';
 const dateToLocale = (time) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zonedDate = toZonedTime(time, userTimeZone);
-  const formattedDate = format(zonedDate, 'PPPpp', { timeZone: userTimeZone });
+  const formattedDate = format(zonedDate, 'Pp', { timeZone: userTimeZone });
 
   return formattedDate;
 };

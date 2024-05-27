@@ -35,6 +35,7 @@ if (loading) {
                       address={report.roomId.location.address}
                       cycle={report.roomId.inspectionCycleLength}
                       lastInspected={report.roomId.lastInspectionDate}
+                      dateTimeProperties={report.roomId.dateTimeProperties}
                       completed={true}
                   />
               ))}

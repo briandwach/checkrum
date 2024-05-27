@@ -100,7 +100,13 @@ query AllRooms {
     }
     lastInspectionDate
     inspectionCycleLength
-    overdueInspection
+    dateTimeProperties {
+      overdueStatus
+      timeToUpcomingDueDate
+      upcomingDueDate
+      missedCycles
+      initialMissedDate
+    }
   }
 }
 `;
@@ -231,6 +237,13 @@ query Query($assignedStaff: ID!) {
       }
       lastInspectionDate
       inspectionCycleLength
+      dateTimeProperties {
+        overdueStatus
+        timeToUpcomingDueDate
+        upcomingDueDate
+        missedCycles
+        initialMissedDate
+      }
     }
   }
 }
@@ -254,6 +267,13 @@ query Query($assignedStaff: ID!) {
       }
       lastInspectionDate
       inspectionCycleLength
+      dateTimeProperties {
+        overdueStatus
+        timeToUpcomingDueDate
+        upcomingDueDate
+        missedCycles
+        initialMissedDate
+      }
     }
   }
 }
