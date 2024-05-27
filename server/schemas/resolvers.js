@@ -50,7 +50,7 @@ const resolvers = {
       //throw AuthenticationError;
     },
     allStaff: async (parent, args, context) => {
-      return User.find({ role: 'staff' }).populate('username');
+      return User.find().populate('username').populate('role');
     },
     roomEquipment: async (parent, args, context) => {
       //if (context.user){
