@@ -8,7 +8,7 @@ import { ADD_LOCATION } from '../../utils/mutations'
 
 import Auth from '../../utils/auth';
 
-const AddLocationForm = ({clientIdData}) => {
+const AddLocationForm = ({clientIdData, setLocationPresent}) => {
    const [ addLocation, {data, loading, error}] = useMutation(ADD_LOCATION);
 
    console.log(ADD_LOCATION);
@@ -33,7 +33,7 @@ const AddLocationForm = ({clientIdData}) => {
             console.log(err);
         }
         console.log(locationObj)
-
+        setLocationPresent(true);
     }
 
    const { register, handleSubmit } = useForm();
@@ -43,19 +43,19 @@ const AddLocationForm = ({clientIdData}) => {
         <h3>Add New Location</h3>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
-                    <span className="label-text">Location Name</span>
+                    <span className="label-text">Location Name:</span>
                 </div>
                 <input {...register("locationName", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
-                    <span className="label-text">Location Address</span>
+                    <span className="label-text">Location Address:</span>
                 </div>
                 <input {...register("address", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
-                    <span className="label-text">Access Instructions</span>
+                    <span className="label-text">Access Instructions:</span>
                 </div>
                 <input {...register("accessInstructions", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>

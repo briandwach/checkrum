@@ -36,8 +36,8 @@ const ClientCard = ({clientIdData}) => {
         <div className="card w-11/12 bg-primary text-primary-content">
   <div className="card-body">
     <h2 className="card-title"> {data.getClient.businessName}</h2>
-    <p>{data.getClient.contactName}</p>
-    <p>{data.getClient.contactEmail}</p>
+    <p><b> Contact Name: </b>{data.getClient.contactName}</p>
+    <p><b> Contact Email: </b>{data.getClient.contactEmail}</p>
     <p>Locations</p>
     <div className="card-actions justify-end">
     </div>

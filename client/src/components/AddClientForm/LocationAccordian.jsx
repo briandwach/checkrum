@@ -5,10 +5,10 @@ import AddRoomForm from "../AddRoomForm";
 
 import { QUERY_LOCATION_REVISED } from "../../utils/queries";
 
-const LocationAccordian = () => {
-    const { loading, data } = useQuery(QUERY_LOCATION_REVISED/*,{
+const LocationAccordian = ({locationPresent}) => {
+    const { loading, data } = useQuery(QUERY_LOCATION_REVISED,{
         pollInterval: 2000
-    }*/);
+    });
 
     if (loading) {
         return <div>Loading...</div>;
@@ -19,29 +19,19 @@ const LocationAccordian = () => {
 
     const arr = data.locationsRevised.filter(( client ) => client._id === clientId );
     const locationArr = arr.find(({locations}) => locations);
-    //console.log(locationArr);
-    //console.log(arr);
-    //console.log(locationArr['locations']);
-    const locationList = locationArr['locations'];
-    //console.log(locationList);
-    //const locationArr2 = Object.entries(locationArr.locations);
-    //console.log(locationArr2);
-    //console.log(locationArr2[0])
-    /*const reduced = data.locationsRevised.reduce(function(filtered, location){
-        if (location.client._id === clientId) {
-            var newVal = { _id: location._id, locationName: location.locationName, address: location.address, accessInstructions: location.accessInstructions}
-            filtered.push(newVal)
-        }
-        return filtered; 
-    }, []);
-    console.log(reduced);*/
+    var locationList = [];
+    console.log(locationArr);
+    if (locationPresent === true){
+        locationList = locationArr['locations']
+    } else ( locationList = []);
+
 
     return (
         <>
 
             <p>Locations Display Here</p>
             <h3>Locations</h3>
-            {locationList.map((location) => (
+            {locationList && locationList.map((location) => (
                 <>
                 <div className="collapse collapse-plus bg-base-200">
                 <input type="radio" name="my-accordion-3" /> 
@@ -58,7 +48,7 @@ const LocationAccordian = () => {
                         <AddRoomForm />
                         <div className="modal-action">
                         <form method="dialog">
-                        <button className="btn">Close</button>
+                        <button className="btn">Close Without Saving</button>
                         </form>
                         </div>
                         </div>
