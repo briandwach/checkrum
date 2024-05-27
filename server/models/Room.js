@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const { startOfToday, addMinutes, subMinutes, differenceInMinutes, isAfter } = require("date-fns");
+const { startOfToday, addMinutes, subMinutes, differenceInMinutes, isAfter, formatDistanceToNowStrict } = require("date-fns");
 
 const roomSchema = new Schema({
   roomName: {
@@ -44,7 +44,7 @@ const roomSchema = new Schema({
 // When data is fetched, determines if the current time is after the due date
 // If true and the last inspected date is before the beginning of the last cycle
 // Then the value for overdue is TRUE 
-roomSchema.virtual('overdueInspection').get( function(){
+roomSchema.virtual('dateTimeProperties').get( function(){
   const currentTime = Date.now();
   const lastInspected = this.lastInspectionDate;
   const cycle = this.inspectionCycleLength;
@@ -54,16 +54,36 @@ roomSchema.virtual('overdueInspection').get( function(){
  
   const latestDueDate = addMinutes(startOfToday(), (inspectionCycles * cycle));
 
+  const upcomingDueDate = addMinutes(startOfToday(), ((inspectionCycles + 1) * cycle));
+
   const startOfLatestCycle = subMinutes(latestDueDate, cycle);
 
   const nowAfterDueDate = isAfter(currentTime, latestDueDate);
 
-  var overdue = false;
+  let overdueStatus = false;
+  let calculateFirstMiss = startOfLatestCycle;
+  let missedCycles = 0;
 
   if (nowAfterDueDate) {
     if (isAfter(startOfLatestCycle, lastInspected)) {
-      overdue= true;
+      overdueStatus= true;
+
+      for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subMinutes(cycleStart, cycle))) {
+        missedCycles++;
+        calculateFirstMiss = cycleStart;
+      }
+      calculateFirstMiss = addMinutes(calculateFirstMiss, cycle);
     }
+  }
+
+  const timeToUpcomingDueDate = formatDistanceToNowStrict(upcomingDueDate);
+
+  const dateTimeProperties = {
+    upcomingDueDate: upcomingDueDate,
+    timeToUpcomingDueDate: timeToUpcomingDueDate,
+    overdueStatus: overdueStatus,
+    missedCycles: missedCycles,
+    initialMissedDate: calculateFirstMiss
   }
 
   // Use these comments for debugging
@@ -73,11 +93,11 @@ roomSchema.virtual('overdueInspection').get( function(){
   // console.log('Minutes into the day for latest due date: ' + (inspectionCycles * cycle));
   // console.log('Start of latest cycle: ' + startOfLatestCycle);
   // console.log('Last Inspected: ' + lastInspected);
-  // console.log('Latested Due Date: ' + latestDueDate);
+  // console.log('Latested Due Date: ' + upcomingDueDate);
   // console.log('Now after due date?: ' + nowAfterDueDate)
   // console.log(overdue);
 
-  return overdue;
+  return dateTimeProperties;
 })
 
 //Calculate inspections due soon (next 30 days)--return due date

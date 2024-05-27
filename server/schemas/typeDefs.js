@@ -35,7 +35,7 @@ scalar DateTime
     equipment: [Equipment]
     lastInspectionDate: DateTime
     inspectionCycleLength: Int
-    overdueInspection: Boolean
+    dateTimeProperties: DateTimeProperties
   }
 
   type Location {
@@ -79,6 +79,14 @@ scalar DateTime
 
   type DeleteReportResultsResponse {
     deletedCount: Int!
+  }
+
+  type DateTimeProperties {
+    upcomingDueDate: DateTime
+    timeToUpcomingDueDate: String
+    overdueStatus: Boolean
+    missedCycles: Int
+    initialMissedDate: DateTime
   }
 
   type Auth {

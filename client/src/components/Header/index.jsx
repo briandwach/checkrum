@@ -18,7 +18,8 @@ const Header = () => {
 
   useEffect(() => {
     const htmlTag = document.querySelector('html');
-    htmlTag.dataset.theme = 'business';
+    htmlTag.dataset.theme = 'corporate';
+    // htmlTag.dataset.theme = 'business';
   }, []);
 
 
