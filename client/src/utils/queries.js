@@ -302,3 +302,26 @@ query rooms {
   }
 }
 `;
+
+export const QUERY_LOCATION_REVISED = gql`
+query locationsRevised {
+  locationsRevised {
+    _id
+    businessName
+    contactName
+    contactEmail
+    locations {
+      _id
+      locationName
+      address
+      accessInstructions
+      rooms {
+        _id
+        roomName
+        lastInspectionDate
+        inspectionCycleLength
+      }
+    }
+  }
+}
+`;

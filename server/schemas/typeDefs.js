@@ -43,7 +43,7 @@ scalar DateTime
     locationName: String
     address: String
     accessInstructions: String
-    room: [Room]
+    rooms: [Room]
   }
 
   type Client {
@@ -110,6 +110,7 @@ scalar DateTime
     assignedReportsByStaff(assignedStaff: ID!): [Report]
     completedReportsByStaff(assignedStaff: ID!): [Report]
     roomInfoByReportId(id: ID!): Report
+    locationsRevised: [Client]
   }
 
   type Mutation {

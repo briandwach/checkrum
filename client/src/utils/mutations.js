@@ -175,15 +175,12 @@ mutation Mutation($roomId: ID!, $lastInspectionDate: DateTime!) {
 `;
 
 export const ADD_LOCATION = gql`
-  mutation addLocation($locationName: String!, $address: String!, $accessInstructions: String!, $client: ID!) {
-    addLocation(locationName: $locationName, address: $address, accessInstructions: $accessInstructions, client: $client) {
-      _id
-      locationName
-      address
-      accessInstructions
-      client {
-        _id
-      }
-    }
+mutation addLocation($clientId: ID, $locationName: String!, $address: String!, $accessInstructions: String!) {
+  addLocation(clientId: $clientId, locationName: $locationName, address: $address, accessInstructions: $accessInstructions) {
+    _id
+    locationName
+    address
+    accessInstructions
   }
+}
 `;

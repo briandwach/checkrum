@@ -85,6 +85,9 @@ const resolvers = {
     },
     rooms: async (parent, args, context) => {
       return await Room.find().populate('equipment');
+    },
+    locationsRevised: async (parent, args, context) => {
+      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}])
     }
   },
 
