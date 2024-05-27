@@ -45,8 +45,8 @@ const UpdateClientForm = () => {
                             <div className="card w-11/12 bg-primary text-primary-content">
                             <div className="card-body">
                                 <h2 className="card-title">{client.businessName}</h2>
-                                <p>{client.contactName}</p>
-                                <p><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
+                                <p><b>Contact Name: </b>{client.contactName}</p>
+                                <p><b>Contact Email: </b><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
                             </div>
                             </div>
                         )}

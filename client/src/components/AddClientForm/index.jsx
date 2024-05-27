@@ -18,6 +18,7 @@ const AddClientForm = () => {
     const [ newClient, setNewClient ] = useState(true);
     const [ clientIdData, setClientIdData ] = useState('');
     const [ addLocationButton, setAddLocationButton ] = useState( false );
+    const [ locationPresent, setLocationPresent ] = useState(false);
 
     //TO DO
     //Add button to add new client after form is completed
@@ -42,8 +43,8 @@ const AddClientForm = () => {
           { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
           { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
           { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location</button>: null}
-          { addLocationButton === true ? <AddLocationForm clientIdData={clientIdData} />: null}
-          { newClient === false? <LocationAccordian /> : null}
+          { addLocationButton === true ? <AddLocationForm clientIdData={clientIdData} setLocationPresent={setLocationPresent}/>: null}
+          { newClient === false? <LocationAccordian locationPresent={locationPresent}/> : null}
           {console.log(addLocationButton)}
           {console.log(clientIdData)}
         </div>
