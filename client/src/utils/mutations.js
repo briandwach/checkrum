@@ -184,3 +184,17 @@ mutation addLocation($clientId: ID, $locationName: String!, $address: String!, $
   }
 }
 `;
+
+export const ADD_ROOM = gql`
+mutation addRoom($locationId: ID, $roomName: String!, $inspectionCycleLength: Int, $equipment: [String]) {
+  addRoom(locationId: $locationId, roomName: $roomName, inspectionCycleLength: $inspectionCycleLength, equipment: $equipment) {
+    _id
+    roomName
+    inspectionCycleLength
+    equipment {
+      _id
+      equipmentName
+    }
+  }
+}
+`;
