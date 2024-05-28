@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EQUIPMENT } from '../../utils/queries';
 import { ADD_ROOM } from "../../utils/mutations";
 
-const AddRoomForm = ({locationId}) => {
+const AddRoomForm = ({locationId, setRoomPresent}) => {
 
     const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
     const [addRoom, {loading, error, data}] = useMutation(ADD_ROOM);
@@ -48,8 +48,9 @@ const AddRoomForm = ({locationId}) => {
         }
 
         //Resetting form
-        ///equipmentList = equipmentList.splice(0, equipmentList.length);
+        equipmentList = equipmentList.splice(0, equipmentList.length);
         document.getElementById("checkbox").checked = false;
+        setRoomPresent(true);
     }
 
     return (
