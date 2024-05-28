@@ -36,9 +36,6 @@ const roomSchema = new Schema({
     id: false
   });
 
-//Virtuals needed
-//Calculate inspections overdue--return date due
-
 // Virtual calculates inspection cycles based on the start of the day
 // Determines the latest cycle begin and end time
 // When data is fetched, determines if the current time is after the due date

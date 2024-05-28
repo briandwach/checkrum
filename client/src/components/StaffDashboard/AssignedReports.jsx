@@ -1,4 +1,4 @@
-import ReportCard from '../ReportCard';
+import AssignedReportCard from '../AssignedReportCard';
 
 import { useQuery } from '@apollo/client';
 import { ASSIGNED_REPORTS_BY_STAFF } from '../../utils/queries';
@@ -26,7 +26,7 @@ if (loading) {
             ) : (
           <div className="">
               {assignedReportsByStaff.map((report) => (
-                  <ReportCard
+                  <AssignedReportCard
                       key={report._id}
                       id={report._id}
                       name={report.roomId.roomName}

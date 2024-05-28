@@ -1,5 +1,5 @@
 // import { Link } from 'react-router-dom';
-import dateToLocale from '../../utils/dateTimeTools';
+import { dateToLocale } from '../../utils/dateTimeTools.js';
 
 function RoomCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties }) {
     

@@ -1,22 +1,30 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
-import { ROOM_INFO_BY_REPORT_ID } from '../utils/queries';
+import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queries';
 
 import { useMutation } from '@apollo/client';
 import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
 
-import dateToLocale from '../utils/dateTimeTools';
+import { dateToLocale } from '../utils/dateTimeTools.js';
 
 function Inspection() {
+    const urlLocation = useLocation();
+    const navigate = useNavigate();
 
     // Pulls room objectId from url parameter to use for room data query
     const { id } = useParams();
 
     // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
-    const { loading, data } = useQuery(ROOM_INFO_BY_REPORT_ID, {
-        variables: { id: id },
+    const { loading: roomLoading, data: roomData } = useQuery(ROOM_INFO_BY_REPORT_ID, {
+        variables: { id: id }
+    });
+
+    const { loading: resultLoading, data: resultData } = useQuery(RESULT_DATA_BY_REPORT_ID, {
+        variables: { id: id }
     });
 
     // Defines mutations for creating Result documents and submitting Report
@@ -33,13 +41,36 @@ function Inspection() {
     const [generalComments, setGeneralComments] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [messageStyle, setMessageStyle] = useState('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
-    if (loading) {
+    // Pulls previous resultData if it exists and uses the information to set the state of the input fields
+    useEffect(() => {
+        if (resultData) {
+            if (resultData.resultDataByReportId.generalComments) {
+                setGeneralComments(resultData.resultDataByReportId.generalComments);
+            };
+
+            const results = resultData.resultDataByReportId.results;
+
+            const setResultStates = (results) => {
+                for (const result of results) {
+                    const equipId = result.equipmentId._id;
+                    const { comment, result: checkState } = result;
+                    setSuccessCheckbox(prevState => ({ ...prevState, [equipId]: checkState }));
+                    setErrorCheckbox(prevState => ({ ...prevState, [equipId]: !checkState }));
+                    setCommentText(prevState => ({ ...prevState, [equipId]: comment }));
+                }
+            };
+            setResultStates(results);
+        }
+    }, [resultData]);
+
+    if (roomLoading || resultLoading) {
         return <div>Loading...</div>;
     }
 
     // Destructure data from QUERY_SINGLE_ROOM
-    const { roomInfoByReportId } = data;
+    const { roomInfoByReportId } = roomData;
     const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
@@ -110,6 +141,8 @@ function Inspection() {
             // Exits code block if something is wrong so that the user can correct it
             return;
         }
+
+        setFormSubmitted(true);
 
         // Deletes previously submitted results for the report on last submission
         try {
@@ -195,14 +228,9 @@ function Inspection() {
         };
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
-        setErrorMessage('Inspection report successfully submitted. Returning to Assigned Inspections.');
-        
+        setErrorMessage('Inspection report successfully submitted.');
+
         // Put a settimeout here to clear setErrorMessage
-        setTimeout(() => {
-            setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
-            setErrorMessage('');
-            window.location.href = '/staff';
-        }, 4000);
     };
 
     return (
@@ -229,9 +257,10 @@ function Inspection() {
                                                     type="checkbox"
                                                     name="successCheckbox"
                                                     className="checkbox checkbox-success"
-                                                    checked={successCheckbox[equipmentItem._id] ? successCheckbox[equipmentItem._id] : false}
+                                                    checked={successCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
-                                                    onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
+                                                    onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
+                                                    disabled={formSubmitted} />
                                             </label>
                                         </div>
                                         <div className="form-control" >
@@ -240,9 +269,10 @@ function Inspection() {
                                                     type="checkbox"
                                                     name="errorCheckbox"
                                                     className="checkbox checkbox-error"
-                                                    checked={errorCheckbox[equipmentItem._id] ? errorCheckbox[equipmentItem._id] : false}
+                                                    checked={errorCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
-                                                    onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))} />
+                                                    onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
+                                                    disabled={formSubmitted} />
                                             </label>
                                         </div>
                                         {errorCheckbox[equipmentItem._id] ? (
@@ -271,9 +301,10 @@ function Inspection() {
                                 <textarea
                                     placeholder={`${errorCheckbox[equipmentItem._id] ? 'Comment required...' : 'Add comment here...'}`}
                                     name="equipmentComment"
-                                    value={commentText[equipmentItem._id] ? commentText[equipmentItem._id] : ''}
+                                    value={commentText[equipmentItem._id]}
                                     onChange={e => commentPresent(e, equipmentItem._id)}
-                                    className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}>
+                                    className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}
+                                    disabled={formSubmitted}>
                                 </textarea>
                             </div>
                         ))}
@@ -283,15 +314,25 @@ function Inspection() {
                             value={generalComments}
                             onChange={e => setGeneralComments(e.target.value)}
                             placeholder="Add comments here..."
-                            className=" rounded-md">
+                            className=" rounded-md"
+                            disabled={formSubmitted}>
                         </textarea>
                         {errorMessage && (
                             <div className={messageStyle}>
                                 <p className="p-1 font-semibold">{errorMessage}</p>
                             </div>)}
-                        <div className="mt-1 card-actions justify-end">
-                            <button className="btn btn-primary">Submit</button>
-                        </div>
+                        {formSubmitted ? (
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => navigate(-1)}
+                            >
+                                &larr; Return
+                            </button>
+                        ) : (
+                            <div className={`"mt-1 card-actions justify-end ${formSubmitted && 'hidden'}`}>
+                                <button className="btn btn-primary">Submit</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </form>
