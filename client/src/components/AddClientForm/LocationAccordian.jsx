@@ -45,7 +45,7 @@ const LocationAccordian = ({locationPresent}) => {
                         <button className="btn" type="button" onClick={()=>document.getElementById('add_room_modal').showModal()}>Add a Room</button>
                         <dialog id="add_room_modal" className="modal modal-bottom sm:modal-middle">
                         <div className="modal-box">
-                        <AddRoomForm />
+                        <AddRoomForm locationId={location._id} />
                         <div className="modal-action">
                         <form method="dialog">
                         <button className="btn">Close Without Saving</button>

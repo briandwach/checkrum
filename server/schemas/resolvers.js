@@ -294,7 +294,24 @@ const resolvers = {
         })
         return room;
       }
-    }
+    },
+    addRoom: async (parent, { roomName, inspectionCycleLength, equipment, locationId }, context) => {
+      if (context.user) {
+        const room = await Room.create({
+          roomName,
+          inspectionCycleLength,
+          equipment
+        });
+
+        await Location.findOneAndUpdate(
+          { _id: locationId },
+          { $addToSet: { rooms: room._id} }
+        );
+
+        return room;
+      }
+      throw AuthenticationError;
+    },
   }
 };
 

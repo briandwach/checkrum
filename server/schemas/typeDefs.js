@@ -134,6 +134,7 @@ scalar DateTime
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
     updateRoomLastInspectionDate(roomId: ID!, lastInspectionDate: DateTime!): Room
+    addRoom(locationId: ID, roomName: String!, inspectionCycleLength: Int, equipment: [String]): Room
   }
 `;
 
