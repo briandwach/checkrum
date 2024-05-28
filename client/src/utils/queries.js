@@ -152,6 +152,7 @@ query AllStaff {
     _id
     username
     role
+    email
   }
 }
 `;
