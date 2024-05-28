@@ -78,7 +78,7 @@ const resolvers = {
       return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
     },
     completedReportsByStaff: async (parent, args, context) => {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });

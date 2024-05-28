@@ -1,6 +1,6 @@
 import Auth from '../utils/auth';
 import AssignedReports from '../components/StaffDashboard/AssignedReports.jsx';
-import CompletedReports from '../components/StaffDashboard/CompletedReports.jsx';
+import CompletedReports from '../components/StaffDashboard/RecentReports.jsx';
 
 import { useState } from "react";
 
@@ -23,24 +23,24 @@ const Staff = () => {
         return null;
     }
 
-    const [selectedOption, setSelectedOption] = useState("Assigned");
+    const [selectedOption, setSelectedOption] = useState("Assigned Reports");
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-console.log("User's timezone: ", userTimeZone);
+    console.log("User's timezone: ", userTimeZone);
 
     const handleTabChange = (event) => {
         setSelectedOption(event.target.getAttribute("aria-label"));
     };
 
     return (
-        <div className="relative"> 
-            <div role="tablist" className="tabs tabs-bordered tabs-lg relative"> 
-                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Assigned Reports" onChange={handleTabChange} />
-                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Completed Reports" onChange={handleTabChange} />
+        <div className="relative">
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative">
+                <input type="radio" defaultChecked name="my_tabs_1" role="tab" className="tab" aria-label="Assigned Reports" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Recent Reports" onChange={handleTabChange} />
             </div>
             <br></br>
             {selectedOption === "Assigned Reports" && <AssignedReports assignedStaff={assignedStaff} />}
-            {selectedOption === "Completed Reports" && <CompletedReports assignedStaff={assignedStaff} />}
+            {selectedOption === "Recent Reports" && <CompletedReports assignedStaff={assignedStaff} />}
         </div>
 
         // <div>

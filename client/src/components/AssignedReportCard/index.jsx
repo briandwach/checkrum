@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import dateToLocale from '../../utils/dateTimeTools';
+import { dateToLocale } from '../../utils/dateTimeTools.js';
 
-function ReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed }) {
+function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed }) {
     
     const { upcomingDueDate, timeToUpcomingDueDate, overdueStatus, missedCycles, initialMissedDate } = dateTimeProperties;
    
@@ -44,4 +44,4 @@ function ReportCard({ id, name, client, location, address, cycle, lastInspected,
     );
 }
 
-export default ReportCard;
+export default AssignedReportCard;

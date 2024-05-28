@@ -253,6 +253,15 @@ export const COMPLETED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   completedReportsByStaff(assignedStaff: $assignedStaff) {
     _id
+    results {
+      equipmentId {
+        equipmentName
+      }
+      result
+      comment
+    }
+    inspectionDate
+    generalComments
     roomId {
       _id
       roomName
@@ -263,17 +272,8 @@ query Query($assignedStaff: ID!) {
         }
         _id
         locationName
-        address
       }
-      lastInspectionDate
       inspectionCycleLength
-      dateTimeProperties {
-        overdueStatus
-        timeToUpcomingDueDate
-        upcomingDueDate
-        missedCycles
-        initialMissedDate
-      }
     }
   }
 }
