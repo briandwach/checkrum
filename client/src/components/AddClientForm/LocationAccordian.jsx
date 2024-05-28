@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import AddRoomForm from "../AddRoomForm";
+import RoomCard from "../AddRoomForm/RoomCard";
 
 import { QUERY_LOCATION_REVISED } from "../../utils/queries";
 
@@ -9,6 +10,7 @@ const LocationAccordian = ({locationPresent}) => {
     const { loading, data } = useQuery(QUERY_LOCATION_REVISED,{
         pollInterval: 2000
     });
+    const [roomPresent, setRoomPresent] = useState(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -25,6 +27,7 @@ const LocationAccordian = ({locationPresent}) => {
         locationList = locationArr['locations']
     } else ( locationList = []);
 
+    console.log(locationList);
 
     return (
         <>
@@ -45,7 +48,7 @@ const LocationAccordian = ({locationPresent}) => {
                         <button className="btn" type="button" onClick={()=>document.getElementById('add_room_modal').showModal()}>Add a Room</button>
                         <dialog id="add_room_modal" className="modal modal-bottom sm:modal-middle">
                         <div className="modal-box">
-                        <AddRoomForm locationId={location._id} />
+                        <AddRoomForm locationId={location._id} setRoomPresent={setRoomPresent} />
                         <div className="modal-action">
                         <form method="dialog">
                         <button className="btn">Close Without Saving</button>
@@ -55,6 +58,7 @@ const LocationAccordian = ({locationPresent}) => {
                     </dialog>
                     </div>
                     </div>
+                    { roomPresent === true? <RoomCard locationList={locationList} roomPresent={roomPresent} locationId={location._id}/> : null}
                     </>
                     ))}
         </>
@@ -62,28 +66,3 @@ const LocationAccordian = ({locationPresent}) => {
 }
 
 export default LocationAccordian
-
-/*             {locationList.map((location) => (
-                <>
-                <div className="collapse collapse-plus bg-base-200">
-                <input type="radio" name="my-accordion-3" /> 
-                   <div className="collapse-title text-xl font-medium" key={location.locationName}>
-                    {location.locationName}
-                    </div>
-                    <div className="collapse-content" key={location._id}> 
-                        <b>Address: </b> {location.address} <br/>
-                        <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
-                        <h3>Rooms in {location.locationName}: </h3><br />
-                        <button className="btn" type="button" onClick={()=>document.getElementById('add_room_modal').showModal()}>Add a Room</button>
-                        <dialog id="add_room_modal" className="modal modal-bottom sm:modal-middle">
-                        <div className="modal-box">
-                        <AddRoomForm />
-                        <div className="modal-action">
-                        <form method="dialog">
-                       /* <button className="btn">Close</button>
-                        </form>
-                        </div>
-                        </div>
-                    </dialog>
-                    </div>
-                    </div>*/
