@@ -36,9 +36,29 @@ const ViewStaff = () => {
         return (
             <div>
                 {loading ? (
-                <p>Loading...</p>
-            ) : (
-            <div>
+                    <p>Loading...</p>
+                ) : (
+                    <>
+                        {data.allStaff.map((user) => (
+                            <div key={user.id} tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
+                                <div className="collapse-title text-xl font-medium">
+                                    {user.username}
+                                </div>
+                                <div className="collapse-content">
+                                    <p>Role: {user.role} Email: {user.email}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+        );
+}
+
+export default ViewStaff;
+
+
+{/* <div>
                 <select value={selectedUser} onChange={(e) => handleEditUser(e.target.value)}>
                     <option value="">Select User</option>
                     {data.allStaff.map((user) => (
@@ -60,8 +80,4 @@ const ViewStaff = () => {
                 )}
             </div>
         )}
-    </div>
-        );
-}
-
-export default ViewStaff;
+    </div> */}
