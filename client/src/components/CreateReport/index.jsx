@@ -48,10 +48,10 @@ const CreateReport = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-
+                <div className="card  m-2 bg-primary text-primary-content">
                     <form onSubmit={handleSubmit}>
                         <select
-                            className="select select-bordered w-full max-w-xs"
+                            className="select select-bordered"
                             id="staff"
                             name="staff"
                             value={selectedStaff}
@@ -66,7 +66,7 @@ const CreateReport = () => {
                         </select>
 
                         <select
-                            className="select select-bordered w-full max-w-xs"
+                            className="select select-bordered"
                             id="location"
                             name="location"
                             value={selectedLocation}
@@ -79,8 +79,11 @@ const CreateReport = () => {
                                 </option>
                             ))}
                         </select>
-                        <button type="submit">Search for Rooms </button>
+                        <button 
+                        className="ml-2 mr-2"
+                         type="submit">Search for Rooms </button>
                     </form>
+                </div>
                 </div>
             )}
             {/* Section for rooms, loads after you hit submit on the above form */}
@@ -89,7 +92,7 @@ const CreateReport = () => {
             ) : (
                 dataRoom && (
                     <>
-                        <div>
+                        <div className="flex flex-col" style={{ alignItems: "center"}} >
                             {dataRoom.roomByLocation.map((room) => (
                                 <div key={room.id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
