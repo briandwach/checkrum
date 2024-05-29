@@ -1,8 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import { useLocation, useNavigate } from 'react-router-dom';
-
 import { useQuery } from '@apollo/client';
 import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queries';
 
@@ -12,8 +10,6 @@ import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSP
 import { dateToLocale } from '../utils/dateTimeTools.js';
 
 function Inspection() {
-    const urlLocation = useLocation();
-    const navigate = useNavigate();
 
     // Pulls room objectId from url parameter to use for room data query
     const { id } = useParams();
@@ -41,7 +37,7 @@ function Inspection() {
     const [generalComments, setGeneralComments] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [messageStyle, setMessageStyle] = useState('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
-    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [formSubmit, setFormSubmit] = useState('editing');
 
     // Pulls previous resultData if it exists and uses the information to set the state of the input fields
     useEffect(() => {
@@ -59,6 +55,7 @@ function Inspection() {
                     setSuccessCheckbox(prevState => ({ ...prevState, [equipId]: checkState }));
                     setErrorCheckbox(prevState => ({ ...prevState, [equipId]: !checkState }));
                     setCommentText(prevState => ({ ...prevState, [equipId]: comment }));
+                    setViewComment(prevState => ({ ...prevState, [equipId]: !!comment }));
                 }
             };
             setResultStates(results);
@@ -69,11 +66,14 @@ function Inspection() {
         return <div>Loading...</div>;
     }
 
+    const updateStatus = resultData.resultDataByReportId.results.length;
+    const inspectionDate = resultData.resultDataByReportId.inspectionDate;
+
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = roomData;
     const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
-
+      
     //State logic to toggle viewing an equipment comment box
     const commentToggle = (equipmentItemId) => {
         setViewComment((prevState) => ({
@@ -142,7 +142,14 @@ function Inspection() {
             return;
         }
 
-        setFormSubmitted(true);
+        setFormSubmit('waiting');
+
+        setMessageStyle('mt-1 mb-3 border-2 border-blue-500 rounded-md bg-blue-200');
+        if (!updateStatus) {
+            setErrorMessage('Submitting results...');
+        } else {
+            setErrorMessage('Updating results...');
+        }
 
         // Deletes previously submitted results for the report on last submission
         try {
@@ -202,35 +209,58 @@ function Inspection() {
 
         // Submits report by updating Report document with array of Result documents, generalComments, and inspectionDate
         try {
-            const { data } = await submitReport({
-                variables: {
-                    reportId: id,
-                    results: resultIdsArr,
-                    generalComments: generalComments,
-                    inspectionDate: Date.now()
-                }
-            });
-            date = data.submitReport.inspectionDate;
+            if (!updateStatus) {
+                const { data } = await submitReport({
+                    variables: {
+                        reportId: id,
+                        results: resultIdsArr,
+                        generalComments: generalComments,
+                        inspectionDate: Date.now()
+                    }
+                });
+                date = data.submitReport.inspectionDate;
+            } else {
+                const { data } = await submitReport({
+                    variables: {
+                        reportId: id,
+                        results: resultIdsArr,
+                        generalComments: generalComments,
+                        inspectionDate: inspectionDate
+                    }
+                });
+            }
         } catch (e) {
             console.error(e);
         };
 
-        // After inspection report is submitted, updates the room document with the latest inspection date
-        try {
-            const { data } = await updateRoomLastInspectionDate({
-                variables: {
-                    roomId: roomId,
-                    lastInspectionDate: date
-                }
-            });
-        } catch (e) {
-            console.error(e);
-        };
+        // Only updates room model with inspection date on first report submission
+        if (!updateStatus) {
+            // After inspection report is submitted, updates the room document with the latest inspection date
+            try {
+                const { data } = await updateRoomLastInspectionDate({
+                    variables: {
+                        roomId: roomId,
+                        lastInspectionDate: date
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+            };
+        }
 
         setMessageStyle('mt-1 mb-3 border-2 border-green-500 rounded-md bg-green-200');
-        setErrorMessage('Inspection report successfully submitted.');
+
+        if (!updateStatus) {
+            setErrorMessage('Inspection report successfully submitted.');
+        } else {
+            setErrorMessage('Inspection report successfully updated.');
+        }
 
         // Put a settimeout here to clear setErrorMessage
+        setTimeout(() => {
+            setErrorMessage('');
+            setFormSubmit('editing');
+        }, 3000);
     };
 
     return (
@@ -244,7 +274,11 @@ function Inspection() {
                         <p>{address}</p>
                         <br></br>
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
-                        <p><span className="font-bold">Last Inspected: </span>{dateToLocale(lastInspected)}</p>
+                        {!updateStatus ? (
+                            <p><span className="font-bold">Last Inspected: </span>{dateToLocale(lastInspected)}</p>
+                        ) : (
+                            <p><span className="font-bold">Inspection Date: </span>{dateToLocale(inspectionDate)}</p>
+                        )}
                         <br></br>
                         {equipment.map((equipmentItem) => (
                             <div key={equipmentItem._id} className="card card-compact bg-base-100 bg-slate-200 shadow-xl">
@@ -260,7 +294,7 @@ function Inspection() {
                                                     checked={successCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
                                                     onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
-                                                    disabled={formSubmitted} />
+                                                    disabled={formSubmit === 'waiting'} />
                                             </label>
                                         </div>
                                         <div className="form-control" >
@@ -272,7 +306,7 @@ function Inspection() {
                                                     checked={errorCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
                                                     onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
-                                                    disabled={formSubmitted} />
+                                                    disabled={formSubmit === 'waiting'} />
                                             </label>
                                         </div>
                                         {errorCheckbox[equipmentItem._id] ? (
@@ -304,7 +338,7 @@ function Inspection() {
                                     value={commentText[equipmentItem._id]}
                                     onChange={e => commentPresent(e, equipmentItem._id)}
                                     className={`${viewComment[equipmentItem._id] ? '' : 'hidden'} m-1 rounded-md`}
-                                    disabled={formSubmitted}>
+                                    disabled={formSubmit === 'waiting'}>
                                 </textarea>
                             </div>
                         ))}
@@ -315,24 +349,18 @@ function Inspection() {
                             onChange={e => setGeneralComments(e.target.value)}
                             placeholder="Add comments here..."
                             className=" rounded-md"
-                            disabled={formSubmitted}>
+                            disabled={formSubmit === 'waiting'}>
                         </textarea>
                         {errorMessage && (
                             <div className={messageStyle}>
                                 <p className="p-1 font-semibold">{errorMessage}</p>
                             </div>)}
-                        {formSubmitted ? (
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => navigate(-1)}
-                            >
-                                &larr; Return
-                            </button>
-                        ) : (
-                            <div className={`"mt-1 card-actions justify-end ${formSubmitted && 'hidden'}`}>
-                                <button className="btn btn-primary">Submit</button>
-                            </div>
-                        )}
+                        {(!!updateStatus && formSubmit !== 'waiting') && <p className="text-center font-bold text-red-500">You are updating this inspection form.</p>}
+                        {(formSubmit !== 'waiting') &&
+                            <div className="mt-1 card-actions justify-end">
+                                <button className="btn btn-primary">{!updateStatus ? 'Submit' : 'Update'}</button>
+                            </div>}
+                        {formSubmit === 'waiting' && <div></div>}
                     </div>
                 </div>
             </form>

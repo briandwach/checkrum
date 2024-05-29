@@ -319,6 +319,7 @@ query Query($id: ID!) {
       comment
     }
     generalComments
+    inspectionDate
   }
 }
 `;
