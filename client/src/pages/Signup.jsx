@@ -42,7 +42,7 @@ const Signup = () => {
   return (
     <main className="flex flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
-        <div className="card">
+        <div className="card w-96 bg-neutral text-primary-content rounded-box m-4">
           <h4 className="card-header bg-primary text-light p-2">Sign Up</h4>
           <div className="card-body">
             {data ? (
