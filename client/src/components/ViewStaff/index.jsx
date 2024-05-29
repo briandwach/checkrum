@@ -37,11 +37,16 @@ const ViewStaff = () => {
                         >
                             <input type="checkbox" /> 
                             <div className="collapse-title text-xl font-medium">
-                                {user.username}
+                                {user.username} - Click to view details
                             </div>
                             <div className="collapse-content">
                                 <p>
-                                    Role: {user.role.charAt(0).toUpperCase() + user.role.slice(1)} Email: {user.email}
+                                    Role: {user.role.charAt(0).toUpperCase() + user.role.slice(1)} 
+                                    <br />
+                                    
+                                    Email: {user.email}
+                                    
+                                    <br />
                                 </p>
                                 {userRole === 'admin' && (
                                     <div>
