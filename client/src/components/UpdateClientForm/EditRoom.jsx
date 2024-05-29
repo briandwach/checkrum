@@ -1,12 +1,28 @@
 import React from "react";
 import { useForm, set } from "react-hook-form";
+import { useQuery, useMutation } from "@apollo/client";
+
+import { QUERY_EQUIPMENT } from '../../utils/queries';
 
 const EditRoom = ({roomId, roomName, equipment, inspectionCycleLength}) => {
     const { register, handleSubmit } = useForm();
-    console.log(roomId);
-    console.log(roomName);
-    console.log(equipment);
-    console.log(inspectionCycleLength);
+    const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
+
+    console.log(equipment)
+    console.log(typeof equipment)
+    //console.log(dataEquipment.equipmentItems[0]['_id'])
+
+    const checkedEquipment = [];
+
+    const checkCheckedItems = () => {
+        for (let i = 0; i < Object.keys(equipment).length; i ++){
+            console.log(equipment[i]._id);
+            checkedEquipment.push(equipment[i]._id)
+        }
+        console.log(checkedEquipment)
+    }
+    checkCheckedItems();
+    const items = dataEquipment?.equipmentItems || [];
 
     const onSubmitRoomEdit = (val) => {
         console.log(val)
@@ -36,10 +52,12 @@ const EditRoom = ({roomId, roomName, equipment, inspectionCycleLength}) => {
                 <div className="label">
                     <span className="label-text">Equipment in Room</span>
                 </div>
-                {equipment.map((item)=>(
+                {items.map((item)=>(
                     <div className="form-control" key={item.equipmentName}>
                     <label className="cursor-pointer label">
-                      <input type="checkbox" checked className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id} onChange={handleCheck} />
+                        { checkedEquipment.includes(item._id)? <input type="checkbox" checked className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id} onChange={handleCheck}/> :
+                                              <input type="checkbox" className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id} onChange={handleCheck} />
+}
                       <span className="label-text">{item.equipmentName}</span>
                     </label>
                   </div>
