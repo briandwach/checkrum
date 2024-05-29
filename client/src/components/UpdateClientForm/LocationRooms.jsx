@@ -8,6 +8,7 @@ import EditRoom from "./EditRoom";
 const LocationRooms = ({locationId}) => {
     const { loading, error, data } = useQuery( QUERY_ROOM );
     const [ currentLocation, setCurrentLocation] = useState('');
+    console.log(data)
 
     if (loading) {
         return <div>Loading...</div>;
@@ -18,7 +19,7 @@ const LocationRooms = ({locationId}) => {
 
     for (let i = 0; i < Object.keys(data.rooms).length; i++ ){
         if (data.rooms[i].location && data.rooms[i].location._id === locationId){
-            var newVal = { _id: data.rooms[i]._id, roomName: data.rooms[i].roomName, equipment: data.rooms[i].equipment}
+            var newVal = { _id: data.rooms[i]._id, roomName: data.rooms[i].roomName, equipment: data.rooms[i].equipment, inspectionCycleLength: data.rooms[i].inspectionCycleLength}
             roomList.push(newVal)
         }
         
