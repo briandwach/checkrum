@@ -29,11 +29,13 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                 <p><span className="font-bold">Inspection Date: </span>{dateToLocale(inspectionDate)}</p>
                 <br></br>    
                 <p className="card-title">Results Summary:</p>
-                {(renderResults.length > 1) ? (
+                {(renderResults.length > 0) ? (
                 renderResults.map((result) => (
                     <div key={result.name} >
                     <p className="font-bold">{result.name}:  
-                    {!result.result && <span className="font-bold text-red-500"> Failed</span>}
+                    {!result.result ? <span className="font-bold text-red-500"> Failed</span> 
+                    : <span className="font-light"> (comment)</span> 
+                    }
                     </p>
                      
                     <p>{result.comment}</p>
