@@ -1,34 +1,40 @@
 import { Link } from 'react-router-dom';
+import auth from '../utils/auth';
 
 
 const Home = () => {
 
+  const user = auth.loggedIn();
+
+  let userRole;
+  if(user === true) {
+    userRole = auth.getProfile().authenticatedPerson.role;
+    console.log(userRole);
+  }
+
+
     return (
       <>
-        <main style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
-          <div style={{ textAlign: 'center' }}>
-            <img src="/images/hero-banner.jpg" alt="Hero Banner" style={{ backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', position: 'relative', width: '100%' }} />
-            <p>Welcome to Checkrum. A business-level application that simplifies your planning and strategic needs for keeping your properties in safe and working order.</p>
-            <p>Checkrum is a safe and secure application that focused on making work as easy and efficient as possible.</p>
+        <div className="hero min-h-screen" style={{backgroundImage: 'url(../images/hero-banner.jpg)'}}>
+          <div className="hero-overlay bg-opacity-60"></div>
+          <div className="hero-content text-center text-neutral-content">
+            <div className="max-w-md">
+              <h1 className="mb-5 text-5xl font-bold">CheckRum</h1>
+              <p className="mb-5">A business-level application that simplifies your planning and strategic needs for keeping your properties in safe and working order.</p>
+              {user === null ? (
+                <Link to="/login" className="btn btn-primary">Get Started</Link>
+              ) : (
+                <Link to={userRole === 'admin' ? '/manager' : userRole === 'staff' ? '/staff' : '/manager'} className="btn btn-primary">Get Started</Link>
+              )}
+            </div>
           </div>
-        </main>
+        </div>
       </>
     );
 };
 
 
+
   
 
 export default Home;
-
-// return (
-//   <main>
-  // <Link to='/Staff'>Staff Page</Link><br />
-  // <Link to='/Manager'>Manager Page</Link><br />
- 
-  // <Link to='/Admin'>Data Admin Page</Link><br />
-  // <Link to='/Equipment'>Equipment Admin Page</Link><br />
-  // <Link to='/Rooms'>All Rooms Page</Link>
-// </main>
-// );
-// };
