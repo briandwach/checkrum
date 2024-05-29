@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 
 import ClientLocations from "./ClientLocations";
-
+import EditClient from "./EditClient";
 
 const UpdateClientForm = () => { 
 
@@ -47,6 +47,20 @@ const UpdateClientForm = () => {
                                 <h2 className="card-title">{client.businessName}</h2>
                                 <p><b>Contact Name: </b>{client.contactName}</p>
                                 <p><b>Contact Email: </b><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
+                            </div>
+                            <div className="card-footer">
+                            <button className="btn" onClick={()=>document.getElementById('edit_client').showModal()}>Edit Client</button>
+                            <dialog id="edit_client" className="modal">
+                                <div className="modal-box">
+                                    <EditClient clientId={client._id} businessName={client.businessName} contactName={client.contactName} contactEmail={client.contactEmail}/>
+                                    <div className="modal-action">
+                                        <form method="dialog">
+                                        {/* if there is a button in form, it will close the modal */}
+                                            <button className="btn">Close</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </dialog>
                             </div>
                             </div>
                         )}

@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_LOCATION_REVISED } from '../../utils/queries';
 
 import LocationRooms from './LocationRooms';
+import EditLocation from './EditLocation';
 
 const ClientLocations = ({selectedClientId}) => {
     const { loading, data } = useQuery(QUERY_LOCATION_REVISED);
@@ -13,26 +14,17 @@ const ClientLocations = ({selectedClientId}) => {
         return <div>Loading...</div>;
     }
 
-    console.log(data)
+    // Filtering data by the ID of the client being viewed and returning a usable list
     const arr = data.locationsRevised.filter((client) => client._id === selectedClientId);
-    console.log(arr);
     const locationArr = arr.find(({locations}) => locations);
     const locationList = locationArr['locations'];
-    console.log(locationList);
-    /*const reduced = data.reduce(function(filtered, location){
-        if (location.client._id === selectedClientId) {
-            var newVal = { _id: location._id, locationName: location.locationName, address: location.address, accessInstructions: location.accessInstructions}
-            filtered.push(newVal)
-        }
-        return filtered; 
-    }, [])*/
 
     return (
         <>
             <h3>Locations</h3>
              {locationList && locationList.map((location) => (
             <>
-                <div className="collapse collapse-plus bg-base-200">
+                <div className="collapse collapse-plus bg-base-200" key={location._id}>
                     <input type="radio" name="my-accordion-3" /> 
                     <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
@@ -43,6 +35,18 @@ const ClientLocations = ({selectedClientId}) => {
                     <h3>Rooms in {location.locationName}: </h3><br />
                     <LocationRooms locationId = {location._id}/>
                 </div>
+                <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>Edit Location</button>
+<dialog id="my_modal_location" className="modal">
+  <div className="modal-box">
+   <EditLocation locationId={location._id} locationName={location.locationName} address={location.address} accessInstructions={location.accessInstructions} />
+    <div className="modal-action">
+      <form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
                 </div>
     </>
 ))}
