@@ -48,14 +48,23 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
     return(
       <>
         <form className="new-client" onSubmit={handleSubmit(onSubmitClient)}>
-          <h3>Add New Client</h3>
-            <label className="input flex items-center gap-2">
+          <h3>Add a New Client</h3>
+            <label className="form-control w-full max-w-xs">
+            <div className="label">
+                    <span className="label-text">Business Name:</span>
+                </div>
               <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Business Name" className="input input-bordered w-full max-w-xs" />
             </label>
-            <label className="input flex items-center gap-2">
+            <label className="form-control w-full max-w-xs">
+            <div className="label">
+                    <span className="label-text">Contact Name:</span>
+                </div>
               <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Contact Name" className="input input-bordered w-full max-w-xs" />  
             </label>
-            <label className="input flex items-center gap-2">
+            <label className="form-control w-full max-w-xs">
+            <div className="label">
+                    <span className="label-text">Contact Email Address:</span>
+                </div>
               <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Contact Email Address" className="input input-bordered w-full max-w-xs"/>
             </label>
             {newClient === true? <button type="Submit" className="btn btn-outline btn-accent">Submit</button> : null} 
