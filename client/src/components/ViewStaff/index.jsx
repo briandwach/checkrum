@@ -45,13 +45,7 @@ const ViewStaff = () => {
                                 </p>
                                 {userRole === 'admin' && (
                                     <div>
-                                        Change Role to:
-                                        <button
-                                            className='btn-sm bg-primary m-2'
-                                            onClick={() => console.log('clicked')}
-                                        >
-                                            test
-                                        </button>    
+                                        Change Role to:  
                                         <button
                                             className='btn-sm bg-primary m-2'
                                             onClick={() => handleSubmit(user.username, 'staff')}
