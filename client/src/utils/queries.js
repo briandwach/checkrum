@@ -171,6 +171,15 @@ query RoomByLocation($name: String!) {
   roomByLocation(name: $name) {
     _id
     roomName
+    inspectionCycleLength
+    lastInspectionDate
+    dateTimeProperties {
+      initialMissedDate
+      missedCycles
+      overdueStatus
+      timeToUpcomingDueDate
+      upcomingDueDate
+    }
   }
 }
 `;
@@ -183,6 +192,72 @@ query AllReports {
     }
     roomId {
       roomName
+    }
+  }
+}
+`;
+
+export const IN_PROGRESS_REPORTS = gql`
+query Query {
+  inProgressReports {
+    _id
+    assignedStaff {
+      username
+    }
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      lastInspectionDate
+      inspectionCycleLength
+      dateTimeProperties {
+        overdueStatus
+        timeToUpcomingDueDate
+        upcomingDueDate
+        missedCycles
+        initialMissedDate
+      }
+    }
+  }
+}
+`;
+
+export const COMPLETED_REPORTS = gql`
+query Query {
+  completedReports {
+    _id
+    assignedStaff {
+      username
+    }
+    results {
+      equipmentId {
+        equipmentName
+      }
+      result
+      comment
+    }
+    inspectionDate
+    generalComments
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+      }
+      inspectionCycleLength
     }
   }
 }
@@ -254,6 +329,9 @@ export const COMPLETED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   completedReportsByStaff(assignedStaff: $assignedStaff) {
     _id
+    assignedStaff {
+      username
+    }
     results {
       equipmentId {
         equipmentName

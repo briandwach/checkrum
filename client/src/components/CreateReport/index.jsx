@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { ALL_STAFF} from '../../utils/queries';
+import { ALL_STAFF } from '../../utils/queries';
 import { ALL_LOCATIONS } from '../../utils/queries';
 import { ROOM_BY_LOCATION } from "../../utils/queries";
 import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
 import { CREATE_REPORT } from "../../utils/mutations";
-
+import { dateToLocale } from "../../utils/dateTimeTools.js";
 
 const CreateReport = () => {
 
     //Queries to pull all the users with staff role and the locations to populate drop downs.
     const { loading, data } = useQuery(ALL_STAFF);
-    const { loading: loadingLocation, data: dataLocation } = useQuery(ALL_LOCATIONS);   
+    const { loading: loadingLocation, data: dataLocation } = useQuery(ALL_LOCATIONS);
 
     //state to manager the selected staff and location from dropdown
     const [selectedStaff, setSelectedStaff] = useState('');
@@ -33,7 +33,7 @@ const CreateReport = () => {
                 console.log(room._id, selectedStaff);
                 setReportStatus('Creating Report...');
                 createReport({ variables: { roomId: room._id, assignedStaff: selectedStaff } });
-                setReportStatus('Report Created!'); 
+                setReportStatus('Report Created!');
             }
             setTimeout(() => {
                 setReportStatus('');
@@ -48,22 +48,22 @@ const CreateReport = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-                <div className="flex" style={{alignItems: "center"}}>
-                    <form >
-                        <select
-                            className="select select-bordered"
-                            id="staff"
-                            name="staff"
-                            value={selectedStaff}
-                            onChange={(e) => setSelectedStaff(e.target.value)}
-                        >
-                            <option value="">Assign Staff:</option>
-                            {data.allStaff.map((staff) => (
-                                <option key={staff.id} value={staff.id}>
-                                    {staff.username}
-                                </option>
-                            ))}
-                        </select>
+                    <div className="flex" style={{alignItems: "center"}}>
+                        <form >
+                            <select
+                                className="select select-bordered"
+                                id="staff"
+                                name="staff"
+                                value={selectedStaff}
+                                onChange={(e) => setSelectedStaff(e.target.value)}
+                            >
+                                <option value="">Assign Staff:</option>
+                                {data.allStaff.map((staff) => (
+                                    <option key={staff.id} value={staff.id}>
+                                        {staff.username}
+                                    </option>
+                                ))}
+                            </select>
 
                         <select
                             className="select select-bordered"
@@ -96,14 +96,25 @@ const CreateReport = () => {
             ) : (
                 dataRoom && (
                     <>
-                        <div className="flex flex-col" style={{ alignItems: "center"}} >
+                        <div className="flex flex-col" style={{ alignItems: "center" }} >
                             {dataRoom.roomByLocation.map((room) => (
                                 <div key={room.id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
-                                        <div className="card-body">
-                                            <h2 className="card-title">Room: {room.roomName} Due: 01/01/1999
-                                            <input id={`checkbox-${room._id}`} type="checkbox" className="checkbox checkbox-success" />
-                                            </h2>
+                                        <div className="flex p-3 justify-between">
+                                            {room.dateTimeProperties.overdueStatus ? (
+                                                <div>
+                                                    <h2 className="font-bold">Room: {room.roomName}</h2>
+                                                    <p className="font-bold text-red-500">OVERDUE</p>
+                                                    <p><span className="font-bold">Since: </span>{dateToLocale(room.dateTimeProperties.initialMissedDate)}</p>
+                                                </div>
+                                            ) : (<div>
+                                                <h2 className="font-bold">Room: {room.roomName}</h2>
+                                                <p><span className="font-bold">Due: </span>{dateToLocale(room.dateTimeProperties.upcomingDueDate)}</p>
+                                                <p>(in {room.dateTimeProperties.timeToUpcomingDueDate})</p>
+                                            </div>
+                                            )}
+                                            <input id={`checkbox-${room._id}`} type="checkbox" className="checkbox checkbox-success mt-auto mb-auto mr-4" />
+
                                         </div>
                                     </div>
                                 </div>
