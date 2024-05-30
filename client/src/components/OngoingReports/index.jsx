@@ -1,11 +1,10 @@
 import { useQuery } from "@apollo/client";
-import { ALL_REPORTS } from "../../utils/queries";
-
-
+import { IN_PROGRESS_REPORTS } from "../../utils/queries";
+import { dateToLocale } from "../../utils/dateTimeTools"
 
 const OngoingReports = () => {
 
-    const { loading, data } = useQuery(ALL_REPORTS);
+    const { loading, data } = useQuery(IN_PROGRESS_REPORTS);
     console.log(data);
 
 
@@ -15,21 +14,31 @@ const OngoingReports = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-                    {data.allReports.length > 0 ? (
+                    {data.inProgressReports.length > 0 ? (
                         <ul>
-                            {data.allReports.map((report) => (
-                                <li key={report._id}>
-                                    <div className="bg-primary shadow-md rounded-md p-4 mb-4">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <p className="font-bold">Staff Assigned: </p>
-                                            <p>{report.assignedStaff.username}</p>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <p className="font-bold">To Room: </p>
-                                            <p>{report.roomId.roomName}</p>
+                            {data.inProgressReports.map((report) => (
+                                <div key={report.roomId._id}>
+                                    <div className="card w-96 m-2 bg-primary text-primary-content">
+                                        <div className="flex p-3 justify-between">
+                                            {report.roomId.dateTimeProperties.overdueStatus ? (
+                                                <div>
+                                                    <h2 className="font-bold">Room: {report.roomId.roomName}</h2>
+                                                    <p className="font-bold text-red-500">OVERDUE</p>
+                                                    <p><span className="font-bold">Since: </span>{dateToLocale(report.roomId.dateTimeProperties.initialMissedDate)}</p>
+                                                </div>
+                                            ) : (<div>
+                                                <h2 className="font-bold">Room: {report.roomId.roomName}</h2>
+                                                <p><span className="font-bold">Due: </span>{dateToLocale(report.roomId.dateTimeProperties.upcomingDueDate)}</p>
+                                                <p>(in {report.roomId.dateTimeProperties.timeToUpcomingDueDate})</p>
+                                            </div>
+                                            )}
+                                            <div className="mt-auto mb-auto mr-4">
+                                                <p className="font-bold">Assigned to:</p>
+                                                <p>{report.assignedStaff.username}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
                             ))}
                         </ul>
                     ) : (

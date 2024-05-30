@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { dateToLocale } from '../../utils/dateTimeTools.js';
 
-function RecentReportCard({ id, name, client, location, cycle, inspectionDate, results, generalComments}) {
+function RecentReportCard({ id, name, client, location, cycle, inspectionDate, results, generalComments, assignedStaff }) {
     let renderResults = [];
 
     const parseResults = (results) => {
@@ -12,7 +12,7 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                     result: equipment.result,
                     comment: equipment.comment
                 }
-            renderResults.push(resultObject);
+                renderResults.push(resultObject);
             }
         }
     };
@@ -25,26 +25,26 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                 <p><span className="font-bold">Client: </span>{client}</p>
                 <p><span className="font-bold">Location: </span>{location}</p>
                 <br></br>
-                <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
                 <p><span className="font-bold">Inspection Date: </span>{dateToLocale(inspectionDate)}</p>
-                <br></br>    
+                <p><span className="font-bold">Inspected By: </span>{assignedStaff}</p>
+                <br></br>
                 <p className="card-title">Results Summary:</p>
                 {(renderResults.length > 0) ? (
-                renderResults.map((result) => (
-                    <div key={result.name} >
-                    <p className="font-bold">{result.name}:  
-                    {!result.result ? <span className="font-bold text-red-500"> Failed</span> 
-                    : <span className="font-light"> (comment)</span> 
-                    }
-                    </p>
-                     
-                    <p>{result.comment}</p>
-                    <br></br>
-                    </div>
-                ))
-            ) : (
-                <p className="font-bold text-green-500">No failures or comments.</p>
-            )}
+                    renderResults.map((result) => (
+                        <div key={result.name} >
+                            <p className="font-bold">{result.name}:
+                                {!result.result ? <span className="font-bold text-red-500"> Failed</span>
+                                    : <span className="font-light"> (comment)</span>
+                                }
+                            </p>
+
+                            <p>{result.comment}</p>
+                            <br></br>
+                        </div>
+                    ))
+                ) : (
+                    <p className="font-bold text-green-500">No failures or comments.</p>
+                )}
                 <br></br>
                 <p className="font-bold">General Comments:</p>
                 <p>{generalComments ? generalComments : 'N/A'}</p>

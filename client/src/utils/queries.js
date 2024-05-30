@@ -197,6 +197,72 @@ query AllReports {
 }
 `;
 
+export const IN_PROGRESS_REPORTS = gql`
+query Query {
+  inProgressReports {
+    _id
+    assignedStaff {
+      username
+    }
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+        address
+      }
+      lastInspectionDate
+      inspectionCycleLength
+      dateTimeProperties {
+        overdueStatus
+        timeToUpcomingDueDate
+        upcomingDueDate
+        missedCycles
+        initialMissedDate
+      }
+    }
+  }
+}
+`;
+
+export const COMPLETED_REPORTS = gql`
+query Query {
+  completedReports {
+    _id
+    assignedStaff {
+      username
+    }
+    results {
+      equipmentId {
+        equipmentName
+      }
+      result
+      comment
+    }
+    inspectionDate
+    generalComments
+    roomId {
+      _id
+      roomName
+      location {
+        client {
+          _id
+          businessName
+        }
+        _id
+        locationName
+      }
+      inspectionCycleLength
+    }
+  }
+}
+`;
+
 export const QUERY_SINGLE_CLIENT = gql`
   query getClient($id: ID) {
     getClient(id: $id) {

@@ -113,6 +113,8 @@ scalar DateTime
     allLocations: [Location]
     roomByLocation(name: String!): [Room]
     allReports: [Report]
+    inProgressReports: [Report]
+    completedReports: [Report]
     getClient(id: ID): Client
     locations: [Location]
     rooms: [Room]
