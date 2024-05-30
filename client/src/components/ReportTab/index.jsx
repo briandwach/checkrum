@@ -17,7 +17,7 @@ const ReportTab = () => {
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create Report" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="See Ongoing" onChange={handleTabChange} />
             </div>
-            <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
+            <div style={{ display: "flex", justifyContent: "center"}}>
             {selectedOption === "Create Report" && <CreateReport />}
             {selectedOption === "See Ongoing" && <OngoingReports />}
             </div>
