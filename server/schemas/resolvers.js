@@ -315,6 +315,44 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    editRoom: async (parent, { roomId, roomName, inspectionCycleLength, equipment }, context) => {
+      if (context.user) {
+        const room = await Room.findOneAndUpdate({_id: roomId},
+          { $set: {roomName: roomName,
+            inspectionCycleLength: inspectionCycleLength,
+            equipment: equipment}
+          },
+        { new: true}
+      )
+        return room
+      }
+    },
+    editLocation: async (parent, { locationId, locationName, address, accessInstructions }, context) => {
+      if (context.user) {
+        const location = await Location.findOneAndUpdate({ _id: locationId },
+          { $set: {locationName: locationName,
+            address: address,
+            accessInstructions: accessInstructions}
+          },
+        { new: true}
+      )
+        return location
+      }
+    },
+    editClient: async (parent, { clientId, businessName, contactName, contactEmail }, context) => {
+      if (context.user) {
+        const location = await Client.findOneAndUpdate({ _id: clientId },
+          { $set: {
+            businessName: businessName,
+            contactName: contactName,
+            contactEmail: contactEmail
+            }
+          },
+        { new: true}
+      )
+        return location
+      }
+    },
   }
 };
 

@@ -35,21 +35,20 @@ const ClientLocations = ({selectedClientId}) => {
                     <h3>Rooms in {location.locationName}: </h3><br />
                     <LocationRooms locationId = {location._id}/>
                 </div>
-                <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>Edit Location</button>
-<dialog id="my_modal_location" className="modal">
-  <div className="modal-box">
-   <EditLocation locationId={location._id} locationName={location.locationName} address={location.address} accessInstructions={location.accessInstructions} />
-    <div className="modal-action">
-      <form method="dialog">
-        {/* if there is a button in form, it will close the modal */}
-        <button className="btn">Close</button>
-      </form>
-    </div>
-  </div>
-</dialog>
-                </div>
-    </>
-))}
+                <button className="btn" onClick={()=>document.getElementById('edit_location').showModal()}>Edit Location</button>
+                <dialog id="edit_location" className="modal">
+                  <div className="modal-box">
+                    <EditLocation locationId={location._id} locationName={location.locationName} address={location.address} accessInstructions={location.accessInstructions} />
+                    <div className="modal-action">
+                    <form method="dialog">
+                      <button className="btn">Close</button>
+                    </form>
+                    </div>
+                  </div>
+                </dialog>
+              </div>
+            </>
+          ))}
         </>
     )
 }
