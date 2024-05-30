@@ -40,9 +40,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <NotificationProvider>
+
           <Header />
-        </NotificationProvider>
+
             <Outlet />
         <Footer />
       </div>
