@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queries';
@@ -266,7 +267,7 @@ function Inspection() {
     return (
         <div>
             <form onSubmit={handleFormSubmit}>
-                <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
+                <div className="card bg-secondary shadow-xl m-5">
                     <div className="card-body">
                         <h2 className="card-title">Room: {name}</h2>
                         <p><span className="font-bold">Client: </span>{businessName}</p>
@@ -281,7 +282,7 @@ function Inspection() {
                         )}
                         <br></br>
                         {equipment.map((equipmentItem) => (
-                            <div key={equipmentItem._id} className="card card-compact bg-base-100 bg-slate-200 shadow-xl">
+                            <div key={equipmentItem._id} className="card card-compact bg-neutral shadow-xl">
                                 <div className="p-2 flex justify-between">
                                     <h2 className="card-title">{equipmentItem.equipmentName}</h2>
                                     <div className="flex">
@@ -348,7 +349,7 @@ function Inspection() {
                             value={generalComments}
                             onChange={e => setGeneralComments(e.target.value)}
                             placeholder="Add comments here..."
-                            className=" rounded-md"
+                            className=" rounded-md bg-neutral"
                             disabled={formSubmit === 'waiting'}>
                         </textarea>
                         {errorMessage && (
@@ -358,8 +359,11 @@ function Inspection() {
                         {(!!updateStatus && formSubmit !== 'waiting') && <p className="text-center font-bold text-red-500">You are updating this inspection form.</p>}
                         {(formSubmit !== 'waiting') &&
                             <div className="mt-1 card-actions justify-end">
-                                <button className="btn btn-primary">{!updateStatus ? 'Submit' : 'Update'}</button>
-                            </div>}
+                            <Link to={`/staff`}>
+                            <button className="btn btn-secondary">Go Back</button>
+                            </Link>
+                                    <button className="btn btn-primary">{!updateStatus ? 'Submit' : 'Update'}</button>
+                                </div>}
                         {formSubmit === 'waiting' && <div></div>}
                     </div>
                 </div>
