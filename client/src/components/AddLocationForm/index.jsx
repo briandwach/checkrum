@@ -12,13 +12,7 @@ const AddLocationForm = ({clientIdData, setLocationPresent}) => {
    const [ addLocation, {data, loading, error}] = useMutation(ADD_LOCATION);
 
    console.log(ADD_LOCATION);
-   //Retrive client _id from local storage
-
-    //TO DO: 
-    // Close form after submit
-    // Add submit mutation 
-    // Pass setAddLocation up to parent
-
+  
     const onSubmitLocation = async (val) => {
         var clientIdVal = await localStorage.getItem("clientId");
         console.log(clientIdVal);
