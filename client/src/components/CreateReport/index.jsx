@@ -48,8 +48,8 @@ const CreateReport = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-                <div className="card  m-2 bg-primary text-primary-content">
-                    <form onSubmit={handleSubmit}>
+                <div className="flex" style={{alignItems: "center"}}>
+                    <form >
                         <select
                             className="select select-bordered"
                             id="staff"
@@ -79,10 +79,14 @@ const CreateReport = () => {
                                 </option>
                             ))}
                         </select>
-                        <button 
-                        className="ml-2 mr-2"
-                         type="submit">Search for Rooms </button>
                     </form>
+
+                    <button 
+                        className="btn btn-sm btn-primary m-2"
+                        onClick={handleSubmit}
+                        type="submit">Search for Rooms 
+                    </button>
+                    
                 </div>
                 </div>
             )}
@@ -104,7 +108,11 @@ const CreateReport = () => {
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={handleSendReports}>Create Report</button>
+                            <button 
+                            className="btn btn-sm btn-primary m-2"
+                                onClick={handleSendReports}>
+                                Create Report
+                            </button>
                         </div>
                         <h2>{reportStatus}</h2>
                     </>
