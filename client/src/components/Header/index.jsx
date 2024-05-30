@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import Auth from '../../utils/auth';
-import { notifcationAmount } from '../../utils/constants';
+
 
 const Header = () => {
   const logout = (event) => {
@@ -85,10 +85,10 @@ const Header = () => {
               </>
             )}
             <li>
-              <div className="indicator">
+              {/* <div className="indicator">
                 <span className="indicator-item badge badge-secondary">{notifcationAmount}</span> 
                 <button className="btn-sm bg-primary">inbox</button>
-              </div>
+              </div> */}
             </li>
             <li>
               <label className="flex cursor-pointer gap-2">
