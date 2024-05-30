@@ -198,3 +198,39 @@ mutation addRoom($locationId: ID, $roomName: String!, $inspectionCycleLength: In
   }
 }
 `;
+
+export const EDIT_ROOM = gql`
+mutation editRoom($roomId: ID, $roomName: String!, $inspectionCycleLength: Int, $equipment: [String]) {
+  editRoom(roomId: $roomId, roomName: $roomName, inspectionCycleLength: $inspectionCycleLength, equipment: $equipment) {
+    _id
+    roomName
+    inspectionCycleLength
+    equipment {
+      _id
+      equipmentName
+    }
+  }
+}
+`;
+
+export const EDIT_LOCATION = gql`
+mutation editLocation($locationId: ID, $locationName: String!, $address: String, $accessInstructions: String) {
+  editLocation(locationId: $locationId, locationName: $locationName, address: $address, accessInstructions: $accessInstructions) {
+    _id
+    locationName
+    address
+    accessInstructions
+  }
+}
+`;
+
+export const EDIT_CLIENT = gql`
+mutation editClient($clientId: ID, $businessName: String, $contactName: String, $contactEmail: String) {
+  editClient(clientId: $clientId, businessName: $businessName, contactName: $contactName, contactEmail: $contactEmail) {
+    _id
+    businessName
+    contactName
+    contactEmail
+  }
+}
+`;
