@@ -329,6 +329,9 @@ export const COMPLETED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   completedReportsByStaff(assignedStaff: $assignedStaff) {
     _id
+    assignedStaff {
+      username
+    }
     results {
       equipmentId {
         equipmentName
