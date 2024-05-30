@@ -171,6 +171,15 @@ query RoomByLocation($name: String!) {
   roomByLocation(name: $name) {
     _id
     roomName
+    inspectionCycleLength
+    lastInspectionDate
+    dateTimeProperties {
+      initialMissedDate
+      missedCycles
+      overdueStatus
+      timeToUpcomingDueDate
+      upcomingDueDate
+    }
   }
 }
 `;
