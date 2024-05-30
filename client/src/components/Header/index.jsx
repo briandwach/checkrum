@@ -20,8 +20,8 @@ const Header = () => {
   useEffect(() => {
     const htmlTag = document.querySelector('html');
     // Forces app to stay with the light theme
-    htmlTag.dataset.theme = 'corporate';
-    // htmlTag.dataset.theme = 'business';
+    //htmlTag.dataset.theme = 'corporate';
+    htmlTag.dataset.theme = 'business';
   }, []);
 
 
