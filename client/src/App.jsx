@@ -5,7 +5,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { NotificationProvider } from './utils/notifications';
+
 
 import { Outlet } from 'react-router-dom';
 
