@@ -48,8 +48,8 @@ const CreateReport = () => {
                 <p>Loading...</p>
             ) : (
                 <div>
-                    <div className="card  m-2 bg-primary text-primary-content">
-                        <form onSubmit={handleSubmit}>
+                    <div className="flex" style={{alignItems: "center"}}>
+                        <form >
                             <select
                                 className="select select-bordered"
                                 id="staff"
@@ -65,25 +65,29 @@ const CreateReport = () => {
                                 ))}
                             </select>
 
-                            <select
-                                className="select select-bordered"
-                                id="location"
-                                name="location"
-                                value={selectedLocation}
-                                onChange={(e) => setSelectedLocation(e.target.value)}
-                            >
-                                <option value="">Choose a Location</option>
-                                {dataLocation.allLocations.map((location) => (
-                                    <option key={location.id} value={location.id}>
-                                        {location.locationName}
-                                    </option>
-                                ))}
-                            </select>
-                            <button
-                                className="ml-2 mr-2"
-                                type="submit">Search for Rooms </button>
-                        </form>
-                    </div>
+                        <select
+                            className="select select-bordered"
+                            id="location"
+                            name="location"
+                            value={selectedLocation}
+                            onChange={(e) => setSelectedLocation(e.target.value)}
+                        >
+                            <option value="">Choose a Location</option>
+                            {dataLocation.allLocations.map((location) => (
+                                <option key={location.id} value={location.id}>
+                                    {location.locationName}
+                                </option>
+                            ))}
+                        </select>
+                    </form>
+
+                    <button 
+                        className="btn btn-sm btn-primary m-2"
+                        onClick={handleSubmit}
+                        type="submit">Search for Rooms 
+                    </button>
+                    
+                </div>
                 </div>
             )}
             {/* Section for rooms, loads after you hit submit on the above form */}
@@ -115,7 +119,11 @@ const CreateReport = () => {
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={handleSendReports}>Create Report</button>
+                            <button 
+                            className="btn btn-sm btn-primary m-2"
+                                onClick={handleSendReports}>
+                                Create Report
+                            </button>
                         </div>
                         <h2>{reportStatus}</h2>
                     </>

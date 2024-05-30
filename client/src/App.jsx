@@ -5,7 +5,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
+import { NotificationProvider } from './utils/notifications';
 
 import { Outlet } from 'react-router-dom';
 
@@ -39,11 +39,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
-        <Header />
-        <div className="container">
+      <div>
+
+          <Header />
+
             <Outlet />
-        </div>
         <Footer />
       </div>
     </ApolloProvider>
