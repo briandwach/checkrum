@@ -15,6 +15,7 @@ import Admin from './pages/Admin';
 import Equipment from './pages/Equipment.jsx';
 import Rooms from './pages/Rooms.jsx';
 import Inspection from './pages/Inspection.jsx';
+import Contact from './pages/Contact.jsx';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: '/inspection/:id',
         element: <Inspection />
+      },
+      {
+        path: '/contact',
+        element: <Contact />
       }
     ]
   }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddClientForm from "../AddClientForm";
 import ViewStaff from "../ViewStaff";
 import UpdateClientForm from "../UpdateClientForm";
+import ManagerEquipment from "../EquipmentForm/index";
 
 const Maintain = () => {
 
@@ -17,10 +18,13 @@ const Maintain = () => {
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="View Staff" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Edit Client" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Add Client" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Manage Equipment" onChange={handleTabChange} />
+
             </div>
             {selectedOption === "View Staff" && <ViewStaff />}
             {selectedOption === "Edit Client" && <UpdateClientForm />}
             {selectedOption === "Add Client" && <AddClientForm />}
+            {selectedOption === "Manage Equipment" && <ManagerEquipment />}
         </div>
     );
 }
