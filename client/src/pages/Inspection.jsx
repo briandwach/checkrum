@@ -8,7 +8,7 @@ import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queri
 import { useMutation } from '@apollo/client';
 import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
 
-import { dateToLocale } from '../utils/dateTimeTools.js';
+import { dateToLocale, dateTimeToLocale } from '../utils/dateTimeTools.js';
 
 function Inspection() {
 
@@ -274,11 +274,11 @@ function Inspection() {
                         <p><span className="font-bold">Location: </span>{locationName}</p>
                         <p>{address}</p>
                         <br></br>
-                        <p><span className="font-bold">Inspection Cycle: </span>{cycle} minutes</p>
+                        <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                         {!updateStatus ? (
-                            <p><span className="font-bold">Last Inspected: </span>{dateToLocale(lastInspected)}</p>
+                            <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
                         ) : (
-                            <p><span className="font-bold">Inspection Date: </span>{dateToLocale(inspectionDate)}</p>
+                            <p><span className="font-bold">Inspection Date: </span>{dateTimeToLocale(inspectionDate)}</p>
                         )}
                         <br></br>
                         {equipment.map((equipmentItem) => (

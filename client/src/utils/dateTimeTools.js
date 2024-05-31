@@ -6,6 +6,14 @@ import { differenceInMinutes } from 'date-fns';
 export const dateToLocale = (time) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zonedDate = toZonedTime(time, userTimeZone);
+  const formattedDate = format(zonedDate, 'P', { timeZone: userTimeZone });
+
+  return formattedDate;
+};
+
+export const dateTimeToLocale = (time) => {
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const zonedDate = toZonedTime(time, userTimeZone);
   const formattedDate = format(zonedDate, 'Pp', { timeZone: userTimeZone });
 
   return formattedDate;
