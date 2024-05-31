@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { dateToLocale, dateTimeToLocale } from '../../utils/dateTimeTools.js';
 
 function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed }) {
-    
-    const { upcomingDueDate, timeToUpcomingDueDate, overdueStatus, missedCycles, initialMissedDate } = dateTimeProperties;
-   
+
+    const { upcomingDueDate, timeToUpcomingDueDate, inspectionStatus, missedCycles, initialMissedDate } = dateTimeProperties;
+
     return (
         <div className="card bg-secondary shadow-xl m-5">
             <div className="card-body">
@@ -16,22 +16,24 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                 <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
                 <br></br>
-                <p className="font-bold">Due For Next Inspection By:</p> 
+                {inspectionStatus === 'Current' && <p className="font-bold">Next Inspection:</p>}
+                {inspectionStatus === 'Due' && <p className="font-bold">Inspection Due By:</p>}
                 <p>{dateToLocale(upcomingDueDate)}</p>
                 <p>(in {timeToUpcomingDueDate})</p>
                 <br></br>
-                <p className={overdueStatus ? "text-red-500" : "text-green-500" }>
-                    <span className="font-bold">{overdueStatus ? `Overdue since ${dateToLocale(initialMissedDate)}` : 'Inspections are current'}</span>
-                </p>
-                {overdueStatus &&
-                <p>{`Missed ${missedCycles} inspection cycle(s)`}</p>
-                }
+                {inspectionStatus === 'Current' && <i className="fa-solid fa-clipboard-check fa-2xl" style={{color: "#63E6BE"}}></i>}
+                {inspectionStatus === 'Due' && <i className="fa-regular fa-hourglass-half fa-2xl" style={{color: "#FFD43B"}}></i>}
+                {inspectionStatus === 'Overdue' && 
+                    <>
+                        <p className="font-bold text-red-500">`Overdue since ${dateToLocale(initialMissedDate)} :`</p>
+                        <p>{`Missed ${missedCycles} inspection cycle(s)`}</p>
+                    </>}
                 {completed ? (
-                <div className="card-actions justify-end">
-                    <Link to={`/Inspection/${id}`}>
-                        <button className="btn btn-primary">Update</button>
-                    </Link>
-                </div>
+                    <div className="card-actions justify-end">
+                        <Link to={`/Inspection/${id}`}>
+                            <button className="btn btn-primary">Update</button>
+                        </Link>
+                    </div>
                 ) : (
                     <div className="card-actions justify-end">
                         <Link to={`/Inspection/${id}`}>
@@ -40,7 +42,7 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
 

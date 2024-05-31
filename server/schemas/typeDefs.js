@@ -84,7 +84,7 @@ scalar DateTime
   type DateTimeProperties {
     upcomingDueDate: DateTime
     timeToUpcomingDueDate: String
-    overdueStatus: Boolean
+    inspectionStatus: String
     missedCycles: Int
     initialMissedDate: DateTime
   }
