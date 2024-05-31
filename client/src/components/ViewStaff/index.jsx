@@ -23,6 +23,7 @@ const ViewStaff = () => {
 
     const userRole = Auth.getProfile().authenticatedPerson.role;
 
+//below is mainly a daisy ui component that is a collapsible list of staff members. If the user is an admin, they can change the role of the staff member. -dh
     return (
         <div>
             {loading ? (
@@ -41,6 +42,7 @@ const ViewStaff = () => {
                             </div>
                             <div className="collapse-content">
                                 <p>
+                                    {/* roles get capitalized because we store them as lowercase in the database. -dh */}
                                     Role: {user.role.charAt(0).toUpperCase() + user.role.slice(1)} Email: {user.email}
                                 </p>
                                 {userRole === 'admin' && (

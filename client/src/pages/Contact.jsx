@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Contact = () => {
+    //boiler plate contact form code. Also no functionality added to the form on purpose -dh
     return (
         <div className='m-5'>
             <h1 className="text-3xl text-white text-center">Contact Us</h1>

@@ -7,7 +7,7 @@ const Manager = () => {
     
     // If user is not logged in, redirect to login page
     if (Auth.loggedIn() === false) {
-        // Redirect to login page
+        // Redirect to login page if not logged in
         window.location.href = '/login';
         return null;
     }
@@ -17,7 +17,7 @@ const Manager = () => {
 
     // If user is not a manager or admin, redirect to homepage. 
     if (authenticatedPerson !== 'manager' && authenticatedPerson !== 'admin') {
-        // Redirect
+        // Redirect to home
         window.location.href = '/';
         return null;
     }

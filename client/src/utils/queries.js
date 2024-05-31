@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-
 export const QUERY_CLIENT = gql`
   query clients {
     clients {
@@ -88,6 +87,7 @@ query RoomEquipment($id: ID!) {
 }
 `;
 
+//Mutation to find all staff members. Used to populate the staff list in the View Staff/Create Report component. -dh
 export const ALL_STAFF = gql`
 query AllStaff {
   allStaff {
@@ -99,7 +99,7 @@ query AllStaff {
 }
 `;
 
-
+//Mutation to find all locations. Used to populate the location list in the Create Report component. -dh
 export const ALL_LOCATIONS = gql`
 query AllLocations {
   allLocations {

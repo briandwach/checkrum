@@ -8,17 +8,18 @@ import { dateToLocale } from "../../utils/dateTimeTools.js";
 
 const CreateReport = () => {
 
-    //Queries to pull all the users with staff role and the locations to populate drop downs.
+    //Queries to pull all the users with staff role and the locations to populate drop downs. -dh
     const { loading, data } = useQuery(ALL_STAFF);
     const { loading: loadingLocation, data: dataLocation } = useQuery(ALL_LOCATIONS);
 
-    //state to manager the selected staff and location from dropdown
+    //state to manager the selected staff and location from dropdown -dh
     const [selectedStaff, setSelectedStaff] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('');
-    //runs the query to get the rooms based on the location selected, passes location name from handleSubmit function
+    //runs the query to get the rooms based on the location selected, passes location name from handleSubmit function -dh
     const [loadRooms, { loading: loadingRoom, data: dataRoom }] = useLazyQuery(ROOM_BY_LOCATION);
-    //mutation to create the report, create report runs from handleSendReports
+    //mutation to create the report, create report runs from handleSendReports -dh
     const [createReport] = useMutation(CREATE_REPORT);
+    //state to manage the status of the report creation -dh
     const [reportStatus, setReportStatus] = useState('');
 
     const handleSubmit = (e) => {
@@ -26,15 +27,16 @@ const CreateReport = () => {
         loadRooms({ variables: { name: selectedLocation } });
     };
 
+    //function to handle the creation of the report, loops through the rooms and creates a report for each room that is checked -dh
     const handleSendReports = () => {
         dataRoom.roomByLocation.forEach((room) => {
             const checkbox = document.getElementById(`checkbox-${room._id}`);
             if (checkbox.checked) {
-                console.log(room._id, selectedStaff);
                 setReportStatus('Creating Report...');
                 createReport({ variables: { roomId: room._id, assignedStaff: selectedStaff } });
                 setReportStatus('Report Created!');
             }
+            //clears the report text after 3 seconds -dh
             setTimeout(() => {
                 setReportStatus('');
             }, 3000);
@@ -43,10 +45,11 @@ const CreateReport = () => {
 
     return (
         <div>
-            {/* loading terinary operator otherwise will cause loading errors even on the smallest load times */}
+            {/* loading terinary operator otherwise will cause loading errors even on the smallest load times -dh */}
             {loading || loadingLocation ? (
                 <p>Loading...</p>
             ) : (
+                // inside this terenary operator is the form to select staff and location to search for rooms. Options for each dropdown are populated from the queries above  -dh
                 <div>
                     <div className="flex" style={{alignItems: "center"}}>
                         <form >
@@ -90,11 +93,12 @@ const CreateReport = () => {
                 </div>
                 </div>
             )}
-            {/* Section for rooms, loads after you hit submit on the above form */}
+            {/* Section for rooms, loads after you hit "search for rooms" on the above form  -dh */}
             {loadingRoom ? (
                 <p>Loading rooms...</p>
             ) : (
                 dataRoom && (
+                    //this block displays the rooms that are returned when you search for rooms. -dh
                     <>
                         <div className="flex flex-col" style={{ alignItems: "center" }} >
                             {dataRoom.roomByLocation.map((room) => (

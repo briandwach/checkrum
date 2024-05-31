@@ -4,6 +4,7 @@ import Auth from '../../utils/auth';
 
 
 const Header = () => {
+  //logout function when logout button used. -dh
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
@@ -11,12 +12,14 @@ const Header = () => {
 
   let userRole = '';
 
+  //find user role or set to guest if not logged in -dh
   try {
   userRole = Auth.getProfile().authenticatedPerson.role;
   } catch {
   userRole = 'Guest';
   }
 
+  //use effect changes the daisy ui theme on load. resets on refreshing any website page. This is a temporary fix until a better solution is implemented. -dh
   useEffect(() => {
     const htmlTag = document.querySelector('html');
     // Forces app to stay with the light theme
@@ -26,6 +29,7 @@ const Header = () => {
 
 
   return (
+    //this is a daisy ui component that is a nav bar with buttons on larger resolutions and a drawer on smaller resolutions. -dh
     <><header>
       <div className="drawer" style={{ zIndex: 1 }}>
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -84,12 +88,7 @@ const Header = () => {
                 </li>
               </>
             )}
-            <li>
-              {/* <div className="indicator">
-                <span className="indicator-item badge badge-secondary">{notifcationAmount}</span> 
-                <button className="btn-sm bg-primary">inbox</button>
-              </div> */}
-            </li>
+            {/* below list item is a theme switcher component from daisy ui. -dh */}
             <li>
               <label className="flex cursor-pointer gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -100,6 +99,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
+      {/* this is the side drawer content. -dh */}
     </div><div className="drawer-side">
         <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200">

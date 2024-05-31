@@ -3,6 +3,7 @@ import ReportTab from "../ReportTab";
 import Maintain from "../Maintain";
 
 
+//entire component is a navigation element that makes radio buttons(that are tabs visually) that change the view of the page based on the selected tab. -dh
 const ManagerNav = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
