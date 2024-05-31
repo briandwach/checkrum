@@ -2,116 +2,116 @@
     {
         "roomName": "3301",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Daily"
     },
     {
         "roomName": "3302",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "3303",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "5"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "3304",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "5"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "Auditorium",
         "locationString": "C3PO Town Hall",
-        "inspectionCycleLength": "5"
+        "inspectionCycleLength": "Daily"
     },
     {
         "roomName": "VC Lab 1",
         "locationString": "R2D2 Laboratory",
-        "inspectionCycleLength": "15"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "VC Lab 2",
         "locationString": "R2D2 Laboratory",
-        "inspectionCycleLength": "15"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "51A",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "51B",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "51C",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "53A",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "53B",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "53C",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "53D",
         "locationString": "Peterson Hall",
-        "inspectionCycleLength": "10"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "Jefferson",
         "locationString": "Office Quad A",
-        "inspectionCycleLength": "30"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "Adams",
         "locationString": "Office Quad A",
-        "inspectionCycleLength": "30"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "Washington",
         "locationString": "Office Quad A",
-        "inspectionCycleLength": "30"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "Monroe",
         "locationString": "Office Quad A",
-        "inspectionCycleLength": "30"
+        "inspectionCycleLength": "Weekly"
     },
     {
         "roomName": "Divisible Room A",
         "locationString": "West Bay Building",
-        "inspectionCycleLength": "45"
+        "inspectionCycleLength": "Daily"
     },
     {
         "roomName": "Divisible Room B",
         "locationString": "West Bay Building",
-        "inspectionCycleLength": "45"
+        "inspectionCycleLength": "Daily"
     },
     {
         "roomName": "Cafeteria For You",
         "locationString": "West Bay Building",
-        "inspectionCycleLength": "60"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "5606F",
         "locationString": "West Bay Building",
-        "inspectionCycleLength": "45"
+        "inspectionCycleLength": "Monthly"
     },
     {
         "roomName": "5606G",
         "locationString": "West Bay Building",
-        "inspectionCycleLength": "45"
+        "inspectionCycleLength": "Monthly"
     }
 ]
