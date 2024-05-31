@@ -186,7 +186,7 @@ mutation addLocation($clientId: ID, $locationName: String!, $address: String!, $
 `;
 
 export const ADD_ROOM = gql`
-mutation addRoom($locationId: ID, $roomName: String!, $inspectionCycleLength: Int, $equipment: [String]) {
+mutation addRoom($locationId: ID, $roomName: String!, $inspectionCycleLength: String, $equipment: [String]) {
   addRoom(locationId: $locationId, roomName: $roomName, inspectionCycleLength: $inspectionCycleLength, equipment: $equipment) {
     _id
     roomName
@@ -200,7 +200,7 @@ mutation addRoom($locationId: ID, $roomName: String!, $inspectionCycleLength: In
 `;
 
 export const EDIT_ROOM = gql`
-mutation editRoom($roomId: ID, $roomName: String!, $inspectionCycleLength: Int, $equipment: [String]) {
+mutation editRoom($roomId: ID, $roomName: String!, $inspectionCycleLength: String, $equipment: [String]) {
   editRoom(roomId: $roomId, roomName: $roomName, inspectionCycleLength: $inspectionCycleLength, equipment: $equipment) {
     _id
     roomName
