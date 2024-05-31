@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { dateToLocale } from '../../utils/dateTimeTools.js';
+import { dateToLocale, dateTimeToLocale } from '../../utils/dateTimeTools.js';
 
 function RecentReportCard({ id, name, client, location, cycle, inspectionDate, results, generalComments, assignedStaff }) {
     let renderResults = [];
@@ -25,7 +25,7 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                 <p><span className="font-bold">Client: </span>{client}</p>
                 <p><span className="font-bold">Location: </span>{location}</p>
                 <br></br>
-                <p><span className="font-bold">Inspection Date: </span>{dateToLocale(inspectionDate)}</p>
+                <p><span className="font-bold">Inspection Date: </span>{dateTimeToLocale(inspectionDate)}</p>
                 <p><span className="font-bold">Inspected By: </span>{assignedStaff}</p>
                 <br></br>
                 <p className="card-title">Results Summary:</p>

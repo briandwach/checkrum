@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 
-const { startOfToday, addMinutes, subMinutes, differenceInMinutes, isAfter, formatDistanceToNowStrict } = require("date-fns");
+const { endOfYesterday, previousFriday, endOfDay, endOfMonth,
+  subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, isAfter, 
+  formatDistanceToNowStrict } = require("date-fns");
 
 const roomSchema = new Schema({
   roomName: {
@@ -24,7 +26,7 @@ const roomSchema = new Schema({
     default: Date.now
   },
   inspectionCycleLength: {
-    type: Number,
+    type: String,
     required: false,
     unique: false
   },
@@ -36,40 +38,77 @@ const roomSchema = new Schema({
     id: false
   });
 
-// Virtual calculates inspection cycles based on the start of the day
-// Determines the latest cycle begin and end time
+// Virtual calculates inspection cycles based on the cycle length
+// Determines the latest due date (11:59PM of specified day and does calculations from there)
 // When data is fetched, determines if the current time is after the due date
 // If true and the last inspected date is before the beginning of the last cycle
 // Then the value for overdue is TRUE 
-roomSchema.virtual('dateTimeProperties').get( function(){
+roomSchema.virtual('dateTimeProperties').get(function () {
+  const cycle = this.inspectionCycleLength;
   const currentTime = Date.now();
   const lastInspected = this.lastInspectionDate;
-  const cycle = this.inspectionCycleLength;
-  
-  
-  const inspectionCycles = Math.floor((differenceInMinutes(currentTime, startOfToday()) / cycle));
- 
-  const latestDueDate = addMinutes(startOfToday(), (inspectionCycles * cycle));
 
-  const upcomingDueDate = addMinutes(startOfToday(), ((inspectionCycles + 1) * cycle));
-
-  const startOfLatestCycle = subMinutes(latestDueDate, cycle);
-
-  const nowAfterDueDate = isAfter(currentTime, latestDueDate);
-
+  let latestDueDate;
+  let upcomingDueDate;
+  let startOfLatestCycle;
   let overdueStatus = false;
-  let calculateFirstMiss = startOfLatestCycle;
   let missedCycles = 0;
+  let calculateFirstMiss = startOfLatestCycle;
 
-  if (nowAfterDueDate) {
-    if (isAfter(startOfLatestCycle, lastInspected)) {
-      overdueStatus= true;
+  if (cycle === 'Daily') {
+    latestDueDate = endOfYesterday();
+    upcomingDueDate = addDays(latestDueDate, 2);
+    startOfLatestCycle = subDays(latestDueDate, 1);
+    const nowAfterDueDate = isAfter(currentTime, latestDueDate);
+    
+    if (nowAfterDueDate) {
+      if (isAfter(startOfLatestCycle, lastInspected)) {
+        overdueStatus = true;
 
-      for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subMinutes(cycleStart, cycle))) {
-        missedCycles++;
-        calculateFirstMiss = cycleStart;
+        for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subDays(cycleStart, 1))) {
+          missedCycles++;
+          calculateFirstMiss = cycleStart;
+        }
+        calculateFirstMiss = addDays(calculateFirstMiss, 1);
       }
-      calculateFirstMiss = addMinutes(calculateFirstMiss, cycle);
+    }
+  }
+
+  if (cycle === 'Weekly') {
+    latestDueDate = endOfDay(previousFriday(currentTime));
+    upcomingDueDate = (addWeeks(latestDueDate, 2));
+    startOfLatestCycle = subWeeks(latestDueDate, 1);
+    const nowAfterDueDate = isAfter(currentTime, latestDueDate);
+
+    if (nowAfterDueDate) {
+      if (isAfter(startOfLatestCycle, lastInspected)) {
+        overdueStatus = true;
+
+        for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subWeeks(cycleStart, 1))) {
+          missedCycles++;
+          calculateFirstMiss = cycleStart;
+        }
+        calculateFirstMiss = addWeeks(calculateFirstMiss, 1);
+      }
+    }
+  }
+
+  if (cycle === 'Monthly') {
+    latestDueDate = subMonths(endOfMonth(currentTime), 1);
+    upcomingDueDate = addMonths(latestDueDate, 2);
+    startOfLatestCycle = subMonths(latestDueDate, 1);
+    const nowAfterDueDate = isAfter(currentTime, latestDueDate);
+    
+    if (nowAfterDueDate) {
+      if (isAfter(startOfLatestCycle, lastInspected)) {
+        overdueStatus = true;
+
+        for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subMonths(cycleStart, 1))) {
+          missedCycles++;
+          calculateFirstMiss = cycleStart;
+        }
+        calculateFirstMiss = addMonths(calculateFirstMiss, 1);
+      }
     }
   }
 
@@ -83,27 +122,8 @@ roomSchema.virtual('dateTimeProperties').get( function(){
     initialMissedDate: calculateFirstMiss
   }
 
-  // Use these comments for debugging
-  // console.log('Minutes since start of today: ' + differenceInMinutes(currentTime, startOfToday()));
-  // console.log('Inspection Cycle: ' + cycle + ' Minutes');
-  // console.log('Inspection Cycles that occurred today: ' + inspectionCycles);
-  // console.log('Minutes into the day for latest due date: ' + (inspectionCycles * cycle));
-  // console.log('Start of latest cycle: ' + startOfLatestCycle);
-  // console.log('Last Inspected: ' + lastInspected);
-  // console.log('Latested Due Date: ' + upcomingDueDate);
-  // console.log('Now after due date?: ' + nowAfterDueDate)
-  // console.log(overdue);
-
   return dateTimeProperties;
 })
-
-//Calculate inspections due soon (next 30 days)--return due date
-
-// roomSchema.virtual('inspectionDueDate').get(
-//   function(){
-
-//   }
-// )
 
 const Room = model('Room', roomSchema);
 

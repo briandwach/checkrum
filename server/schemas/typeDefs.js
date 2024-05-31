@@ -34,7 +34,7 @@ scalar DateTime
     location: Location
     equipment: [Equipment]
     lastInspectionDate: DateTime
-    inspectionCycleLength: Int
+    inspectionCycleLength: String!
     dateTimeProperties: DateTimeProperties
   }
 
@@ -145,8 +145,8 @@ scalar DateTime
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
     updateRoomLastInspectionDate(roomId: ID!, lastInspectionDate: DateTime!): Room
-    addRoom(locationId: ID, roomName: String!, inspectionCycleLength: Int, equipment: [String]): Room
-    editRoom(roomId: ID, roomName: String, inspectionCycleLength: Int, equipment: [String]): Room
+    addRoom(locationId: ID, roomName: String!, inspectionCycleLength: String, equipment: [String]): Room
+    editRoom(roomId: ID, roomName: String, inspectionCycleLength: String, equipment: [String]): Room
     editLocation(locationId: ID, locationName: String, address: String, accessInstructions: String): Location
     editClient(clientId: ID, businessName: String, contactName: String, contactEmail: String): Client
   }
