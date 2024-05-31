@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
 
           <h4 className="text-white text-lg mb-3">
-            &copy; 2024
+            &copy; Checkrum 2024
           </h4>
         </div>
       </footer>
