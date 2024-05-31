@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import DbButtons from '../DbButtons';
 
 
 
@@ -18,6 +19,8 @@ const Footer = () => {
               <i className="fa-brands fa-github ml-2"></i>
             </a>
           </div>
+
+          <DbButtons />
 
           <h4 className="text-white text-lg mb-3">
             &copy; Checkrum 2024
