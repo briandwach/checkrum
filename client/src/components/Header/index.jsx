@@ -40,7 +40,7 @@ const Header = () => {
               <Link to="/">Checkrum: Inspection Tracker</Link>
             </div>
             <div className="flex-none hidden lg:block">
-              <ul className="menu menu-horizontal">
+              <ul className="menu menu-horizontal" style={{alignItems: "center"}}>
                 {userRole === 'manager' && (
                     <>
                       <li>
