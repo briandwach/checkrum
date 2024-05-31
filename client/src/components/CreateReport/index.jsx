@@ -51,7 +51,7 @@ const CreateReport = () => {
             ) : (
                 // inside this terenary operator is the form to select staff and location to search for rooms. Options for each dropdown are populated from the queries above  -dh
                 <div>
-                    <div className="flex" style={{alignItems: "center"}}>
+                    <div className="flex" style={{flexDirection:"column", alignItems: "center"}}>
                         <form >
                             <select
                                 className="select select-bordered"
@@ -129,7 +129,7 @@ const CreateReport = () => {
                                 Create Report
                             </button>
                         </div>
-                        <h2>{reportStatus}</h2>
+                        <h1 className="mb-3 text-2xl font-bold text-center">{reportStatus}</h1>
                     </>
                 )
             )}
