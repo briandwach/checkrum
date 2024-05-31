@@ -5,7 +5,7 @@ import DbButtons from '../DbButtons';
 //footer component that is displayed at the bottom of the page. Icon/link to the apps github repo and contact page -dh
 const Footer = () => {
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
+    <footer className="flex bg-secondary p-4" style={{justifyContent:"center"}}>
         <div className="container text-center">
           <div>
             <Link to="/contact" className="text-white mr-2">
