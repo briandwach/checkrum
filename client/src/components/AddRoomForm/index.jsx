@@ -11,12 +11,10 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
     const [addRoom, {loading, error, data}] = useMutation(ADD_ROOM);
     const { register, handleSubmit } = useForm();
     const [ selectedEquipment, setSelectedEquipment ] = useState([]);
+    const [ currentLocation, setCurrentLocation] = useState(locationId)
     var equipmentList = [];
-    //const equipmentOptions = dataEquipment.equipmentItems;
-    //console.log(equipmentOptions);
     const items = dataEquipment?.equipmentItems || [];
-    console.log(items);
-    console.log(locationId);
+
 
     //Add and remove items from the equipment list for the room
     const handleCheck = (event) => {
@@ -34,10 +32,9 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
     //Submit the room function
     const onSubmitRoom = async (val) => {
         const roomObj = val;
-        roomObj.locationId = locationId;
+        roomObj.locationId = currentLocation;
        roomObj['equipment'] = equipmentList;
-        console.log(roomObj);
-        console.log(equipmentList)
+      
 
         try {
             const { data } = await addRoom({

@@ -19,17 +19,18 @@ const ClientLocations = ({selectedClientId}) => {
     const locationArr = arr.find(({locations}) => locations);
     const locationList = locationArr['locations'];
 
+
     return (
         <>
             <h3>Locations</h3>
              {locationList && locationList.map((location) => (
             <>
-                <div className="collapse collapse-plus bg-base-200" key={location._id}>
+                <div className="collapse collapse-plus bg-base-200 " class = "test" key={location._id}>
                     <input type="radio" name="my-accordion-3" /> 
                     <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                 </div>
-                <div className="collapse-content" key={location._id}> 
+                <div className="collapse-content"  key={location._id}> 
                     <b>Address: </b> {location.address} <br/>
                     <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
                     <h3>Rooms in {location.locationName}: </h3><br />

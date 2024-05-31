@@ -1,5 +1,3 @@
-//Delete Thought and Comment typedefs
-
 const typeDefs = `
 
 scalar DateTime
@@ -10,22 +8,6 @@ scalar DateTime
     email: String
     password: String
     role: String
-    thoughts: [Thought]!
-  }
-
-  type Thought {
-    _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
   }
 
   type Room {
@@ -101,9 +83,6 @@ scalar DateTime
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
-    me: User
     clients: [Client]
     equipmentItems: [Equipment]
     allRooms: [Room]
@@ -128,10 +107,6 @@ scalar DateTime
   type Mutation {
     addUser(username: String!, email: String!, password: String!, role: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
     addClient(businessName: String!, contactName: String!, contactEmail: String!, locations: String): Client
     addEquipment(equipmentName: String!): Equipment
     seed: String
@@ -152,7 +127,5 @@ scalar DateTime
   }
 `;
 
-//Remove queries: thoughts, thought, and me
-//Remove mutation: addThought, addComment, removeThought, removeComment
 
 module.exports = typeDefs;
