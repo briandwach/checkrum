@@ -6,12 +6,10 @@ import Auth from '../../utils/auth';
 
 const ViewStaff = () => {
     const { loading, data, refetch } = useQuery(ALL_STAFF);
-    console.log(data);
 
     const [editUser] = useMutation(EDIT_USER);
 
     const handleSubmit = async (username, role) => {
-        console.log(username, role);
         await editUser({
             variables: {
                 username: username,
