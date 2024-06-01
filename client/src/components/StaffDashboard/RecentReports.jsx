@@ -1,4 +1,5 @@
 import RecentReportCard from '../RecentReportCard/index.jsx';
+import React, { useEffect } from 'react';
 
 import { useQuery } from '@apollo/client';
 import { COMPLETED_REPORTS_BY_STAFF } from '../../utils/queries.js';
@@ -7,9 +8,13 @@ import { calculateClosedReport } from '../../utils/dateTimeTools.js';
 
 const CompletedReports = ({ assignedStaff }) => {
 
-  const { loading, data } = useQuery(COMPLETED_REPORTS_BY_STAFF, {
+  const { loading, data, refetch } = useQuery(COMPLETED_REPORTS_BY_STAFF, {
     variables: { assignedStaff }
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
