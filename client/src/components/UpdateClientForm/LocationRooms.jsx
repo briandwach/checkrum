@@ -6,11 +6,9 @@ import { QUERY_ROOM } from "../../utils/queries";
 import EditRoom from "./EditRoom";
 import AddRoomForm from "../AddRoomForm";
 
-const LocationRooms = ({locationId}) => {
-    const { loading, error, data } = useQuery( QUERY_ROOM/*, { pollInterval: 2000}*/ );
-    const [ currentLocation, setCurrentLocation] = useState('');
-    const [ roomPresent, setRoomPresent] = useState(true);
-    console.log("locationid", locationId);
+const LocationRooms = ({locations, locationId}) => {
+    const { loading, error, data } = useQuery( QUERY_ROOM );
+    const [ editRoom, setEditRoom] = useState(null);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -26,6 +24,12 @@ const LocationRooms = ({locationId}) => {
         }
         
     }
+
+    // Update editRoom state on click
+    const handleEditClick = (event, room) => {
+        event.preventDefault();
+        setEditRoom(room._id)
+        };
 
     return (
       <div className="flex flex-wrap justify-center mt-10">
@@ -85,34 +89,32 @@ export default LocationRooms
         <div className="flex flex-col">
         <div className="flex-wrap mb-3 space-x-4">
         {roomList.map((room) => (
+        <div className="flex flex-wrap justify-center mt-10">
+        {roomList.map((room)=>(
                 <>
-                    <div className="card w-96 bg-primary text-primary-content inline-flex items-center flex-shrink-0">
-                        <div className="card-body">
+                  <div className="p-4 max-w-sm">
+                        <div className="flex rounded-lg h-full bg-base-300 p-8 flex-col">
+                            <div className="flex flex-col justify-between ">
+                {room._id === editRoom? 
+                    <EditRoom roomId={room._id} roomName={room.roomName} inspectionCycleLength={room.inspectionCycleLength} equipment={room.equipment} setEditRoom={setEditRoom}/> : 
+                            <>
                             <h2 className="card-title">{room.roomName}</h2>
                             <p><b>Inspection Cycle Length: </b>{room.inspectionCycleLength}</p>
-                                { room.equipment &&
-                                    room.equipment.map((item) => (<ul key={item._id}>{item.equipmentName}</ul>))
-                                }
-                            <div className="card-actions justify-end">
-                                <button className="btn" onClick={()=>{document.getElementById('edit_room').showModal()}}>Edit Room</button>
-                                <dialog id="edit_room" className="modal">
-                                    <div className="modal-box">
-                                        <EditRoom roomId={room._id} roomName={room.roomName} equipment={room.equipment} inspectionCycleLength={room.inspectionCycleLength} />
-                                        <div className="modal-action">
-                                            <form method="dialog">
-                                                <button className="btn">Close</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </dialog>
+                            { room.equipment && room.equipment.map((item) => (<ul key={item._id} className="m-1">{item.equipmentName}</ul>))}
+                                <div className="card-actions justify-end">
+                                    <button type="button" className="btn btn-outline" onClick={(event)=>{handleEditClick(event, room)}}>Edit {room.roomName} <i className="fa-solid fa-pencil"></i></button>
                             </div>
-                        </div>
-                    </div>
-                </>
-            ))}
-        </div>
-        </div>
-        </div>
-        </div>
+                            </>
+                }
+                </div>
+                </div>
+                </div>
+            </>
+        ))}
+
+      </div>
+ 
+    )
+}
 
 */

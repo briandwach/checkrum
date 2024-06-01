@@ -105,7 +105,7 @@ const CreateReport = () => {
                                 <div key={room.id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
                                         <div className="flex p-3 justify-between">
-                                            {room.dateTimeProperties.overdueStatus ? (
+                                            {room.dateTimeProperties.inspectionStatus === 'Overdue' ? (
                                                 <div>
                                                     <h2 className="font-bold">Room: {room.roomName}</h2>
                                                     <p className="font-bold text-red-500">OVERDUE</p>

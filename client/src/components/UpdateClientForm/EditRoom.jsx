@@ -6,7 +6,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EQUIPMENT } from '../../utils/queries';
 import { EDIT_ROOM } from "../../utils/mutations";
 
-const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength }) => {
+const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength, setEditRoom }) => {
     const { register, handleSubmit } = useForm();
     const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
     const [editRoom, { loading, error, data }] = useMutation(EDIT_ROOM);
@@ -67,10 +67,7 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength }) => {
         for (let i = 0; i < equipmentIdsArr.length; i++) {
             if (itemCheckbox[equipmentIdsArr[i]])
                 equipmentList.push(equipmentIdsArr[i])
-        };
-
-        // NOTE: I can confirm that up to here a successful array named equipmentList is created 
-        // contaiting only the objectIDs of the equipment items that are checked
+        }
 
         val.roomId = roomId;
         val.equipment = equipmentList;
@@ -81,10 +78,16 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength }) => {
             const { data } = await editRoom({
                 variables: { ...roomObj }
             })
-            console.log(data);
+            setEditRoom(null);
         } catch (err) {
             console.log(err);
         }
+    }
+
+       //Resets setEditClient state, hiding edit form
+       const handleCancelEdit = (event) => {
+        event.preventDefault();
+        setEditRoom(null)
     }
 
     return (
@@ -110,7 +113,7 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength }) => {
                     {equipmentItems.map((item) => (
                         <div className="form-control" key={item.equipmentName}>
                             <label className="cursor-pointer label">
-                                <input type="checkbox" checked={itemCheckbox[item._id]} className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id}
+                                <input type="checkbox" checked={itemCheckbox[item._id]} className="checkbox" id="checkbox" key={item._id} name={item._id}
                                     onChange={e => setItemCheckbox(prevState => ({ ...prevState, [item._id]: e.target.checked }))} />
                                 <span className="label-text">{item.equipmentName}</span>
                             </label>
@@ -118,22 +121,11 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength }) => {
 
                     ))}
                 </label>
-                <button type="submit" className="btn btn-outline btn-accent" onClick={() => document.getElementById('edit_room').close()}>Submit Room</button>
+                <button type="submit" className="btn btn-outline m-2" onClick={() => document.getElementById('edit_room').close()}>Submit Room</button>
+                <button type="button" className="btn btn-outline m-2" onClick={(event) => handleCancelEdit(event)}>Cancel Edit Room</button>
             </form>
         </>
     )
 }
 
 export default EditRoom
-
-/*
-              {items.map((item)=>(
-                    <div className="form-control" key={item.equipmentName}>
-                    <label className="cursor-pointer label">
-                      <input type="checkbox" className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id} onChange={handleCheck} />
-                      <span className="label-text">{item.equipmentName}</span>
-                    </label>
-                  </div>
-                    
-                ))} 
-*/
