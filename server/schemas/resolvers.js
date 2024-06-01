@@ -13,7 +13,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    equipmentItems: async () => {
+    equipmentItems: async (parent, args, context) => {
       if (context.user){
       return Equipment.find()
       }
@@ -41,7 +41,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    getClient: async (parent, { id }) => {
+    getClient: async (parent, { id }, context) => {
       if (context.user) {
       return Client.findOne({ _id: id});
       }
@@ -103,9 +103,7 @@ const resolvers = {
       }
     },
     locationsRevised: async (parent, args, context) => {
-      if (context.user) {
-      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}])
-      }
+      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}, {path: 'locations', populate: {path: 'rooms', populate:{ path: 'equipment'}}}])
     }
   },
 
