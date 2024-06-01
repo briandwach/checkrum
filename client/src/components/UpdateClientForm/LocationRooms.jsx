@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 
@@ -7,8 +7,12 @@ import EditRoom from "./EditRoom";
 import AddRoomForm from "../AddRoomForm";
 
 const LocationRooms = ({locations, locationId}) => {
-    const { loading, error, data } = useQuery( QUERY_ROOM );
+    const { loading, error, data, refetch } = useQuery( QUERY_ROOM );
     const [ editRoom, setEditRoom] = useState(null);
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;
