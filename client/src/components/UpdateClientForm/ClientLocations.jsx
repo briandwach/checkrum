@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
-//import { QUERY_LOCATION } from '../../utils/queries';
 import { QUERY_LOCATION_REVISED } from '../../utils/queries';
 
 import LocationRooms from './LocationRooms';
@@ -9,7 +8,14 @@ import EditLocation from './EditLocation';
 
 const ClientLocations = ({selectedClientId}) => {
     const { loading, data } = useQuery(QUERY_LOCATION_REVISED);
-    const [ locationId, setLocationId] = useState('');
+    const [ locations, setLocations] = useState([]);
+    
+    /*useEffect(() => {
+      if (loading) {
+        return <div>Loading...</div>;
+    } else {console.log('loaded')}});s
+*/
+   
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -18,6 +24,10 @@ const ClientLocations = ({selectedClientId}) => {
     const arr = data.locationsRevised.filter((client) => client._id === selectedClientId);
     const locationArr = arr.find(({locations}) => locations);
     const locationList = locationArr['locations'];
+    //setLocations(locationList);
+    //console.log(locations);
+
+    console.log(locations);
 
     return (
         <>
@@ -33,7 +43,7 @@ const ClientLocations = ({selectedClientId}) => {
                     <b>Address: </b> {location.address} <br/>
                     <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
                     <h3>Rooms in {location.locationName}: </h3><br />
-                    <LocationRooms locationId = {location._id}/>
+                    <LocationRooms locations={locations} locationId={location._id}/>
                 </div>
                 <button className="btn" onClick={()=>document.getElementById('edit_location').showModal()}>Edit Location</button>
                 <dialog id="edit_location" className="modal">

@@ -11,7 +11,6 @@ import Profile from './pages/Profile';
 import Staff from './pages/Staff';
 import Manager from './pages/Manager';
 import Error from './pages/Error';
-import Admin from './pages/Admin';
 import Equipment from './pages/Equipment.jsx';
 import Rooms from './pages/Rooms.jsx';
 import Inspection from './pages/Inspection.jsx';
@@ -47,10 +46,7 @@ const router = createBrowserRouter([
       }, {
         path: '/thoughts/:thoughtId',
         element: <SingleThought />
-      }, {
-        path: '/admin',
-        element: <Admin />
-      },
+      }, 
       {
         path: '/equipment',
         element: <Equipment />
