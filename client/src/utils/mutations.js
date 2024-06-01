@@ -119,14 +119,18 @@ mutation Mutation($roomId: String, $assignedBy: String, $assignedStaff: String) 
 `;
 
 export const SUBMIT_REPORT = gql`
-mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String) {
-  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments) {
+mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String, $lastUpdated: DateTime, $lastUpdatedBy: String) {
+  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments, lastUpdated: $lastUpdated, lastUpdatedBy: $lastUpdatedBy) {
     _id
     results {
       _id
     }
     generalComments
     inspectionDate
+    lastUpdated
+    lastUpdatedBy {
+      username
+    }
   }
 }
 `;

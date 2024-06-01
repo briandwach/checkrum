@@ -10,7 +10,7 @@ import { ROOM_INFO_BY_REPORT_ID, RESULT_DATA_BY_REPORT_ID } from '../utils/queri
 import { useMutation } from '@apollo/client';
 import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSPECTION_DATE } from '../utils/mutations';
 
-import { dateToLocale, dateTimeToLocale } from '../utils/dateTimeTools.js';
+import { dateTimeToLocale } from '../utils/dateTimeTools.js';
 
 function Inspection() {
     // If user is not logged in, redirect to login page
@@ -23,7 +23,7 @@ function Inspection() {
     //assigning the logged in user's role to authenticatedPerson
     const userProfile = Auth.getProfile();
     const authenticatedPerson = userProfile.authenticatedPerson.role;
-    const staff = userProfile.authenticatedPerson._id;
+    const staff = userProfile.authenticatedPerson.username;
 
     // If user is not a staff, redirect to homepage
     if (authenticatedPerson !== 'staff' && authenticatedPerson !== 'admin') {
@@ -87,12 +87,18 @@ function Inspection() {
         return <div>Loading...</div>;
     }
 
+    console.log(resultData.resultDataByReportId);
+    const lastUpdatedBy = resultData.resultDataByReportId.lastUpdatedBy.username;
     const updateStatus = resultData.resultDataByReportId.results.length;
     const inspectionDate = resultData.resultDataByReportId.inspectionDate;
-    const assignedStaff = resultData.resultDataByReportId.assignedStaff.username;
+    const lastUpdated = resultData.resultDataByReportId.lastUpdated;
+    
 
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = roomData;
+    const assignedBy = roomInfoByReportId.assignedBy.username;
+    const assignedStaff = roomInfoByReportId.assignedStaff.username;
+
     const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
 
@@ -238,7 +244,9 @@ function Inspection() {
                         reportId: id,
                         results: resultIdsArr,
                         generalComments: generalComments,
-                        inspectionDate: Date.now()
+                        inspectionDate: Date.now(),
+                        lastUpdated: Date.now(),
+                        lastUpdatedBy: assignedStaff
                     }
                 });
                 date = data.submitReport.inspectionDate;
@@ -248,7 +256,9 @@ function Inspection() {
                         reportId: id,
                         results: resultIdsArr,
                         generalComments: generalComments,
-                        inspectionDate: inspectionDate
+                        inspectionDate: inspectionDate,
+                        lastUpdated: Date.now(),
+                        lastUpdatedBy: staff
                     }
                 });
             }
@@ -300,16 +310,22 @@ function Inspection() {
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                         {!updateStatus ? (
                             <>
-                            <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
-                            <br></br>
+                                
+                                <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
+                                <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
+                                <br></br>
+                                <p><span className="font-bold">Assigned To: </span>{assignedStaff}</p>
+                                <br></br>
                             </>
                         ) : (
                             <>
+                                <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
+                                <br></br>
                                 <p><span className="font-bold">Inspection Date: </span>{dateTimeToLocale(inspectionDate)}</p>
                                 <p><span className="font-bold">Inspected By: </span>{assignedStaff}</p>
                                 <br></br>
-                                <p><span className="font-bold">Last Updated: </span>{staff}</p>
-                                <p><span className="font-bold">By: </span>{staff}</p>
+                                <p><span className="font-bold">Last Updated: </span>{dateTimeToLocale(lastUpdated)}</p>
+                                <p><span className="font-bold">By: </span>{lastUpdatedBy}</p>
                             </>
                         )}
                         {equipment.map((equipmentItem) => (
@@ -386,7 +402,7 @@ function Inspection() {
                                 <p className="p-1 font-semibold text-black">{errorMessage}</p>
                             </div>)}
                         {(!!updateStatus && formSubmit !== 'waiting') && <div className="flex justify-end">
-                            <i class="fa-solid fa-triangle-exclamation fa-xl mt-auto mb-auto mr-2" style={{ color: "#a46a6a" }}></i>
+                            <i className="fa-solid fa-triangle-exclamation fa-xl mt-auto mb-auto mr-2" style={{ color: "#a46a6a" }}></i>
                             <p className="font-bold grow-0">You are updating this inspection form.</p>
                         </div>}
                         {(formSubmit !== 'waiting') &&

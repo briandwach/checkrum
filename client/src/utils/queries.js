@@ -277,6 +277,9 @@ query Query($assignedStaff: ID!) {
     assignedStaff {
       username
     }
+    assignedBy {
+      username
+    }
     results {
       equipmentId {
         equipmentName
@@ -307,6 +310,9 @@ export const ROOM_INFO_BY_REPORT_ID = gql`
 query Query($id: ID!) {
   roomInfoByReportId(id: $id) {
     _id
+    assignedBy {
+      username
+    }
     assignedStaff {
       username
     }
@@ -349,6 +355,10 @@ query Query($id: ID!) {
     }
     generalComments
     inspectionDate
+    lastUpdated
+    lastUpdatedBy {
+      username
+    }
   }
 }
 `;

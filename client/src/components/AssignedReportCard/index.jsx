@@ -14,8 +14,9 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                 <p>{address}</p>
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
-                <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
                 <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
+                <br></br>
+                <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>                
                 <br></br>
                 {inspectionStatus === 'Current' &&
                     <>

@@ -84,17 +84,17 @@ const resolvers = {
     },
     completedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff');
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy');
       }
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff');
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff').populate('assignedBy').populate('lastUpdatedBy');
       }
     },
     resultDataByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff');
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff').populate('lastUpdatedBy');
       }
     },
     rooms: async (parent, args, context) => {
@@ -226,12 +226,16 @@ const resolvers = {
       return report;
     }
     },
-    submitReport: async (parent, { reportId, results, generalComments, inspectionDate }, context) => {
+    submitReport: async (parent, { reportId, results, generalComments, inspectionDate, lastUpdated, lastUpdatedBy }, context) => {
       if (context.user) {
+        const user = await User.findOne({ username: lastUpdatedBy });
+        if (!user) {
+          throw new Error('User not found');
+        }
         const report = await Report.findByIdAndUpdate(
           reportId,
           {
-            $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results }
+            $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results, lastUpdated: lastUpdated, lastUpdatedBy: user._id }
           },
           { new: true }
         );
