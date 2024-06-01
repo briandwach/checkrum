@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { dateToLocale, dateTimeToLocale } from '../../utils/dateTimeTools.js';
 
-function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed }) {
+function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed, assignedBy }) {
 
     const { upcomingDueDate, timeToUpcomingDueDate, inspectionStatus, missedCycles, initialMissedDate } = dateTimeProperties;
 
@@ -15,6 +15,7 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                 <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
+                <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
                 <br></br>
                 {inspectionStatus === 'Current' &&
                     <>

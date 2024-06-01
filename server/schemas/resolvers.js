@@ -79,7 +79,7 @@ const resolvers = {
     },
     assignedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedBy');
       }
     },
     completedReportsByStaff: async (parent, args, context) => {
@@ -89,12 +89,12 @@ const resolvers = {
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff');
       }
     },
     resultDataByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } });
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff');
       }
     },
     rooms: async (parent, args, context) => {
@@ -211,14 +211,16 @@ const resolvers = {
       }
 
     },
-    createReport: async (parent, { roomId, assignedStaff }, context) => {
+    createReport: async (parent, { roomId, assignedBy, assignedStaff }, context) => {
       if (context.user) {
       const user = await User.findOne({ username: assignedStaff });
       if (!user) {
         throw new Error('User not found');
       }
+      const manager = await User.findOne({ username: assignedBy });
       const report = await Report.create({
         roomId,
+        assignedBy: manager._id,
         assignedStaff: user._id
       });
       return report;

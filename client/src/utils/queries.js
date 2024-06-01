@@ -241,6 +241,9 @@ export const ASSIGNED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   assignedReportsByStaff(assignedStaff: $assignedStaff) {
     _id
+    assignedBy {
+      username
+    }
     roomId {
       _id
       roomName
@@ -304,6 +307,9 @@ export const ROOM_INFO_BY_REPORT_ID = gql`
 query Query($id: ID!) {
   roomInfoByReportId(id: $id) {
     _id
+    assignedStaff {
+      username
+    }
     roomId {
       _id
       roomName
@@ -331,6 +337,9 @@ export const RESULT_DATA_BY_REPORT_ID = gql`
 query Query($id: ID!) {
   resultDataByReportId(id: $id) {
     _id
+    assignedStaff {
+      username
+    }
     results {
       equipmentId {
         _id

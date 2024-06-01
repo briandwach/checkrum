@@ -43,6 +43,7 @@ const AssignedReports = ({ assignedStaff }) => {
                             address={report.roomId.location.address}
                             cycle={report.roomId.inspectionCycleLength}
                             lastInspected={report.roomId.lastInspectionDate}
+                            assignedBy={report.assignedBy.username}
                             dateTimeProperties={report.roomId.dateTimeProperties}
                             completed={false}
                         />

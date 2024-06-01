@@ -5,6 +5,10 @@ const reportSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Room'
   },
+  assignedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   assignedStaff:
   {
     type: Schema.Types.ObjectId,
@@ -23,6 +27,13 @@ const reportSchema = new Schema({
   },
   inspectionDate: {
     type: Date
+  },
+  lastUpdated: {
+    type: Date
+  },
+  lastUpdatedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 

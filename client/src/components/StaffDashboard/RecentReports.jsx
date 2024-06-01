@@ -34,7 +34,7 @@ const CompletedReports = ({ assignedStaff }) => {
 
   return (
     <div>
-      <h1 className="ml-3 text-3xl font-bold text-center">Recently Completed</h1>
+      <h1 className="ml-3 text-3xl font-bold text-center">Past 48 Hours</h1>
 
       {recentReports.length < 1 ? (
         <div>

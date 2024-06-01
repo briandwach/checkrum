@@ -1,3 +1,5 @@
+import Auth from '../../utils/auth';
+
 import { useState } from "react";
 import { ALL_STAFF } from '../../utils/queries';
 import { ALL_LOCATIONS } from '../../utils/queries';
@@ -7,7 +9,6 @@ import { CREATE_REPORT } from "../../utils/mutations";
 import { dateToLocale } from "../../utils/dateTimeTools.js";
 
 const CreateReport = () => {
-
     //Queries to pull all the users with staff role and the locations to populate drop downs. -dh
     const { loading, data } = useQuery(ALL_STAFF);
     const { loading: loadingLocation, data: dataLocation } = useQuery(ALL_LOCATIONS);
@@ -30,10 +31,11 @@ const CreateReport = () => {
     //function to handle the creation of the report, loops through the rooms and creates a report for each room that is checked -dh
     const handleSendReports = () => {
         dataRoom.roomByLocation.forEach((room) => {
+            const manager = Auth.getProfile().authenticatedPerson.username;
             const checkbox = document.getElementById(`checkbox-${room._id}`);
             if (checkbox.checked) {
                 setReportStatus('Creating Report...');
-                createReport({ variables: { roomId: room._id, assignedStaff: selectedStaff } });
+                createReport({ variables: { roomId: room._id, assignedBy: manager, assignedStaff: selectedStaff } });
                 setReportStatus('Report Created!');
             }
             //clears the report text after 3 seconds -dh

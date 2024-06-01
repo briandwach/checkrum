@@ -1,3 +1,5 @@
+import Auth from '../utils/auth';
+
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -11,6 +13,24 @@ import { DELETE_REPORT_RESULTS, ADD_RESULT, SUBMIT_REPORT, UPDATE_ROOM_LAST_INSP
 import { dateToLocale, dateTimeToLocale } from '../utils/dateTimeTools.js';
 
 function Inspection() {
+    // If user is not logged in, redirect to login page
+    if (Auth.loggedIn() == false) {
+        // Redirect to homepage
+        window.location.href = '/login';
+        return null;
+    }
+
+    //assigning the logged in user's role to authenticatedPerson
+    const userProfile = Auth.getProfile();
+    const authenticatedPerson = userProfile.authenticatedPerson.role;
+    const staff = userProfile.authenticatedPerson._id;
+
+    // If user is not a staff, redirect to homepage
+    if (authenticatedPerson !== 'staff' && authenticatedPerson !== 'admin') {
+        // Redirect to homepage
+        window.location.href = '/';
+        return null;
+    }
 
     // Pulls room objectId from url parameter to use for room data query
     const { id } = useParams();
@@ -69,12 +89,13 @@ function Inspection() {
 
     const updateStatus = resultData.resultDataByReportId.results.length;
     const inspectionDate = resultData.resultDataByReportId.inspectionDate;
+    const assignedStaff = resultData.resultDataByReportId.assignedStaff.username;
 
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = roomData;
     const { _id: roomId, roomName: name, location, inspectionCycleLength: cycle, equipment, lastInspectionDate: lastInspected } = roomInfoByReportId.roomId;
     const { client: { businessName }, locationName, address } = location;
-      
+
     //State logic to toggle viewing an equipment comment box
     const commentToggle = (equipmentItemId) => {
         setViewComment((prevState) => ({
@@ -278,11 +299,19 @@ function Inspection() {
                         <br></br>
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                         {!updateStatus ? (
+                            <>
                             <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
+                            <br></br>
+                            </>
                         ) : (
-                            <p><span className="font-bold">Inspection Date: </span>{dateTimeToLocale(inspectionDate)}</p>
+                            <>
+                                <p><span className="font-bold">Inspection Date: </span>{dateTimeToLocale(inspectionDate)}</p>
+                                <p><span className="font-bold">Inspected By: </span>{assignedStaff}</p>
+                                <br></br>
+                                <p><span className="font-bold">Last Updated: </span>{staff}</p>
+                                <p><span className="font-bold">By: </span>{staff}</p>
+                            </>
                         )}
-                        <br></br>
                         {equipment.map((equipmentItem) => (
                             <div key={equipmentItem._id} className="card card-compact bg-base-100 shadow-xl">
                                 <div className="p-2 flex justify-between">
@@ -290,25 +319,25 @@ function Inspection() {
                                     <div className="flex">
                                         <div className="form-control flex flex-col mr-6 " >
                                             <label className="cursor-pointer label p-0">Pass:</label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="successCheckbox"
-                                                    className="checkbox checkbox-success m-auto"
-                                                    checked={successCheckbox[equipmentItem._id]}
-                                                    onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
-                                                    onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
-                                                    disabled={formSubmit === 'waiting'} />
+                                            <input
+                                                type="checkbox"
+                                                name="successCheckbox"
+                                                className="checkbox checkbox-success m-auto"
+                                                checked={successCheckbox[equipmentItem._id]}
+                                                onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
+                                                onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
+                                                disabled={formSubmit === 'waiting'} />
                                         </div>
                                         <div className="form-control flex flex-col mr-4" >
                                             <label className="cursor-pointer label p-0">Fail:</label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="errorCheckbox"
-                                                    className="checkbox checkbox-error m-auto"
-                                                    checked={errorCheckbox[equipmentItem._id]}
-                                                    onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
-                                                    onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
-                                                    disabled={formSubmit === 'waiting'} />
+                                            <input
+                                                type="checkbox"
+                                                name="errorCheckbox"
+                                                className="checkbox checkbox-error m-auto"
+                                                checked={errorCheckbox[equipmentItem._id]}
+                                                onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
+                                                onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
+                                                disabled={formSubmit === 'waiting'} />
                                         </div>
                                         {errorCheckbox[equipmentItem._id] ? (
                                             <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
@@ -357,16 +386,16 @@ function Inspection() {
                                 <p className="p-1 font-semibold text-black">{errorMessage}</p>
                             </div>)}
                         {(!!updateStatus && formSubmit !== 'waiting') && <div className="flex justify-end">
-                        <i class="fa-solid fa-triangle-exclamation fa-xl mt-auto mb-auto mr-2" style={{ color: "#a46a6a" }}></i>
-                        <p className="font-bold grow-0">You are updating this inspection form.</p>
+                            <i class="fa-solid fa-triangle-exclamation fa-xl mt-auto mb-auto mr-2" style={{ color: "#a46a6a" }}></i>
+                            <p className="font-bold grow-0">You are updating this inspection form.</p>
                         </div>}
                         {(formSubmit !== 'waiting') &&
                             <div className="mt-1 card-actions justify-end">
-                            <Link to={`/staff`}>
-                            <button className="btn btn-secondary">Go Back</button>
-                            </Link>
-                                    <button className="btn btn-accent">{!updateStatus ? 'Submit' : 'Update'}</button>
-                                </div>}
+                                <Link to={`/staff`}>
+                                    <button className="btn btn-secondary">Go Back</button>
+                                </Link>
+                                <button className="btn btn-accent">{!updateStatus ? 'Submit' : 'Update'}</button>
+                            </div>}
                         {formSubmit === 'waiting' && <div></div>}
                     </div>
                 </div>
