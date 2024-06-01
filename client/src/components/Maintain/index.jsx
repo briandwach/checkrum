@@ -1,8 +1,7 @@
 import { useState } from "react";
-import AddClientForm from "../AddClientForm";
 import ViewStaff from "../ViewStaff";
-import UpdateClientForm from "../UpdateClientForm";
 import ManagerEquipment from "../EquipmentForm/index";
+import ClientTab from "../ClientTab";
 
 //entire component is a navigation element that makes radio buttons(that are tabs visually) that change the view of the page based on the selected tab. -dh
 const Maintain = () => {
@@ -14,17 +13,14 @@ const Maintain = () => {
 
     return (
         <div className="relative"> 
-            <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "20px"}}> 
+            <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "10px"}}> 
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="View Staff" onChange={handleTabChange} />
-                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Edit Client" onChange={handleTabChange} />
-                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Add Client" onChange={handleTabChange} />
-                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Manage Equipment" onChange={handleTabChange} />
-
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Clients" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Equipment" onChange={handleTabChange} />
             </div>
             {selectedOption === "View Staff" && <ViewStaff />}
-            {selectedOption === "Edit Client" && <UpdateClientForm />}
-            {selectedOption === "Add Client" && <AddClientForm />}
-            {selectedOption === "Manage Equipment" && <ManagerEquipment />}
+            {selectedOption === "Clients" && <ClientTab />}
+            {selectedOption === "Equipment" && <ManagerEquipment />}
         </div>
     );
 }

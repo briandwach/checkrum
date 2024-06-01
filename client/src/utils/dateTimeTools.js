@@ -1,5 +1,5 @@
 import { toZonedTime, format } from 'date-fns-tz';
-import { differenceInMinutes } from 'date-fns';
+import { differenceInHours } from 'date-fns';
 
 // Uses the NPM package date-fns-tz to convert the database UTC timestamp to a readable format
 // in the user's browser's local time
@@ -20,6 +20,6 @@ export const dateTimeToLocale = (time) => {
 };
 
 export const calculateClosedReport = (inspectionDate) => {
-    const minutes = differenceInMinutes(Date.now(), inspectionDate);
-    return (minutes < 20);
+    const hours = differenceInHours(Date.now(), inspectionDate);
+    return (hours < 48);
 };
