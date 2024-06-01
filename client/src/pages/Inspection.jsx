@@ -288,38 +288,36 @@ function Inspection() {
                                 <div className="p-2 flex justify-between">
                                     <h2 className="card-title">{equipmentItem.equipmentName}</h2>
                                     <div className="flex">
-                                        <div className="form-control" >
-                                            <label className="cursor-pointer label">
+                                        <div className="form-control flex flex-col mr-6 " >
+                                            <label className="cursor-pointer label p-0">Pass:</label>
                                                 <input
                                                     type="checkbox"
                                                     name="successCheckbox"
-                                                    className="checkbox checkbox-success"
+                                                    className="checkbox checkbox-success m-auto"
                                                     checked={successCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: false }))}
                                                     onChange={e => setSuccessCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
                                                     disabled={formSubmit === 'waiting'} />
-                                            </label>
                                         </div>
-                                        <div className="form-control" >
-                                            <label className="cursor-pointer label">
+                                        <div className="form-control flex flex-col mr-4" >
+                                            <label className="cursor-pointer label p-0">Fail:</label>
                                                 <input
                                                     type="checkbox"
                                                     name="errorCheckbox"
-                                                    className="checkbox checkbox-error"
+                                                    className="checkbox checkbox-error m-auto"
                                                     checked={errorCheckbox[equipmentItem._id]}
                                                     onClick={e => e.target.checked && viewCommentForceWithFail(equipmentItem._id)}
                                                     onChange={e => setErrorCheckbox(prevState => ({ ...prevState, [equipmentItem._id]: e.target.checked }))}
                                                     disabled={formSubmit === 'waiting'} />
-                                            </label>
                                         </div>
                                         {errorCheckbox[equipmentItem._id] ? (
                                             <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
                                                 {viewComment[equipmentItem._id] ? (
-                                                    <i className={`fa-regular fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots' : ' fa-fade'}`}
+                                                    <i className={`fa-regular fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots' : ' fa-fade'} w-10`}
                                                         style={{ color: commentText[equipmentItem._id] ? 'black' : 'red' }}>
                                                     </i>
                                                 ) : (
-                                                    <i className={`fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots fa-solid' : ' fa-fade fa-regular'}`}
+                                                    <i className={`fa-xl fa-comment${commentText[equipmentItem._id] ? '-dots fa-solid' : ' fa-fade fa-regular'} w-10`}
                                                         style={{ color: commentText[equipmentItem._id] ? 'black' : 'red' }}>
                                                     </i>
                                                 )}
@@ -327,9 +325,9 @@ function Inspection() {
                                         ) : (
                                             <button type="button" onClick={() => commentToggle(equipmentItem._id)}>
                                                 {commentText[equipmentItem._id] ? (
-                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl`}></i>
+                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? '-dots fa-regular' : '-dots fa-solid'} fa-xl w-10`}></i>
                                                 ) : (
-                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl`}></i>
+                                                    <i className={`fa-comment${viewComment[equipmentItem._id] ? ' fa-regular' : '-slash fa-solid'} fa-xl w-10`}></i>
                                                 )}
                                             </button>
                                         )}
