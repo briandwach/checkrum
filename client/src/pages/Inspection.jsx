@@ -88,7 +88,7 @@ function Inspection() {
     }
 
     console.log(resultData.resultDataByReportId);
-    const lastUpdatedBy = resultData.resultDataByReportId.lastUpdatedBy.username;
+    const lastUpdatedBy = resultData.resultDataByReportId.lastUpdatedBy;
     const updateStatus = resultData.resultDataByReportId.results.length;
     const inspectionDate = resultData.resultDataByReportId.inspectionDate;
     const lastUpdated = resultData.resultDataByReportId.lastUpdated;

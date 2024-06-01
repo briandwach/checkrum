@@ -128,9 +128,7 @@ mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $
     generalComments
     inspectionDate
     lastUpdated
-    lastUpdatedBy {
-      username
-    }
+    lastUpdatedBy 
   }
 }
 `;

@@ -32,8 +32,7 @@ const reportSchema = new Schema({
     type: Date
   },
   lastUpdatedBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    type: String
   }
 });
 

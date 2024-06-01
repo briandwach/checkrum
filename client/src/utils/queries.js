@@ -356,9 +356,7 @@ query Query($id: ID!) {
     generalComments
     inspectionDate
     lastUpdated
-    lastUpdatedBy {
-      username
-    }
+    lastUpdatedBy 
   }
 }
 `;

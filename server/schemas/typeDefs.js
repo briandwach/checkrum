@@ -51,7 +51,7 @@ scalar DateTime
     generalComments: String
     inspectionDate: DateTime
     lastUpdated: DateTime
-    lastUpdatedBy: User
+    lastUpdatedBy: String
   }
 
   type Result {
