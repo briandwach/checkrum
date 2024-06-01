@@ -4,16 +4,16 @@ import auth from '../utils/auth';
 
 const Home = () => {
 
+//code to check if the user is logged in when going to home page to change where the get started button sends you. -dh
   const user = auth.loggedIn();
-
   let userRole;
   if(user === true) {
     userRole = auth.getProfile().authenticatedPerson.role;
-    console.log(userRole);
   }
 
 
     return (
+      // this is a daisyui hero component. Specifically for an image with text and button on top of it -dh
       <>
         <div className="hero min-h-screen" style={{backgroundImage: 'url(../images/herobanner.avif)'}}>
           <div className="hero-overlay bg-opacity-60"></div>

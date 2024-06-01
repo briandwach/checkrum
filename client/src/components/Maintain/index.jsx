@@ -4,8 +4,8 @@ import ViewStaff from "../ViewStaff";
 import UpdateClientForm from "../UpdateClientForm";
 import ManagerEquipment from "../EquipmentForm/index";
 
+//entire component is a navigation element that makes radio buttons(that are tabs visually) that change the view of the page based on the selected tab. -dh
 const Maintain = () => {
-
     const [selectedOption, setSelectedOption] = useState(null);
 
     const handleTabChange = (event) => {

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+//Mutation for logging in. Takes in an email and password. -dh
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -13,6 +14,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
+//Mutation for adding a user. Takes in a username, email, password, and role. Used for sign up page. -dh
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!, $role: String!) {
     addUser(username: $username, email: $email, password: $password, role: $role) {
@@ -26,36 +28,6 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-      }
-    }
-  }
-`;
-
-export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        createdAt
-      }
-    }
-  }
-`;
 
 export const ADD_CLIENT = gql`
   mutation addClient($businessName: String!, $contactName: String!, $contactEmail: String!) {
@@ -127,6 +99,7 @@ export const EDIT_EQUIPMENT = gql`
   }
 `;
 
+//Mutation for changing user role. Takes in a role and username. -dh
 export const EDIT_USER = gql`
   mutation Mutation($role: String!, $username: String) {
     editUser(role: $role, username: $username) {
@@ -136,6 +109,7 @@ export const EDIT_USER = gql`
   }
 `;
 
+//Mutation for creating a report. Takes in a room id and assigned staff as a string. -dh
 export const CREATE_REPORT = gql`
   mutation createReport($roomId: String, $assignedStaff: String) {
     createReport(roomId: $roomId, assignedStaff: $assignedStaff) {
