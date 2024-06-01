@@ -49,21 +49,30 @@ roomSchema.virtual('dateTimeProperties').get(function () {
   const lastInspected = this.lastInspectionDate;
 
   let latestDueDate;
+  let inspectionStatus = 'Current';
+  let upcomingNum = 1;
   let upcomingDueDate;
   let startOfLatestCycle;
-  let overdueStatus = false;
   let missedCycles = 0;
   let calculateFirstMiss = startOfLatestCycle;
 
   if (cycle === 'Daily') {
     latestDueDate = endOfYesterday();
-    upcomingDueDate = addDays(latestDueDate, 2);
+
+    if (isAfter(lastInspected, latestDueDate)) {
+      inspectionStatus = 'Current';
+      upcomingNum = 2;
+    } else {
+      inspectionStatus = 'Due';
+    }
+
+    upcomingDueDate = addDays(latestDueDate, upcomingNum);
     startOfLatestCycle = subDays(latestDueDate, 1);
     const nowAfterDueDate = isAfter(currentTime, latestDueDate);
     
     if (nowAfterDueDate) {
       if (isAfter(startOfLatestCycle, lastInspected)) {
-        overdueStatus = true;
+        inspectionStatus = 'Overdue';
 
         for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subDays(cycleStart, 1))) {
           missedCycles++;
@@ -76,13 +85,21 @@ roomSchema.virtual('dateTimeProperties').get(function () {
 
   if (cycle === 'Weekly') {
     latestDueDate = endOfDay(previousFriday(currentTime));
-    upcomingDueDate = (addWeeks(latestDueDate, 2));
+
+    if (isAfter(lastInspected, latestDueDate)) {
+      inspectionStatus = 'Current';
+      upcomingNum = 2;
+    } else {
+      inspectionStatus = 'Due';
+    }
+
+    upcomingDueDate = (addWeeks(latestDueDate, upcomingNum));
     startOfLatestCycle = subWeeks(latestDueDate, 1);
     const nowAfterDueDate = isAfter(currentTime, latestDueDate);
 
     if (nowAfterDueDate) {
       if (isAfter(startOfLatestCycle, lastInspected)) {
-        overdueStatus = true;
+        inspectionStatus = 'Overdue';
 
         for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subWeeks(cycleStart, 1))) {
           missedCycles++;
@@ -95,13 +112,21 @@ roomSchema.virtual('dateTimeProperties').get(function () {
 
   if (cycle === 'Monthly') {
     latestDueDate = subMonths(endOfMonth(currentTime), 1);
-    upcomingDueDate = addMonths(latestDueDate, 2);
+
+    if (isAfter(lastInspected, latestDueDate)) {
+      inspectionStatus = 'Current';
+      upcomingNum = 2;
+    } else {
+      inspectionStatus = 'Due';
+    }
+
+    upcomingDueDate = addMonths(latestDueDate, upcomingNum);
     startOfLatestCycle = subMonths(latestDueDate, 1);
     const nowAfterDueDate = isAfter(currentTime, latestDueDate);
     
     if (nowAfterDueDate) {
       if (isAfter(startOfLatestCycle, lastInspected)) {
-        overdueStatus = true;
+        inpsectionStatus = 'Ovderdue';
 
         for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subMonths(cycleStart, 1))) {
           missedCycles++;
@@ -116,8 +141,8 @@ roomSchema.virtual('dateTimeProperties').get(function () {
 
   const dateTimeProperties = {
     upcomingDueDate: upcomingDueDate,
+    inspectionStatus: inspectionStatus,
     timeToUpcomingDueDate: timeToUpcomingDueDate,
-    overdueStatus: overdueStatus,
     missedCycles: missedCycles,
     initialMissedDate: calculateFirstMiss
   }

@@ -101,7 +101,7 @@ query AllRooms {
     lastInspectionDate
     inspectionCycleLength
     dateTimeProperties {
-      overdueStatus
+      inspectionStatus
       timeToUpcomingDueDate
       upcomingDueDate
       missedCycles
@@ -176,7 +176,7 @@ query RoomByLocation($name: String!) {
     dateTimeProperties {
       initialMissedDate
       missedCycles
-      overdueStatus
+      inspectionStatus
       timeToUpcomingDueDate
       upcomingDueDate
     }
@@ -219,7 +219,7 @@ query Query {
       lastInspectionDate
       inspectionCycleLength
       dateTimeProperties {
-        overdueStatus
+        inspectionStatus
         timeToUpcomingDueDate
         upcomingDueDate
         missedCycles
@@ -314,7 +314,7 @@ query Query($assignedStaff: ID!) {
       lastInspectionDate
       inspectionCycleLength
       dateTimeProperties {
-        overdueStatus
+        inspectionStatus
         timeToUpcomingDueDate
         upcomingDueDate
         missedCycles

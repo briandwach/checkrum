@@ -20,7 +20,7 @@ const OngoingReports = () => {
                                 <div key={report.roomId._id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
                                         <div className="flex p-3 justify-between">
-                                            {report.roomId.dateTimeProperties.overdueStatus ? (
+                                            {report.roomId.dateTimeProperties.inspectionStatus === 'Overdue' ? (
                                                 <div>
                                                     <h2 className="font-bold">Room: {report.roomId.roomName}</h2>
                                                     <p className="font-bold text-red-500">OVERDUE</p>
