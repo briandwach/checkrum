@@ -68,18 +68,15 @@ const AddNewRoom = ({ locationId, setAddRoom }) => {
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text">Inspection Cycle Length (Days)</span>
+                            <span className="label-text">Inspection Cycle Length</span>
                         </div>
                         <select
-                            {...register("inspectionCycleLength", { required: true })}
-                            className="select select-bordered"
-                            id="cycle"
-                            name="cycle"
-                            value={selectedStaff}
-                            onChange={(e) => setSelectedStaff(e.target.value)}
+                            {...register("inspectionCycleLength", { required: true, validate: (value) => ['Daily', 'Weekly', 'Monthly'].includes(value) })}
                         >
-                            <option value="">Assign Staff:</option>
-                            <option value="">Assign Staff:</option>
+                            <option value="">Choose</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Monthly">Monthly</option>
                         </select>
                     </label>
                     <label className="form-control w-full max-w-xs">
