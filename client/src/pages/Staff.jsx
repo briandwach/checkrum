@@ -15,7 +15,6 @@ const Staff = () => {
     const userProfile = Auth.getProfile();
     const authenticatedPerson = userProfile.authenticatedPerson.role;
     const assignedStaff = userProfile.authenticatedPerson._id;
-    //console.log(userProfile);
     // If user is not a staff, redirect to homepage
     if (authenticatedPerson !== 'staff' && authenticatedPerson !== 'admin') {
         // Redirect to homepage
@@ -33,6 +32,7 @@ const Staff = () => {
     };
 
     return (
+        // tab navigation. Only one tab can be active at a time(technically they are radio buttons). Whatever tab is selected it renders the component. -dh
         <div className="relative">
             <div role="tablist" className="tabs tabs-bordered tabs-lg relative">
                 <input type="radio" defaultChecked name="my_tabs_1" role="tab" className="tab" aria-label="Assigned Reports" onChange={handleTabChange} />
@@ -42,25 +42,6 @@ const Staff = () => {
             {selectedOption === "Assigned Reports" && <AssignedReports assignedStaff={assignedStaff} />}
             {selectedOption === "Recent Reports" && <CompletedReports assignedStaff={assignedStaff} />}
         </div>
-
-        // <div>
-        //     <h1>Staff Page</h1>
-        //     <p>Under construction</p>
-
-        //     <div>
-        //         <form>
-        //             <div>
-        //                 <label htmlFor="file">Upload File:</label>
-        //                 <input type="file" id="file" name="file" />
-        //             </div>
-        //             <div>
-        //                 <label htmlFor="description">Description:</label>
-        //                 <textarea id="description" name="description" rows="4" cols="50"></textarea>
-        //             </div>
-        //             <button type="submit">Submit</button>
-        //         </form>
-        //     </div>
-        // </div>
     );
 }
 

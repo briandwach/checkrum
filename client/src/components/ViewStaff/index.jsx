@@ -6,12 +6,10 @@ import Auth from '../../utils/auth';
 
 const ViewStaff = () => {
     const { loading, data, refetch } = useQuery(ALL_STAFF);
-    console.log(data);
 
     const [editUser] = useMutation(EDIT_USER);
 
     const handleSubmit = async (username, role) => {
-        console.log(username, role);
         await editUser({
             variables: {
                 username: username,
@@ -23,6 +21,7 @@ const ViewStaff = () => {
 
     const userRole = Auth.getProfile().authenticatedPerson.role;
 
+//below is mainly a daisy ui component that is a collapsible list of staff members. If the user is an admin, they can change the role of the staff member. -dh
     return (
         <div>
             {loading ? (
@@ -41,6 +40,7 @@ const ViewStaff = () => {
                             </div>
                             <div className="collapse-content">
                                 <p>
+                                    {/* roles get capitalized because we store them as lowercase in the database. -dh */}
                                     Role: {user.role.charAt(0).toUpperCase() + user.role.slice(1)} Email: {user.email}
                                 </p>
                                 {userRole === 'admin' && (

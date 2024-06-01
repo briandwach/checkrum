@@ -7,9 +7,5 @@ const Report = require('./Report');
 const Result = require('./Result');
 
 
-// TO BE DELETED
-const Thought = require('./Thought');
 
-
-// REMOVE THOUGHT BEFORE GO-LIVE
-module.exports = { User, Thought, Client, Equipment, Location, Room, Report, Result };
+module.exports = { User, Client, Equipment, Location, Room, Report, Result };
