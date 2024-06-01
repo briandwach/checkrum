@@ -190,7 +190,7 @@ useEffect(() => {
         </div>
       </div>
       {/* this is the side drawer content. -dh */}
-    </div><div className="drawer-side">
+      <div className="drawer-side">
         <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200">
         {userRole === 'manager' && (
@@ -244,13 +244,11 @@ useEffect(() => {
           </li>
         </ul>
           </div>
-        </div>
-        </header>
-      </>
     </header>
     </>
   );
-};
+}
+
 
 
 export default Header;
