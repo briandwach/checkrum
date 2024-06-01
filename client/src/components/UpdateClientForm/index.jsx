@@ -5,11 +5,13 @@ import { useState, Fragment, useEffect } from 'react';
 import ClientLocations from "./ClientLocations";
 import EditClient from "./EditClient";
 import ClientLocations2 from "./ClientLocations2";
+import AddNewLocation from "./AddNewLocation";
 
 const UpdateClientForm = () => { 
 
     const [selectedClientId, setSelectedClientId] = useState(null);
     const [editClient, setEditClient] = useState(null);
+    const [addLocation, setAddLocation ] = useState(null);
 
     const { loading, data } = useQuery(QUERY_CLIENT);
 
@@ -40,15 +42,22 @@ const UpdateClientForm = () => {
         setEditClient(client._id)
         };
 
+ // Update addLocation state to expose add room form
+    const handleAddClick = (event) => {
+        event.preventDefault();
+        setAddLocation(true)
+    } 
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div>
-            <h1>Select a Client to Edit</h1>
+            <h2 className="m-4 text-xl"> Select a Client to Edit</h2>
             <form onSubmit={handleClientSubmit}>
             <select onChange={handleClientChange} className="m-4 select select-bordered">
+                <option key="blank"></option>
                 {data.clients.map((client) => (
                     <option key={client._id} value={client._id}>
                         {client.businessName}
@@ -66,14 +75,15 @@ const UpdateClientForm = () => {
                         <div key={client._id}>
   
                             <div className="card-body m-4">
-                                <h2 className="card-title">{client.businessName}</h2>
+                                <h1 className="card-title text-2xl">{client.businessName}</h1>
                                 <p><b>Contact Name: </b>{client.contactName}</p>
                                 <p><b>Contact Email: </b><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
                             </div>
                             <div className="card-footer m-4">
                                 <button type="button" className="btn btn-outline m-2" onClick={(event) => handleEditClick(event, client)}>Edit Client <i className="fa-solid fa-pencil"></i></button>
-                                <button type="button" className="btn btn-outline m-2">Add a Location</button>
+                                <button type="button" className="btn btn-outline m-2" onClick={(event)=> handleAddClick(event)}>Add a Location</button>
                             </div>
+                            { addLocation === true? <AddNewLocation clientId={client._id} setAddLocation={setAddLocation} /> : null}
                             </div>
 
                     }
@@ -89,37 +99,3 @@ const UpdateClientForm = () => {
 
 
 export default UpdateClientForm;
-
-/*
-     <button className="btn" onClick={()=>document.getElementById('edit_client').showModal()}>Edit Client</button>
-                            <dialog id="edit_client" className="modal">
-                                <div className="modal-box">
-                                    <EditClient clientId={client._id} businessName={client.businessName} contactName={client.contactName} contactEmail={client.contactEmail}/>
-                                    <div className="modal-action">
-                                        <form method="dialog">
-                                        <button className="btn">Close</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </dialog>
-*/
-
-/*
-{data.clients.map((client) => (
-                    <div key={client._id}>
-                    
-                        {client._id === selectedClientId && (
-                            <div className="card w-10/12 bg-primary text-primary-content m-4">
-                            <div className="card-body m-4">
-                                <h2 className="card-title">{client.businessName}</h2>
-                                <p><b>Contact Name: </b>{client.contactName}</p>
-                                <p><b>Contact Email: </b><a href="mailto:{client.contactEmail}">{client.contactEmail}</a></p>
-                            </div>
-                            <div className="card-footer m-4">
-                                Footer
-                            </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
-*/
