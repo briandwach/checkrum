@@ -1,44 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
-import { useMutation , useQuery, useLazyQuery, InMemoryCache } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { ADD_CLIENT } from '../../utils/mutations';
-//import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
 
-import AddLocationForm from '../AddLocationForm';
-import ClientCard from './ClientCard';
 
 const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
     const { register, handleSubmit } = useForm();
     const [ savedClientCard, setSavedClientCard ] = useState( false );
     const [ clientId, setClientId] = useState('');
 
+    //addClient saves the clientId to local storage on success so it can be passed to subsequent functions
     const [ addClient, { loading: addClientLoading, data: addClientData, error: addClientError }] = useMutation(ADD_CLIENT, {
       onCompleted({ addClient }){if (addClient){localStorage.setItem("clientId", addClient._id)}}
     });
-   // });c
-    //const [getNewClientId, { data: clientData, loading: clientLoading }] = useLazyQuery(QUERY_SINGLE_CLIENT);
 
-
-
+//Submit add mutation for new client
     const onSubmitClient = async (val) => {
         const clientObj = val;
         try {
             const { data } = await addClient({
                 variables: { ...clientObj }
             });
-            //const clientIdData = localStorage.getItem("clientId");
-            console.log(clientId);
             setNewClient(false);
-            //var newClientName = Object.values(clientObj)[0];
-            //setClientName(newClientName)
-            //sendClientData(clientId)
-            //setClientIdData(clientId)
        } catch (err){
             console.log(err);
         }
 
     }
 
+    //Get clientId from local storage 
     useEffect(() => {
       let result = localStorage.getItem("clientId");
       setClientId(result);
@@ -47,27 +37,27 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
 
     return(
       <>
-        <form className="new-client" onSubmit={handleSubmit(onSubmitClient)}>
-          <h3>Add a New Client</h3>
+        <form className="new-client m-4" onSubmit={handleSubmit(onSubmitClient)}>
+          <h2 className="text-2xl">Add a New Client</h2>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Business Name:</span>
                 </div>
-              <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Business Name" className="input input-bordered w-full max-w-xs" />
+              <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Name:</span>
                 </div>
-              <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Contact Name" className="input input-bordered w-full max-w-xs" />  
+              <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />  
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Email Address:</span>
                 </div>
-              <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Contact Email Address" className="input input-bordered w-full max-w-xs"/>
+              <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Type here" className="input input-bordered w-full max-w-xs"/>
             </label>
-            {newClient === true? <button type="Submit" className="btn btn-outline btn-accent">Submit</button> : null} 
+            {newClient === true? <button type="Submit" className="btn btn-outline m-4">Submit</button> : null} 
         </form>
       </>
     )

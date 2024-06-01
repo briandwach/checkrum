@@ -103,9 +103,7 @@ const resolvers = {
       }
     },
     locationsRevised: async (parent, args, context) => {
-      if (context.user) {
-      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}])
-      }
+      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}, {path: 'locations', populate: {path: 'rooms', populate:{ path: 'equipment'}}}])
     }
   },
 

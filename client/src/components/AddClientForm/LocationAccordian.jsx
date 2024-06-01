@@ -11,54 +11,50 @@ const LocationAccordian = ({locationPresent}) => {
         pollInterval: 2000
     });
     const [roomPresent, setRoomPresent] = useState(false);
+    const [addRoom, setAddRoom] = useState(false);
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-
+//Retrieve clientId from location storage
     const clientId = localStorage.getItem("clientId");
 
+//Filter locations based on clientId
     const arr = data.locationsRevised.filter(( client ) => client._id === clientId );
     const locationArr = arr.find(({locations}) => locations);
     var locationList = [];
-    console.log(locationArr);
     if (locationPresent === true){
         locationList = locationArr['locations']
     } else ( locationList = []);
 
-    console.log(locationList);
+    //Set state of addRoom to show add room form
+    const handleAddClick = (event) => {
+        event.preventDefault();
+        setAddRoom(true)
+        };
 
     return (
         <>
-
-            <p>Locations Display Here</p>
-            <h3>Locations</h3>
+            <h3 className="m-4 text-xl">Locations</h3>
             {locationList && locationList.map((location) => (
                 <>
-                <div className="collapse collapse-plus bg-base-200">
-                <input type="radio" name="my-accordion-3" /> 
+                <div className="collapse bg-primary w-10/12 m-4">
+                <input type="checkbox" name="my-accordion-3" /> 
                    <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                     </div>
                     <div className="collapse-content" key={location._id}> 
                         <b>Address: </b> {location.address} <br/>
                         <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
-                        <h3>Rooms in {location.locationName}: </h3><br />
-                        <button className="btn" type="button" onClick={()=>document.getElementById('add_room_modal').showModal()}>Add a Room</button>
-                        <dialog id="add_room_modal" className="modal modal-bottom sm:modal-middle">
-                        <div className="modal-box">
-                        <AddRoomForm locationId={location._id} setRoomPresent={setRoomPresent} />
-                        <div className="modal-action">
-                        <form method="dialog">
-                        <button className="btn">Close Without Saving</button>
-                        </form>
-                        </div>
-                        </div>
-                    </dialog>
+                        <button className="btn btn-outline m-4" onClick={(event)=>{handleAddClick(event)}}>Add a Room</button>
+                        { addRoom === true? <AddRoomForm locationId={location._id} setRoomPresent={setRoomPresent} setAddRoom={setAddRoom} />: null}
+                        <h3 className="m-4 text-xl">Rooms in {location.locationName}: </h3><br />
+                        { roomPresent === true? <RoomCard locationList={locationList} roomPresent={roomPresent} locationId={location._id}/> : null}
+
                     </div>
                     </div>
-                    { roomPresent === true? <RoomCard locationList={locationList} roomPresent={roomPresent} locationId={location._id}/> : null}
+                    
                     </>
                     ))}
         </>

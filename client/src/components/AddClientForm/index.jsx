@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 
-import { ADD_CLIENT } from '../../utils/mutations';
-
-
-import Auth from '../../utils/auth';
 import AddLocationForm from '../AddLocationForm';
 import ClientCard from '../AddClientForm/ClientCard';
 import NewClientForm from '../AddClientForm/AddNewClient';
@@ -20,33 +14,38 @@ const AddClientForm = () => {
     const [ addLocationButton, setAddLocationButton ] = useState( false );
     const [ locationPresent, setLocationPresent ] = useState(false);
 
-    //TO DO
-    //Add button to add new client after form is completed
-
     
+    // Handles showing location form
     const showLocationForm = async (event) => {
       await setShowLocationBtn(true);
-      console.log(showLocationBtn);
       };
 
+    // Handles showing add location form
       const handleAddLocation = async (event) => {
         await setAddLocationButton( true );
       }
 
+    // Handles setting the ClientId when recieved from new client add mutation so other components have access
       const handleSetClientIdData = (newIdData) => {
         setClientIdData(newIdData)
       }
+
+      //Reset form states so user can add another client
+      const resetForm = (event) => {
+      setShowLocationBtn(false);
+      setAddLocationButton(false);
+      setNewClient(true)
+  }
 
       return (
         <div>
 
           { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
           { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
-          { newClient === false?  <button type="button" className="btn" onClick={()=>handleAddLocation()}>Add a Location</button>: null}
-          { addLocationButton === true ? <AddLocationForm clientIdData={clientIdData} setLocationPresent={setLocationPresent}/>: null}
+          { newClient === false?  <button type="button" className="btn btn-outline m-4 " onClick={()=>handleAddLocation()}>Add a Location</button>: null}
+          { addLocationButton === true ? <AddLocationForm clientIdData={clientIdData} setLocationPresent={setLocationPresent} setAddLocationButton={setAddLocationButton}/>: null}
           { newClient === false? <LocationAccordian locationPresent={locationPresent}/> : null}
-          {console.log(addLocationButton)}
-          {console.log(clientIdData)}
+          { newClient === false? <button type="button" className="btn btn-outline m-4" onClick={(event)=>{resetForm(event)}}>Add Another Client</button> : null}
         </div>
       )
 }
