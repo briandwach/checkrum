@@ -121,6 +121,7 @@ function Inspection() {
         // Error message on form submission if not all equipment have pass or fail
         if ((passResults + failResults) < equipment.length) {
             setErrorMessage('Missing inspection results for one or more equipment categories.');
+
             // Exits code block if something is wrong so that the user can correct it
             return;
         }
@@ -260,6 +261,7 @@ function Inspection() {
         // Put a settimeout here to clear setErrorMessage
         setTimeout(() => {
             setErrorMessage('');
+            setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
             setFormSubmit('editing');
         }, 3000);
     };
@@ -267,7 +269,7 @@ function Inspection() {
     return (
         <div>
             <form onSubmit={handleFormSubmit}>
-                <div className="card bg-secondary shadow-xl m-5">
+                <div className="card bg-primary shadow-xl m-5">
                     <div className="card-body">
                         <h2 className="card-title">Room: {name}</h2>
                         <p><span className="font-bold">Client: </span>{businessName}</p>
@@ -282,7 +284,7 @@ function Inspection() {
                         )}
                         <br></br>
                         {equipment.map((equipmentItem) => (
-                            <div key={equipmentItem._id} className="card card-compact bg-neutral shadow-xl">
+                            <div key={equipmentItem._id} className="card card-compact bg-base-100 shadow-xl">
                                 <div className="p-2 flex justify-between">
                                     <h2 className="card-title">{equipmentItem.equipmentName}</h2>
                                     <div className="flex">
@@ -354,15 +356,18 @@ function Inspection() {
                         </textarea>
                         {errorMessage && (
                             <div className={messageStyle}>
-                                <p className="p-1 font-semibold">{errorMessage}</p>
+                                <p className="p-1 font-semibold text-black">{errorMessage}</p>
                             </div>)}
-                        {(!!updateStatus && formSubmit !== 'waiting') && <p className="text-center font-bold text-red-500">You are updating this inspection form.</p>}
+                        {(!!updateStatus && formSubmit !== 'waiting') && <div className="flex justify-end">
+                        <i class="fa-solid fa-triangle-exclamation fa-xl mt-auto mb-auto mr-2" style={{ color: "#a46a6a" }}></i>
+                        <p className="font-bold grow-0">You are updating this inspection form.</p>
+                        </div>}
                         {(formSubmit !== 'waiting') &&
                             <div className="mt-1 card-actions justify-end">
                             <Link to={`/staff`}>
                             <button className="btn btn-secondary">Go Back</button>
                             </Link>
-                                    <button className="btn btn-primary">{!updateStatus ? 'Submit' : 'Update'}</button>
+                                    <button className="btn btn-accent">{!updateStatus ? 'Submit' : 'Update'}</button>
                                 </div>}
                         {formSubmit === 'waiting' && <div></div>}
                     </div>

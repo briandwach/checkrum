@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { dateToLocale, dateTimeToLocale } from '../../utils/dateTimeTools.js';
 
-function RecentReportCard({ id, name, client, location, cycle, inspectionDate, results, generalComments, assignedStaff }) {
+function RecentReportCard({ id, name, client, location, inspectionDate, results, generalComments, assignedStaff }) {
     let renderResults = [];
 
     const parseResults = (results) => {
@@ -19,7 +19,7 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
     parseResults(results);
 
     return (
-        <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
+        <div className="card lg:card-side bg-primary shadow-xl m-5">
             <div className="card-body">
                 <h2 className="card-title">Room: {name}</h2>
                 <p><span className="font-bold">Client: </span>{client}</p>
@@ -33,7 +33,7 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                     renderResults.map((result) => (
                         <div key={result.name} >
                             <p className="font-bold">{result.name}:
-                                {!result.result ? <span className="font-bold text-red-500"> Failed</span>
+                                {!result.result ? <i class="fa-solid fa-triangle-exclamation fa-xl ml-3" style={{ color: "#a46a6a" }}></i>
                                     : <span className="font-light"> (comment)</span>
                                 }
                             </p>
@@ -51,7 +51,7 @@ function RecentReportCard({ id, name, client, location, cycle, inspectionDate, r
                 <br></br>
                 <div className="card-actions justify-end">
                     <Link to={`/Inspection/${id}`}>
-                        <button className="btn btn-primary">Update</button>
+                        <button className="btn btn-base-100">Update</button>
                     </Link>
                 </div>
             </div>
