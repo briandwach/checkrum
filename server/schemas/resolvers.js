@@ -309,7 +309,8 @@ const resolvers = {
         const room = await Room.create({
           roomName,
           inspectionCycleLength,
-          equipment
+          equipment,
+          location: locationId
         });
 
         await Location.findOneAndUpdate(
