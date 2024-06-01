@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ViewStaff from "../ViewStaff";
 import ManagerEquipment from "../EquipmentForm/index";
-import ClientTab from "../ClientTab";
+import EditClient from "../UpdateClientForm";
 
 //entire component is a navigation element that makes radio buttons(that are tabs visually) that change the view of the page based on the selected tab. -dh
 const Maintain = () => {
@@ -19,7 +19,7 @@ const Maintain = () => {
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Equipment" onChange={handleTabChange} />
             </div>
             {selectedOption === "View Staff" && <ViewStaff />}
-            {selectedOption === "Clients" && <ClientTab />}
+            {selectedOption === "Clients" && <EditClient />}
             {selectedOption === "Equipment" && <ManagerEquipment />}
         </div>
     );
