@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddClientForm from "../AddClientForm";
-import EditClient from "../UpdateClientForm/EditClient";
+import EditClient from "../UpdateClientForm/index";
 
 
 const ClientTab = () => {
@@ -14,8 +14,8 @@ const ClientTab = () => {
     return (
         <div className="relative"> 
             <div role="tablist" className="tabs tabs-bordered tabs-lg relative" style={{paddingBottom: "20px"}}> 
-                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Edit Clients" onChange={handleTabChange} />
-                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Add Clients" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_4" role="tab" className="tab" aria-label="Edit Clients" onChange={handleTabChange} />
+                <input type="radio" name="my_tabs_4" role="tab" className="tab" aria-label="Add Clients" onChange={handleTabChange} />
             </div>
             <div style={{ display: "flex", justifyContent: "center"}}>
             {selectedOption === "Edit Clients" && <EditClient/>}
