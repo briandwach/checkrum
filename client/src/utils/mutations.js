@@ -111,22 +111,24 @@ export const EDIT_USER = gql`
 
 //Mutation for creating a report. Takes in a room id and assigned staff as a string. -dh
 export const CREATE_REPORT = gql`
-  mutation createReport($roomId: String, $assignedStaff: String) {
-    createReport(roomId: $roomId, assignedStaff: $assignedStaff) {
-      _id
-    }
+mutation Mutation($roomId: String, $assignedBy: String, $assignedStaff: String) {
+  createReport(roomId: $roomId, assignedBy: $assignedBy, assignedStaff: $assignedStaff) {
+    _id
   }
+}
 `;
 
 export const SUBMIT_REPORT = gql`
-mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String) {
-  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments) {
+mutation Mutation($reportId: ID!, $results: [ID]!, $inspectionDate: DateTime!, $generalComments: String, $lastUpdated: DateTime, $lastUpdatedBy: String) {
+  submitReport(reportId: $reportId, results: $results, inspectionDate: $inspectionDate, generalComments: $generalComments, lastUpdated: $lastUpdated, lastUpdatedBy: $lastUpdatedBy) {
     _id
     results {
       _id
     }
     generalComments
     inspectionDate
+    lastUpdated
+    lastUpdatedBy 
   }
 }
 `;

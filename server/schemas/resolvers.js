@@ -69,7 +69,7 @@ const resolvers = {
     },
     completedReports: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
       }
     },
     locations: async (parent, args, context) => {
@@ -79,22 +79,22 @@ const resolvers = {
     },
     assignedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedBy');
       }
     },
     completedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff');
+      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy');
       }
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] });
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff').populate('assignedBy');
       }
     },
     resultDataByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } });
+      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff');
       }
     },
     rooms: async (parent, args, context) => {
@@ -209,25 +209,27 @@ const resolvers = {
       }
 
     },
-    createReport: async (parent, { roomId, assignedStaff }, context) => {
+    createReport: async (parent, { roomId, assignedBy, assignedStaff }, context) => {
       if (context.user) {
       const user = await User.findOne({ username: assignedStaff });
       if (!user) {
         throw new Error('User not found');
       }
+      const manager = await User.findOne({ username: assignedBy });
       const report = await Report.create({
         roomId,
+        assignedBy: manager._id,
         assignedStaff: user._id
       });
       return report;
     }
     },
-    submitReport: async (parent, { reportId, results, generalComments, inspectionDate }, context) => {
+    submitReport: async (parent, { reportId, results, generalComments, inspectionDate, lastUpdated, lastUpdatedBy }, context) => {
       if (context.user) {
         const report = await Report.findByIdAndUpdate(
           reportId,
           {
-            $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results }
+            $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results, lastUpdated: lastUpdated, lastUpdatedBy: lastUpdatedBy }
           },
           { new: true }
         );

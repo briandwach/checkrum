@@ -176,6 +176,9 @@ export const COMPLETED_REPORTS = gql`
 query Query {
   completedReports {
     _id
+    assignedBy {
+      username
+    }
     assignedStaff {
       username
     }
@@ -241,6 +244,9 @@ export const ASSIGNED_REPORTS_BY_STAFF = gql`
 query Query($assignedStaff: ID!) {
   assignedReportsByStaff(assignedStaff: $assignedStaff) {
     _id
+    assignedBy {
+      username
+    }
     roomId {
       _id
       roomName
@@ -274,6 +280,9 @@ query Query($assignedStaff: ID!) {
     assignedStaff {
       username
     }
+    assignedBy {
+      username
+    }
     results {
       equipmentId {
         equipmentName
@@ -304,6 +313,12 @@ export const ROOM_INFO_BY_REPORT_ID = gql`
 query Query($id: ID!) {
   roomInfoByReportId(id: $id) {
     _id
+    assignedBy {
+      username
+    }
+    assignedStaff {
+      username
+    }
     roomId {
       _id
       roomName
@@ -331,6 +346,9 @@ export const RESULT_DATA_BY_REPORT_ID = gql`
 query Query($id: ID!) {
   resultDataByReportId(id: $id) {
     _id
+    assignedStaff {
+      username
+    }
     results {
       equipmentId {
         _id
@@ -340,6 +358,8 @@ query Query($id: ID!) {
     }
     generalComments
     inspectionDate
+    lastUpdated
+    lastUpdatedBy 
   }
 }
 `;

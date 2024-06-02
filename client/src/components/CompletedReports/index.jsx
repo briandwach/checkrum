@@ -32,6 +32,7 @@ const CompletedReports = () => {
                                     cycle={report.roomId.inspectionCycleLength}
                                     inspectionDate={report.inspectionDate}
                                     assignedStaff={report.assignedStaff.username}
+                                    assignedBy={report.assignedBy.username}
                                     results={report.results}
                                     generalComments={report.generalComments}
                                 />

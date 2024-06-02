@@ -30,8 +30,6 @@ const Header = () => {
   const [themeState, setThemeState] = useState('');
   const [checkState, setCheckState] = useState(false);
 
-  console.log(localStorage.getItem('theme'));
-
   useEffect(() => {
     if (storedTheme) {
         setThemeState(storedTheme);

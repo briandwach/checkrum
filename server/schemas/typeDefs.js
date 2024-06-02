@@ -45,10 +45,13 @@ scalar DateTime
   type Report {
     _id: ID!
     roomId: Room
+    assignedBy: User
     assignedStaff: User
     results: [Result]
     generalComments: String
     inspectionDate: DateTime
+    lastUpdated: DateTime
+    lastUpdatedBy: String
   }
 
   type Result {
@@ -114,11 +117,11 @@ scalar DateTime
     removeEquipment(equipmentId: ID): Equipment
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
-    createReport(roomId: String, assignedStaff: String): Report
+    createReport(roomId: String, assignedBy: String, assignedStaff: String): Report
     addLocation(clientId: ID, locationName: String, address: String, accessInstructions: String): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
-    submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!): Report
+    submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!, lastUpdated: DateTime, lastUpdatedBy: String): Report
     updateRoomLastInspectionDate(roomId: ID!, lastInspectionDate: DateTime!): Room
     addRoom(locationId: ID, roomName: String!, inspectionCycleLength: String, equipment: [String], location: String): Room
     editRoom(roomId: ID, roomName: String, inspectionCycleLength: String, equipment: [String]): Room

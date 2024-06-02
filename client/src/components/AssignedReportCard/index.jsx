@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { dateToLocale, dateTimeToLocale } from '../../utils/dateTimeTools.js';
 
-function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed }) {
+function AssignedReportCard({ id, name, client, location, address, cycle, lastInspected, dateTimeProperties, completed, assignedBy }) {
 
     const { upcomingDueDate, timeToUpcomingDueDate, inspectionStatus, missedCycles, initialMissedDate } = dateTimeProperties;
 
@@ -14,7 +14,9 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                 <p>{address}</p>
                 <br></br>
                 <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
-                <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
+                <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
+                <br></br>
+                <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>                
                 <br></br>
                 {inspectionStatus === 'Current' &&
                     <>
@@ -36,7 +38,7 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                         <p className="font-bold">Overdue since {dateToLocale(initialMissedDate)} :</p>
                         <p>{`Missed ${missedCycles} inspection cycle(s)`}</p>
                         <br></br>
-                        <i class="fa-solid fa-triangle-exclamation fa-2xl" style={{ color: "#a46a6a" }}></i>
+                        <i className="fa-solid fa-triangle-exclamation fa-2xl" style={{ color: "#a46a6a" }}></i>
                     </>}
                 {completed ? (
                     <div className="card-actions justify-end">
