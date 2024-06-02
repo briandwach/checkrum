@@ -177,6 +177,7 @@ export const COMPLETED_REPORTS = gql`
 query Query {
   completedReports {
     _id
+    failStatus
     assignedBy {
       username
     }

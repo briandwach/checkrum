@@ -38,6 +38,7 @@ const CompletedReports = () => {
     }
 
     const allReportsArr = data.completedReports;
+    console.log(allReportsArr);
 
     const reportsLength = allReportsArr.length;
     const monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
