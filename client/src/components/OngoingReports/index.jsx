@@ -126,10 +126,10 @@ const OngoingReports = () => {
 
     return (
         <div>
-           
-            <p className="font-bold">Filter Reports by Assigned Staff</p>
+           <div className="flex flex-col">
+           <p className="font-bold text-center mb-2">Filter Reports by Assigned Staff</p>
             <select
-                className="select-sm select-bordered"
+                className="select-sm select-bordered w-fit ml-auto mr-auto"
                 id="staff"
                 name="staff"
                 value={staffFilter}
@@ -142,8 +142,9 @@ const OngoingReports = () => {
                     </option>
                 ))}
             </select>
+            </div>
             {reportsArr.length > 0 ? (
-                <ul>
+                <ul className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                     {reportsArr.map((report) => (
                         <div key={report._id}>
                             <div className="card w-96 m-2 bg-primary text-primary-content">
@@ -200,8 +201,7 @@ const OngoingReports = () => {
             ) : (
                 <>
                 <br></br>
-                <br></br>
-                <h1>Staff member has no reports.</h1>
+                <h1 className="text-center">Staff member has no reports.</h1>
                 <br></br>
                 </>
             )}

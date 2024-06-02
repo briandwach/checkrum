@@ -27,7 +27,7 @@ const CompletedReports = () => {
                             <p className="m-3">No inspections have been completed recently.</p>
                         </div>
                     ) : (
-                        <div className="">
+                        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {data.completedReports.map((report) => (
                                 <RecentReportCard
                                     key={report._id}
