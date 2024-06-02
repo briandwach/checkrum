@@ -12,8 +12,6 @@ if (loading) {
     return <div>Loading...</div>;
   }
 
-  console.log(data);
-
   return (
       <div>
           <h1 className="ml-3 text-3xl font-bold">All Rooms</h1>
