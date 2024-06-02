@@ -36,7 +36,8 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
         }, [])
 
     return(
-      <>
+      <div className="items-center">
+      <div className="card bg-primary text-primary-content m-4 w-1/4">
         <form className="new-client m-4" onSubmit={handleSubmit(onSubmitClient)}>
           <h2 className="text-2xl">Add a New Client</h2>
             <label className="form-control w-full max-w-xs">
@@ -63,7 +64,8 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
             </label>
             {newClient === true? <button type="Submit" className="btn btn-outline m-4">Submit</button> : null} 
         </form>
-      </>
+      </div>
+      </div>
     )
 }
 

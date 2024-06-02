@@ -4,7 +4,6 @@ import { useState, Fragment, useEffect } from 'react';
 
 import ClientLocations from "./ClientLocations";
 import EditClient from "./EditClient";
-//import ClientLocations2 from "./ClientLocations2";
 import AddNewLocation from "./AddNewLocation";
 
 const UpdateClientForm = () => { 
