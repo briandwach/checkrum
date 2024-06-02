@@ -1,6 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { COMPLETED_REPORTS, ALL_STAFF, QUERY_CLIENT } from "../../utils/queries";
 
+import { calculateMonths } from "../../utils/dateTimeTools";
+
+import { isSameMonth } from 'date-fns';
+
 import { useState, useEffect } from 'react';
 
 import RecentReportCard from '../RecentReportCard/index.jsx';
@@ -13,6 +17,7 @@ const CompletedReports = () => {
 
     const [staffFilter, setStaffFilter] = useState('');
     const [clientFilter, setClientFilter] = useState('');
+    const [monthFilter, setMonthFilter] = useState('');
     const [reportsArr, setReportsArr] = useState([]);
 
     // Call the `refetch` function whenever the component loads
@@ -33,6 +38,9 @@ const CompletedReports = () => {
     }
 
     const allReportsArr = data.completedReports;
+
+    const reportsLength = allReportsArr.length;
+    const monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
 
     const clientChange = (e) => {
         setClientFilter(e.target.value);
@@ -56,8 +64,15 @@ const CompletedReports = () => {
                 });
             }
         });
+
+        if (monthFilter !== '') {
+            filteredReports = filteredReports.filter(item => {
+                return (isSameMonth(monthFilter, item.inspectionDate));
+            });
+        }
+
         setReportsArr(filteredReports);
-    }
+    };
 
     const staffChange = (e) => {
         setStaffFilter(e.target.value);
@@ -81,9 +96,48 @@ const CompletedReports = () => {
                 });
             }
         });
+
+        if (monthFilter !== '') {
+            filteredReports = filteredReports.filter(item => {
+                return (isSameMonth(monthFilter, item.inspectionDate));
+            });
+        }
+
+        setReportsArr(filteredReports);
+    };
+
+
+    const monthChange = (e) => {
+        setMonthFilter(e.target.value);
+
+        const filters = [
+            { property: 'roomId.location.client._id', value: clientFilter },
+            { property: 'assignedStaff._id', value: staffFilter },
+        ];
+
+        let filteredReports = allReportsArr;
+
+        filters.forEach(filter => {
+            if (filter.value !== '') {
+                const properties = filter.property.split('.');
+                filteredReports = filteredReports.filter(item => {
+                    let valueToCompare = item;
+                    for (let prop of properties) {
+                        valueToCompare = valueToCompare[prop]; 
+                    }
+                    return valueToCompare === filter.value;
+                });
+            }
+        });
+
+        if (e.target.value !== '') {
+            filteredReports = filteredReports.filter(item => {
+                return (isSameMonth(e.target.value, item.inspectionDate));
+            });
+        }
+
         setReportsArr(filteredReports);
     }
-
 
     return (
         <div>
@@ -92,7 +146,7 @@ const CompletedReports = () => {
                 <p className="font-bold text-center mb-2">Choose filtering options:</p>
                 <div className="grid grid-cols-2 lg:grid-cols-4 mr-auto ml-auto">
                     <select
-                        className="select-sm select-bordered w-fit"
+                        className="select-sm select-bordered mb-2 mr-3"
                         id="client"
                         name="client"
                         value={clientFilter}
@@ -106,7 +160,7 @@ const CompletedReports = () => {
                         ))}
                     </select>
                     <select
-                        className="select-sm select-bordered w-fit"
+                        className="select-sm select-bordered mb-2 mr-3"
                         id="staff"
                         name="staff"
                         value={staffFilter}
@@ -116,6 +170,20 @@ const CompletedReports = () => {
                         {staffData.allStaff.map((staff) => (
                             <option key={staff._id} value={staff._id}>
                                 {staff.username}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        className="select-sm select-bordered mr-3"
+                        id="month"
+                        name="month"
+                        value={monthFilter}
+                        onChange={(e) => monthChange(e)}
+                    >
+                        <option value=''>All Months</option>
+                        {monthsArray.map((month) => (
+                            <option key={month} value={month}>
+                                {month}
                             </option>
                         ))}
                     </select>
