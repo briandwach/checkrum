@@ -7,12 +7,12 @@ const Footer = () => {
   return (
     <footer className="flex bg-secondary p-4" style={{justifyContent:"center"}}>
         <div className="container text-center">
-          <div>
+          <div className="mb-2">
             <Link to="/contact" className="text-white mr-2">
-              <i className="fa-solid fa-envelope mr-2"></i>
+              <i className="fa-solid fa-envelope mr-2 fa-2xl"></i>
             </Link>
             <a href="https://github.com/briandwach/checkrum" target="_blank" rel="noopener noreferrer">
-              <i className="fa-brands fa-github ml-2"></i>
+              <i className="fa-brands fa-github ml-2 fa-2xl"></i>
             </a>
           </div>
 

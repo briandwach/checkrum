@@ -102,7 +102,7 @@ const CreateReport = () => {
                 dataRoom && (
                     //this block displays the rooms that are returned when you search for rooms. -dh
                     <>
-                        <div className="flex flex-col" style={{ alignItems: "center" }} >
+                        <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3" >
                             {dataRoom.roomByLocation.map((room) => (
                                 <div key={room.id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
@@ -135,13 +135,15 @@ const CreateReport = () => {
                                     </div>
                                 </div>
                             ))}
-                            <button
-                                className="btn btn-sm btn-primary m-2"
+                        </div>
+                        <div className="flex flex-col">
+                        <button
+                                className="btn btn-sm btn-primary m-2 w-fit mr-auto ml-auto" 
                                 onClick={handleSendReports}>
                                 Create Report
                             </button>
-                        </div>
                         <h1 className="mb-3 text-2xl font-bold text-center">{reportStatus}</h1>
+                        </div>
                     </>
                 )
             )}
