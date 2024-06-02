@@ -181,6 +181,7 @@ query Query {
       username
     }
     assignedStaff {
+      _id
       username
     }
     results {

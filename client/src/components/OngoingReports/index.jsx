@@ -17,10 +17,9 @@ const OngoingReports = () => {
     const [updateAssignedTo] = useMutation(UPDATE_ASSIGNED_TO);
 
     const [staffFilter, setStaffFilter] = useState('All Staff');
-    const [reportsArr, setReportsArr] = useState('');
+    const [reportsArr, setReportsArr] = useState([]);
     const [assignedTo, setAssignedTo] = useState({});
     const [updateMessage, setUpdateMessage] = useState({});
-    const [updateStylings, setUpdateStylings] = useState('');
 
     const userProfile = Auth.getProfile();
     const manager = userProfile.authenticatedPerson.username;
@@ -119,7 +118,6 @@ const OngoingReports = () => {
 
         setTimeout(() => {
             setUpdateMessage(prevState => ({ ...prevState, [reportId]: '' }));
-            setUpdateStylings('');
             reportUpdate();
         }, 2000);
     }
