@@ -399,6 +399,10 @@ query locationsRevised {
         roomName
         lastInspectionDate
         inspectionCycleLength
+        equipment {
+          _id
+          equipmentName
+        }
       }
     }
   }

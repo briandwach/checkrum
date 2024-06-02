@@ -13,37 +13,27 @@ const ClientCard = ({clientIdData}) => {
     {
       variables: { id: clientCardId }, 
     });
+
     if (loading){
       return <p>Loading...</p>
     }
 
-    console.log(data);
 
     const handleClientIdData = (val) => {
       setClientIdVal(val)
     }
 
-  /* const handleAddLocation = async (event) => {
-    event.preventDefault();
-    setAddLocationButton( true );
-  } */ 
-  //TO DO
-  // Get this location's _id
-  // Render each location associated with client as accordian with button to add room under location 
-
     return (
         <>
-        <div className="card w-11/12 bg-primary text-primary-content">
-  <div className="card-body">
-    <h2 className="card-title"> {data.getClient.businessName}</h2>
-    <p><b> Contact Name: </b>{data.getClient.contactName}</p>
-    <p><b> Contact Email: </b>{data.getClient.contactEmail}</p>
-    <p>Locations</p>
-    <div className="card-actions justify-end">
-    </div>
-  </div>
-{console.log(clientIdData)}
-</div>
+        <div className="card w-10/12 bg-primary text-primary-content m-4">
+          <div className="card-body">
+            <h2 className="card-title text-2xl"> {data.getClient.businessName}</h2>
+            <p><b> Contact Name: </b>{data.getClient.contactName}</p>
+            <p><b> Contact Email: </b>{data.getClient.contactEmail}</p>
+            <div className="card-actions justify-end">
+            </div>
+          </div>
+        </div>
         </>
     )
 }

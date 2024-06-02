@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EQUIPMENT } from '../../utils/queries';
 import { ADD_ROOM } from "../../utils/mutations";
 
-const AddRoomForm = ({locationId, setRoomPresent}) => {
+const AddRoomForm = ({locationId, setRoomPresent, setAddRoom}) => {
 
     const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
     const [addRoom, {loading, error, data}] = useMutation(ADD_ROOM);
@@ -29,6 +29,12 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
         event.target.checked? equipmentList.push(itemId): filterList(equipmentList, itemId);
     }
 
+    //update addRoom state to hide add form
+   const handleCancelAdd = (event) => {
+    event.preventDefault(event);
+    setAddRoom(false)
+}
+
     //Submit the room function
     const onSubmitRoom = async (val) => {
         const roomObj = val;
@@ -48,12 +54,15 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
         equipmentList = equipmentList.splice(0, equipmentList.length);
         document.getElementById("checkbox").checked = false;
         setRoomPresent(true);
+        setAddRoom(false);
     }
 
     return (
         <>
-            <form className="new-room" onSubmit={handleSubmit(onSubmitRoom)}>
-            <h3>Add a Room</h3>
+            <div className="m-4 bg-base-300">
+                <br />
+            <form className="new-room m-4" onSubmit={handleSubmit(onSubmitRoom)}>
+            <h3 className="m-4">Add a Room</h3>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text">Room Name</span>
@@ -64,7 +73,7 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
                 <div className="label">
                     <span className="label-text">Inspection Cycle Length (Days)</span>
                 </div>
-                <input {...register("inspectionCycleLength", { required: true, valueAsNumber: true })} type="number" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input {...register("inspectionCycleLength", { required: true})} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
@@ -73,15 +82,17 @@ const AddRoomForm = ({locationId, setRoomPresent}) => {
                 {items.map((item)=>(
                     <div className="form-control" key={item.equipmentName}>
                     <label className="cursor-pointer label">
-                      <input type="checkbox" className="checkbox checkbox-accent" id="checkbox" key={item._id} name={item._id} onChange={handleCheck} />
+                      <input type="checkbox" className="checkbox" id="checkbox" key={item._id} name={item._id} onChange={handleCheck} />
                       <span className="label-text">{item.equipmentName}</span>
                     </label>
                   </div>
                     
                 ))} 
             </label>
-            <button type="submit" className="btn btn-outline btn-accent" onClick={()=> document.getElementById('add_room_modal').close()}>Submit Room</button>
+            <button type="submit" className="btn btn-outline m-4">Submit Room</button>
+            <button type="button" className="btn btn-outline m-4" onClick={(event)=>{handleCancelAdd(event)}}>Cancel Add Room</button>
             </form>
+            </div>
         </>
     )
 }
