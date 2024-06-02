@@ -5,7 +5,7 @@ import { ADD_CLIENT } from '../../utils/mutations';
 
 
 const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [ savedClientCard, setSavedClientCard ] = useState( false );
     const [ clientId, setClientId] = useState('');
 
@@ -43,19 +43,23 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
             <div className="label">
                     <span className="label-text">Business Name:</span>
                 </div>
-              <input {...register("businessName", { required: true  })} type="Business Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+              <input {...register("businessName", { required: true, minLength: 1 })} type="Business Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+              {errors.businessName?.type == "required" && ( <p className="text-error">Business name is required.</p>)}
+
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Name:</span>
                 </div>
-              <input {...register("contactName", { required: true })} type="Contact Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />  
+              <input {...register("contactName", { required: true, minLength: 1 })} type="Contact Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />  
+              {errors.contactName?.type == "required" && ( <p className="text-error">Contact name is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Email Address:</span>
                 </div>
-              <input {...register("contactEmail", { required: true })} type="Contact Email" placeholder="Type here" className="input input-bordered w-full max-w-xs"/>
+              <input {...register("contactEmail", { required: true, minLength: 1, pattern: /.+@.+\..+/ })} type="Contact Email" placeholder="Type here" className="input input-bordered w-full max-w-xs"/>
+              {errors.contactEmail && ( <p className="text-error">Contact email is required.</p>)}
             </label>
             {newClient === true? <button type="Submit" className="btn btn-outline m-4">Submit</button> : null} 
         </form>

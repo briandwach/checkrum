@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_LOCATION } from '../../utils/mutations'
 
 const AddLocationForm = ({clientIdData, setLocationPresent, setAddLocationButton}) => {
-   const [ addLocation, {data, loading, error}] = useMutation(ADD_LOCATION);
+   const [ addLocation, {data, loading, error: locationError}] = useMutation(ADD_LOCATION);
   
    //update addLocationButton state to hide add form
    const handleCancelAdd = (event) => {
@@ -30,7 +30,7 @@ const AddLocationForm = ({clientIdData, setLocationPresent, setAddLocationButton
         setAddLocationButton(false);
     }
 
-   const { register, handleSubmit } = useForm();
+   const { register, handleSubmit, formState: { errors } } = useForm();
 
     return (
         <form className="new-location m-4" onSubmit={handleSubmit(onSubmitLocation)}>
@@ -39,19 +39,22 @@ const AddLocationForm = ({clientIdData, setLocationPresent, setAddLocationButton
                 <div className="label">
                     <span className="label-text">Location Name:</span>
                 </div>
-                <input {...register("locationName", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input {...register("locationName", { required: true, minLength: 1 })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                {errors.locationName && <p className="text-error">Location name is required.</p>}
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text">Location Address:</span>
                 </div>
-                <input {...register("address", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input {...register("address", { required: true, minLength: 1 })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                {errors.address&& <p className="text-error">Address is required.</p>}
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text">Access Instructions:</span>
                 </div>
-                <input {...register("accessInstructions", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input {...register("accessInstructions", { required: true, minLength: 1 })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                {errors.accessInstructions && <p className="text-error">Access instructions are required.</p>}
             </label>
             <button type="submit" className="btn btn-outline m-4" >Submit Location</button>
             <button type="button" className="btn btn-outline m-4" onClick={(event)=>{handleCancelAdd(event)}}>Cancel Add Location</button>
