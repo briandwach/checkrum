@@ -18,9 +18,11 @@ const Maintain = () => {
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Clients" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Equipment" onChange={handleTabChange} />
             </div>
+            <div className="flex justify-center">
             {selectedOption === "View Staff" && <ViewStaff />}
-            {selectedOption === "Clients" && <ClientTab />}
             {selectedOption === "Equipment" && <ManagerEquipment />}
+            </div>
+            {selectedOption === "Clients" && <ClientTab />}
         </div>
     );
 }
