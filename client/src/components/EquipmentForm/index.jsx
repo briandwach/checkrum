@@ -1,7 +1,8 @@
-import { useState, useReducer, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import { useMutation, useQuery} from '@apollo/client';
-import Auth from '../../utils/auth';
-import { ADD_EQUIPMENT,  REMOVE_EQUIPMENT } from '../../utils/mutations';
+
+
+import { ADD_EQUIPMENT } from '../../utils/mutations';
 import { QUERY_EQUIPMENT } from '../../utils/queries';
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
@@ -17,6 +18,7 @@ const AddEquipmentForm = () => {
 
     const items = data?.equipmentItems || [];
 
+    // Submit add equipment mutation 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -32,45 +34,27 @@ const AddEquipmentForm = () => {
         }
       };
 
+    // Handle entry of equipment name
     const handleChange = (event) => {
       event.preventDefault();
         const { name, value } = event.target;
-        //if (name === "equipmentNameField"){
             setEquipmentName(value)
-       // }
         };
-
-       /* const [removeEquipment, { removeError }] = useMutation(REMOVE_EQUIPMENT)
-
-        const handleRemoveEquipment = async (equipmentId) => {
-            try {
-                const { data } = await removeEquipment({
-                variables: { equipmentId },
-                });
-                    console.log('Item deleted');
-
-             } catch (err) {
-                console.error(err);
-            }
-        };*/
-
+    
+        // Handle state change for edit equipment itme
         const handleEditClick = (event, item) => {
             event.preventDefault();
             setEditEquipmentItem(item._id);
-
-          ///  const formValues = { 
                 equipmentName: item.equipmentName
             };
 
-           // setEditFormData(formValues);
-       // };
-
+        // Setting edit form state
       const [editFormData, setEditFormData] = useState({
             _id: '',
             equipmentName: ''
         });
 
-        //console.log(editFormData);
+        // Handling changes to the edit form and updating state
         const handleEditFormChange = (event) => {
             event.preventDefault();
             const fieldName = event.target.getAttribute('name');
@@ -81,9 +65,6 @@ const AddEquipmentForm = () => {
             setEditFormData(newFormData);
         };
 
-       /* const handleEditFormSubmit = (event) => {
-            event.preventDefault();
-        }*/
 
     return (
         <div>
@@ -98,7 +79,7 @@ const AddEquipmentForm = () => {
                     </thead>
                     <tbody>
                         {items && items.map((item) => (
-                            <Fragment>
+                            <Fragment key={item._id}>
                                 { editEquipmentItem === item._id? 
                                 <EditableRow item = {item } editFormData={editFormData} handleEditFormChange={handleEditFormChange} setEditFormData={setEditFormData} setEditEquipmentItem={setEditEquipmentItem} /> : 
                                 <ReadOnlyRow item = { item } handleEditClick={handleEditClick}/> }
@@ -108,7 +89,7 @@ const AddEquipmentForm = () => {
                             <th>New Equipment</th>
                             <td><input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" value={equipmentName} onChange={handleChange}/>
                             </td>
-                            <td><button onClick={handleFormSubmit}><i className="fa-solid fa-floppy-disk"></i></button></td>
+                            <td><button onClick={handleFormSubmit}><i className="fa-solid fa-floppy-disk hover:text-green-400"></i></button></td>
                              </tr>
                      </tbody>
                 </table>

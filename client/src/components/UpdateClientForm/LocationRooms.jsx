@@ -47,7 +47,7 @@ const LocationRooms = ({locations, locationId}) => {
                             <h2 className="card-title">{room.roomName}</h2>
                             <p><b>Inspection Cycle Length: </b>{room.inspectionCycleLength}</p>
                             { room.equipment && room.equipment.map((item) => (<ul key={item._id} className="m-1">{item.equipmentName}</ul>))}
-                                <div className="card-actions justify-end">
+                                <div className="card-actions justify-end m-4">
                                     <button type="button" className="btn btn-outline" onClick={(event)=>{handleEditClick(event, room)}}>Edit {room.roomName} <i className="fa-solid fa-pencil"></i></button>
                             </div>
                             </>

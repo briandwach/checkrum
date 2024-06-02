@@ -18,7 +18,7 @@ const EditClient = ({clientId, businessName, contactName, contactEmail, setEditC
           });
         setEditClient(null)
      } catch (err){
-          console.log(err);
+          console.error(err);
       }
 
     }
@@ -37,22 +37,22 @@ const EditClient = ({clientId, businessName, contactName, contactEmail, setEditC
             <div className="label">
                     <span className="label-text">Business Name:</span>
                 </div>
-              <input {...register("businessName", { required: true, minLength: 1 })} type="text" defaultValue={businessName} className="input input-bordered w-full max-w-xs" />
-              {errors.businessName?.type == "required" && ( <p className="text-error">Business name is required.</p>)}
+              <input {...register("businessName", { required: true, minLength: 1 })} type="text" defaultValue={businessName} className="input input-bordered w-full max-w-xs" placeholder="Business Name"/>
+              {errors.businessName?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Business name is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Name:</span>
                 </div>
-              <input {...register("contactName", { required: true, minLength: 1 })} type="text" defaultValue={contactName} className="input input-bordered w-full max-w-xs" />  
-              {errors.contactName?.type == "required" && ( <p className="text-error">Contact name is required.</p>)}
+              <input {...register("contactName", { required: true, minLength: 1 })} type="text" defaultValue={contactName} className="input input-bordered w-full max-w-xs" placeholder="Contact Name" />  
+              {errors.contactName?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Contact name is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Email Address:</span>
                 </div>
               <input {...register("contactEmail", { required: true, minLength: 1, pattern: /.+@.+\..+/ })} type="email" defaultValue={contactEmail} placeholder="Contact Email Address" className="input input-bordered w-full max-w-xs"/>
-              {errors.contactEmail && <p className="text-error">Contact email is required.</p>}
+              {errors.contactEmail && <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Contact email is required.</p>}
             </label>
             <button type="submit" className="btn btn-outline m-4" >Submit Client</button>
             <button type="submit" className="btn btn-outline m-4" onClick={(event)=> handleCancelEdit(event)}>Cancel Edit Client</button>

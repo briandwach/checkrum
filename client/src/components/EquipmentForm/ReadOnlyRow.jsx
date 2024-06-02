@@ -6,14 +6,12 @@ const ReadOnlyRow = ({ item, handleEditClick }) => {
 
     const [removeEquipment, { removeError }] = useMutation(REMOVE_EQUIPMENT);
 
+    // Handle mutation to delete equipment
     const handleRemoveEquipment = async (equipmentId) => {
-        //event.preventDefault();
         try {
-          console.log('Deleting equipment...');
             const { data } = await removeEquipment({
             variables: { equipmentId },
             });
-                console.log('Item deleted');
 
          } catch (err) {
             console.error(err);
@@ -25,8 +23,8 @@ return (
      <tr key={item._id}>
             <th></th>
             <td key={item._id} name={item._id}>{item.equipmentName}</td>
-            <td><button type="button" ><i className="fa-solid fa-trash-can" onClick={() => handleRemoveEquipment(item._id)}></i></button>
-            <button type="button" ><i className="fa-solid fa-pencil" onClick={(event) => handleEditClick(event, item)}></i></button>
+            <td><button type="button" className="m-1"><i className="fa-solid fa-trash-can hover:text-red-400" onClick={() => handleRemoveEquipment(item._id)}></i></button>
+            <button type="button" className="m-1"><i className="fa-solid fa-pencil hover:text-yellow-400" onClick={(event) => handleEditClick(event, item)}></i></button>
             </td>
     </tr>
     </>

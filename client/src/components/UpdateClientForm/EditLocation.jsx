@@ -12,14 +12,13 @@ const EditLocation = ({locationId, address, locationName, accessInstructions, se
     const onSubmitLocationEdit = async (val) => {
         const locationObj = val;
         locationObj.locationId = locationId;
-        console.log(locationObj);
        try {
             const { data } = await editLocation({
                 variables: { ...locationObj}
             })
         setEditLocation(null)
        } catch (err){
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -38,21 +37,21 @@ const EditLocation = ({locationId, address, locationName, accessInstructions, se
                     <span className="label-text">Location Name:</span>
                 </div>
                 <input {...register("locationName", { required: true, minLength: 1 })} type="text" defaultValue={locationName} className="input input-bordered w-full max-w-xs" />
-                {errors.locationName?.type == "required" && ( <p className="text-error">Location name is required.</p>)}
+                {errors.locationName?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Location name is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text">Location Address:</span>
                 </div>
                 <input {...register("address", { required: true, minLength: 1 })} type="text" defaultValue={address} className="input input-bordered w-full max-w-xs" />
-                {errors.address?.type == "required" && ( <p className="text-error">Address is required.</p>)}
+                {errors.address?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Address is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text">Access Instructions:</span>
                 </div>
                 <input {...register("accessInstructions", { required: true, minLength: 1 })} type="text" defaultValue={accessInstructions} className="input input-bordered w-full max-w-xs" />
-                {errors.accessInstructions?.type == "required" && ( <p className="text-error">Access instructions are required.</p>)}
+                {errors.accessInstructions?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Access instructions are required.</p>)}
             </label>
             <button type="submit" className="btn btn-outline m-4" >Submit Location</button>
             <button type="button" className="btn btn-outline m-4" onClick={(event)=> handleCancelEdit(event)}> Cancel Edit Location</button>

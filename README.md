@@ -25,10 +25,15 @@ Inspection tracker for audio video technologies in conference rooms.  Technical 
 [Code Repository](https://github.com/briandwach/checkrum)
 
 ## License
+
 This application is covered under the [MIT License](http://choosealicense.com/licenses/mit/).
 
 ## Resources
-Font Awesome
+
+[Font Awesome](https://fontawesome.com)
+
+[React Hook Form](https://react-hook-form.com)
 
 ## Questions
+
 Please contact us with any questions regarding this application at: checkrumproj@gmail.com

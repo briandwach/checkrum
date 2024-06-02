@@ -4,7 +4,7 @@ import { useState, Fragment, useEffect } from 'react';
 
 import ClientLocations from "./ClientLocations";
 import EditClient from "./EditClient";
-import ClientLocations2 from "./ClientLocations2";
+//import ClientLocations2 from "./ClientLocations2";
 import AddNewLocation from "./AddNewLocation";
 
 const UpdateClientForm = () => { 
@@ -21,7 +21,6 @@ const UpdateClientForm = () => {
     const filterClients = () => {
         if (data) {
             clientData = data.clients.filter((client)=> client._id === selectedClientId)
-            console.log(clientData);
         }}
     
     filterClients();
@@ -91,7 +90,7 @@ const UpdateClientForm = () => {
                     </div>
                 ))}
             </div>
-            {selectedClientId? <ClientLocations2 selectedClientId = {selectedClientId} /> : null}
+            {selectedClientId? <ClientLocations selectedClientId = {selectedClientId} /> : null}
         </div>
     );
 

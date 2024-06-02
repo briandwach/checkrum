@@ -9,7 +9,7 @@ const AddNewRoom = ({ locationId, setAddRoom }) => {
 
     const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
     const [addRoom, { loading, error, data }] = useMutation(ADD_ROOM);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: {errors} } = useForm();
     const [selectedEquipment, setSelectedEquipment] = useState([]);
     var equipmentList = [];
     const items = dataEquipment?.equipmentItems || [];
@@ -45,7 +45,7 @@ const AddNewRoom = ({ locationId, setAddRoom }) => {
                 variables: { ...roomObj }
             })
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
 
         //Resetting form
@@ -64,7 +64,9 @@ const AddNewRoom = ({ locationId, setAddRoom }) => {
                         <div className="label">
                             <span className="label-text">Room Name</span>
                         </div>
-                        <input {...register("roomName", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input {...register("roomName", { required: true })} type="text" placeholder="Room Name" className="input input-bordered w-full max-w-xs" />
+                        {errors.roomName?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" />  Room name is required.</p>)}
+
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
@@ -72,12 +74,14 @@ const AddNewRoom = ({ locationId, setAddRoom }) => {
                         </div>
                         <select
                             {...register("inspectionCycleLength", { required: true, validate: (value) => ['Daily', 'Weekly', 'Monthly'].includes(value) })}
+                            className="m2 select select-bordered"
                         >
                             <option value="">Choose</option>
                             <option value="Daily">Daily</option>
                             <option value="Weekly">Weekly</option>
                             <option value="Monthly">Monthly</option>
                         </select>
+                        {errors.inspectionCycleLength && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" />  Inspection cycle length is required.</p>)}
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
