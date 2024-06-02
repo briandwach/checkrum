@@ -15,7 +15,7 @@ const RoomCard = ({locationList, roomPresent, locationId}) => {
         <div className="flex flex-wrap">
         {roomList.map((room) => (
                 <>
-                    <div className="card bg-base-300 text-primary-content m-1">
+                    <div className="card bg-base-300 text-primary-content m-1" key={room._id}>
                         <div className="card-body">
                             <h2 className="card-title">{room.roomName}</h2>
                             <p><b>Inspection Cycle Length:</b> {room.inspectionCycleLength} </p>
