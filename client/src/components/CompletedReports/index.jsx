@@ -58,7 +58,7 @@ const CompletedReports = () => {
                 filteredReports = filteredReports.filter(item => {
                     let valueToCompare = item;
                     for (let prop of properties) {
-                        valueToCompare = valueToCompare[prop]; 
+                        valueToCompare = valueToCompare[prop];
                     }
                     return valueToCompare === filter.value;
                 });
@@ -90,7 +90,7 @@ const CompletedReports = () => {
                 filteredReports = filteredReports.filter(item => {
                     let valueToCompare = item;
                     for (let prop of properties) {
-                        valueToCompare = valueToCompare[prop]; 
+                        valueToCompare = valueToCompare[prop];
                     }
                     return valueToCompare === filter.value;
                 });
@@ -123,7 +123,7 @@ const CompletedReports = () => {
                 filteredReports = filteredReports.filter(item => {
                     let valueToCompare = item;
                     for (let prop of properties) {
-                        valueToCompare = valueToCompare[prop]; 
+                        valueToCompare = valueToCompare[prop];
                     }
                     return valueToCompare === filter.value;
                 });
@@ -137,6 +137,13 @@ const CompletedReports = () => {
         }
 
         setReportsArr(filteredReports);
+    };
+
+    const clearFilters = () => {
+        setClientFilter('');
+        setStaffFilter('');
+        setMonthFilter('');
+        setReportsArr(allReportsArr);
     }
 
     return (
@@ -188,6 +195,11 @@ const CompletedReports = () => {
                         ))}
                     </select>
                 </div>
+                <button
+                    className="btn btn-sm btn-primary m-2 w-fit mr-auto ml-auto"
+                    onClick={clearFilters}>
+                    Clear Filters
+                </button>
             </div>
             <div>
                 {reportsArr < 1 ? (
