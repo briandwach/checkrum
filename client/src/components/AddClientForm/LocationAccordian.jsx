@@ -7,6 +7,8 @@ import RoomCard from "../AddRoomForm/RoomCard";
 import { QUERY_LOCATION_REVISED } from "../../utils/queries";
 
 const LocationAccordian = ({locationPresent}) => {
+
+    const [locationText, setLocationText] = useState('');
     const { loading, data } = useQuery(QUERY_LOCATION_REVISED,{
         pollInterval: 2000
     });
@@ -31,25 +33,26 @@ const LocationAccordian = ({locationPresent}) => {
     //Set state of addRoom to show add room form
     const handleAddClick = (event) => {
         event.preventDefault();
+        setLocationText("Locations")
         setAddRoom(true)
         };
 
     return (
         <>
-            <h3 className="m-4 text-xl">Locations</h3>
+            <h3 className="m-4 text-xl">{locationText}</h3>
             {locationList && locationList.map((location) => (
                 <>
-                <div className="collapse bg-primary w-10/12 m-4">
+                <div className="collapse bg-primary">
                 <input type="checkbox" name="my-accordion-3" /> 
                    <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                     </div>
-                    <div className="collapse-content" key={location._id}> 
-                        <b>Address: </b> {location.address} <br/>
-                        <b>Access Instructions: </b> {location.accessInstructions}  <br/ >
+                    <div className="flex flex-col flex-wrap content-start collapse-content" key={location._id}> 
+                        <b>Address: </b> {location.address} 
+                        <b>Access Instructions: </b> {location.accessInstructions}
                         <button className="btn btn-outline m-4" onClick={(event)=>{handleAddClick(event)}}>Add a Room</button>
                         { addRoom === true? <AddRoomForm locationId={location._id} setRoomPresent={setRoomPresent} setAddRoom={setAddRoom} />: null}
-                        <h3 className="m-4 text-xl">Rooms in {location.locationName}: </h3><br />
+                        <h3 className="text-xl">Rooms in {location.locationName}: </h3><br />
                         { roomPresent === true? <RoomCard locationList={locationList} roomPresent={roomPresent} locationId={location._id}/> : null}
 
                     </div>

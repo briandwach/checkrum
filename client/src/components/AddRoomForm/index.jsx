@@ -59,7 +59,7 @@ const AddRoomForm = ({locationId, setRoomPresent, setAddRoom}) => {
 
     return (
         <>
-            <div className="m-4 bg-base-300">
+            <div className="flex m-4 bg-base-300">
                 <br />
             <form className="new-room m-4" onSubmit={handleSubmit(onSubmitRoom)}>
             <h3 className="m-4">Add a Room</h3>

@@ -6,7 +6,7 @@ function RoomCard({ id, name, client, location, address, cycle, lastInspected, d
     const { upcomingDueDate, timeToUpcomingDueDate, inspectionStatus, missedCycles, initialMissedDate } = dateTimeProperties;
 
     return (
-        <div className="card lg:card-side bg-base-100 bg-slate-300 shadow-xl m-5">
+        <div className="card bg-base-100 bg-slate-300 shadow-xl flex">
             <div className="card-body">
                 <h2 className="card-title">Room: {name}</h2>
                 <p><span className="font-bold">Client: </span>{client}</p>
