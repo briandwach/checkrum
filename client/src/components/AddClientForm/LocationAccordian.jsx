@@ -42,12 +42,12 @@ const LocationAccordian = ({locationPresent}) => {
             <h3 className="m-4 text-xl">{locationText}</h3>
             {locationList && locationList.map((location) => (
                 <>
-                <div className="collapse bg-primary">
+                <div className="collapse bg-primary m-4" key={location.locationName}>
                 <input type="checkbox" name="my-accordion-3" /> 
                    <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                     </div>
-                    <div className="flex  flex-col flex-wrap content-start collapse-content" key={location._id}> 
+                    <div className="content-start collapse-content" key={location._id}> 
                         <b>Address: </b> {location.address} <br />
                         <b>Access Instructions: </b> {location.accessInstructions}<br />
                         <button className="btn btn-outline m-4 w-48" onClick={(event)=>{handleAddClick(event)}}>Add a Room</button>

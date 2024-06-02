@@ -39,7 +39,7 @@ const AddNewLocation = ({clientId, setAddLocation}) => {
                         <div className="label">
                             <span className="label-text">Location Name:</span>
                         </div>
-                        <input {...register("locationName", { required: true, minLength: 1 })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input {...register("locationName", { required: true, minLength: 1 })} type="text" placeholder="Location Name" className="input input-bordered w-full max-w-xs" />
                         {errors.locationName && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" />  Location name is required.</p>)}
 
                     </label>
