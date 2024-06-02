@@ -1,4 +1,4 @@
-# Checkrum: Inspection Tracker
+# Checkrūm: Inspection Tracker
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](http://choosealicense.com/licenses/mit/)
 
