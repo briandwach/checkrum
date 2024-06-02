@@ -144,6 +144,7 @@ query Query {
   inProgressReports {
     _id
     assignedStaff {
+      _id
       username
     }
     roomId {

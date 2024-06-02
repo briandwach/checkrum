@@ -210,3 +210,19 @@ mutation editClient($clientId: ID, $businessName: String, $contactName: String, 
   }
 }
 `;
+
+export const DELETE_REPORT = gql`
+mutation Mutation($reportId: ID!) {
+  deleteReport(reportId: $reportId) {
+    _id
+  }
+}
+`;
+
+export const UPDATE_ASSIGNED_TO = gql`
+mutation Mutation($reportId: ID!, $assignedStaff: ID!, $assignedBy: String) {
+  updateAssignedTo(reportId: $reportId, assignedStaff: $assignedStaff, assignedBy: $assignedBy) {
+    _id
+  }
+}
+`;

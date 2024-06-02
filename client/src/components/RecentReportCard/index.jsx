@@ -35,7 +35,7 @@ function RecentReportCard({ id, name, client, location, inspectionDate, results,
                     renderResults.map((result) => (
                         <div key={result.name} >
                             <p className="font-bold">{result.name}:
-                                {!result.result ? <i class="fa-solid fa-triangle-exclamation fa-xl ml-3" style={{ color: "#a46a6a" }}></i>
+                                {!result.result ? <i className="fa-solid fa-triangle-exclamation fa-xl ml-3" style={{ color: "#a46a6a" }}></i>
                                     : <span className="font-light"> (comment)</span>
                                 }
                             </p>

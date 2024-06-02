@@ -14,36 +14,36 @@ const resolvers = {
       throw AuthenticationError;
     },
     equipmentItems: async (parent, args, context) => {
-      if (context.user){
-      return Equipment.find()
+      if (context.user) {
+        return Equipment.find()
       }
     },
     room: async (parent, args, context) => {
-      if (context.user){
-      return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      if (context.user) {
+        return Room.findById(args.id).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       }
       throw AuthenticationError;
     },
     allRooms: async (parent, args, context) => {
-      if (context.user){
-      return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+      if (context.user) {
+        return Room.find().populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       }
       throw AuthenticationError;
     },
     allStaff: async (parent, args, context) => {
       if (context.user) {
-      return User.find().populate('username').populate('role').populate('email');
+        return User.find().populate('username').populate('role').populate('email');
       }
     },
     roomEquipment: async (parent, args, context) => {
-      if (context.user){
-      return Room.findById(args.id).populate('equipment');
+      if (context.user) {
+        return Room.findById(args.id).populate('equipment');
       }
       throw AuthenticationError;
     },
     getClient: async (parent, { id }, context) => {
       if (context.user) {
-      return Client.findOne({ _id: id});
+        return Client.findOne({ _id: id });
       }
     },
     allLocations: async (parent, args, context) => {
@@ -53,57 +53,57 @@ const resolvers = {
     },
     roomByLocation: async (parent, args, context) => {
       if (context.user) {
-      const location = await Location.findOne({ locationName: args.name });
-      return Room.find({ location: location._id }).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
+        const location = await Location.findOne({ locationName: args.name });
+        return Room.find({ location: location._id }).populate({ path: 'location', populate: { path: 'client' } }).populate('equipment');
       }
     },
     allReports: async (parent, args, context) => {
       if (context.user) {
-      return Report.find().populate('roomId').populate('assignedStaff');
+        return Report.find().populate('roomId').populate('assignedStaff');
       }
     },
     inProgressReports: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ inspectionDate: null }).populate('assignedStaff').populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+        return Report.find({ inspectionDate: null }).populate('assignedStaff').populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
       }
     },
     completedReports: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+        return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
       }
     },
     locations: async (parent, args, context) => {
       if (context.user) {
-      return Location.find();
+        return Location.find();
       }
     },
     assignedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedBy');
+        return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: null }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedBy');
       }
     },
     completedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-      return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy');
+        return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy');
       }
     },
     roomInfoByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff').populate('assignedBy');
+        return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: [{ path: 'location', populate: { path: 'client' } }, { path: 'equipment' }] }).populate('assignedStaff').populate('assignedBy');
       }
     },
     resultDataByReportId: async (parent, { id }, context) => {
       if (context.user) {
-      return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff');
+        return Report.findById(id).populate({ path: 'results', populate: { path: 'equipmentId' } }).populate('assignedStaff');
       }
     },
     rooms: async (parent, args, context) => {
       if (context.user) {
-      return await Room.find().populate('equipment');
+        return await Room.find().populate('equipment');
       }
     },
     locationsRevised: async (parent, args, context) => {
-      return await Client.find().populate([{ path: 'locations' }, {path: 'locations', populate:{ path: 'rooms'}}, {path: 'locations', populate: {path: 'rooms', populate:{ path: 'equipment'}}}])
+      return await Client.find().populate([{ path: 'locations' }, { path: 'locations', populate: { path: 'rooms' } }, { path: 'locations', populate: { path: 'rooms', populate: { path: 'equipment' } } }])
     }
   },
 
@@ -149,18 +149,18 @@ const resolvers = {
     },
     addResult: async (parent, { reportId, equipmentId, result, comment }, context) => {
       if (context.user) {
-      const resultAdded = await Result.create({ reportId, equipmentId, result, comment });
-      return resultAdded;
+        const resultAdded = await Result.create({ reportId, equipmentId, result, comment });
+        return resultAdded;
       }
     },
     editUser: async (parent, { username, role }, context) => {
       if (context.user) {
-      const user = await User.findOneAndUpdate(
-        { username },
-        { role },
-        { new: true }
-      );
-      return user;
+        const user = await User.findOneAndUpdate(
+          { username },
+          { role },
+          { new: true }
+        );
+        return user;
       }
     },
     // DB Seeding and collection cleaning mutations
@@ -187,8 +187,8 @@ const resolvers = {
         }, {
           equipmentName: equipmentName
         },
-        { new: true}
-      )
+          { new: true }
+        )
         return equipment
       }
     },
@@ -211,18 +211,33 @@ const resolvers = {
     },
     createReport: async (parent, { roomId, assignedBy, assignedStaff }, context) => {
       if (context.user) {
-      const user = await User.findOne({ username: assignedStaff });
-      if (!user) {
-        throw new Error('User not found');
+        const user = await User.findOne({ username: assignedStaff });
+        if (!user) {
+          throw new Error('User not found');
+        }
+        const manager = await User.findOne({ username: assignedBy });
+        const report = await Report.create({
+          roomId,
+          assignedBy: manager._id,
+          assignedStaff: user._id
+        });
+        return report;
       }
-      const manager = await User.findOne({ username: assignedBy });
-      const report = await Report.create({
-        roomId,
-        assignedBy: manager._id,
-        assignedStaff: user._id
-      });
-      return report;
-    }
+    },
+    updateAssignedTo: async (parent, { reportId, assignedBy, assignedStaff }, context) => {
+      if (context.user) {
+        const manager = await User.findOne({ username: assignedBy });
+        if (!manager) {
+          throw new Error('Manager not found');
+        }
+        const report = await Report.findByIdAndUpdate(
+          reportId,
+          {
+            $set: { assignedBy: manager._id, assignedStaff: assignedStaff }
+          },
+      );
+        return report;
+      }
     },
     submitReport: async (parent, { reportId, results, generalComments, inspectionDate, lastUpdated, lastUpdatedBy }, context) => {
       if (context.user) {
@@ -230,8 +245,7 @@ const resolvers = {
           reportId,
           {
             $set: { generalComments: generalComments, inspectionDate: inspectionDate, results: results, lastUpdated: lastUpdated, lastUpdatedBy: lastUpdatedBy }
-          },
-          { new: true }
+          }
         );
         return report;
       }
@@ -263,7 +277,7 @@ const resolvers = {
 
         await Location.findOneAndUpdate(
           { _id: locationId },
-          { $addToSet: { rooms: room._id} }
+          { $addToSet: { rooms: room._id } }
         );
 
         return room;
@@ -272,42 +286,55 @@ const resolvers = {
     },
     editRoom: async (parent, { roomId, roomName, inspectionCycleLength, equipment }, context) => {
       if (context.user) {
-        const room = await Room.findOneAndUpdate({_id: roomId},
-          { $set: {roomName: roomName,
-            inspectionCycleLength: inspectionCycleLength,
-            equipment: equipment}
+        const room = await Room.findOneAndUpdate({ _id: roomId },
+          {
+            $set: {
+              roomName: roomName,
+              inspectionCycleLength: inspectionCycleLength,
+              equipment: equipment
+            }
           },
-        { new: true}
-      )
+          { new: true }
+        )
         return room
       }
     },
     editLocation: async (parent, { locationId, locationName, address, accessInstructions }, context) => {
       if (context.user) {
         const location = await Location.findOneAndUpdate({ _id: locationId },
-          { $set: {locationName: locationName,
-            address: address,
-            accessInstructions: accessInstructions}
+          {
+            $set: {
+              locationName: locationName,
+              address: address,
+              accessInstructions: accessInstructions
+            }
           },
-        { new: true}
-      )
+          { new: true }
+        )
         return location
       }
     },
     editClient: async (parent, { clientId, businessName, contactName, contactEmail }, context) => {
       if (context.user) {
         const location = await Client.findOneAndUpdate({ _id: clientId },
-          { $set: {
-            businessName: businessName,
-            contactName: contactName,
-            contactEmail: contactEmail
+          {
+            $set: {
+              businessName: businessName,
+              contactName: contactName,
+              contactEmail: contactEmail
             }
           },
-        { new: true}
-      )
+          { new: true }
+        )
         return location
       }
     },
+    deleteReport: async (parent, { reportId }, context) => {
+      if (context.user) {
+        const report = await Report.findByIdAndDelete(reportId)
+      return report;
+    };
+    }
   }
 };
 
