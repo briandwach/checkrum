@@ -1,12 +1,18 @@
 import { useQuery } from "@apollo/client";
 import { COMPLETED_REPORTS } from "../../utils/queries";
 
+import { useState, useEffect } from 'react';
+
 import RecentReportCard from '../RecentReportCard/index.jsx';
 
 const CompletedReports = () => {
 
     const { loading, data } = useQuery(COMPLETED_REPORTS);
-    console.log(data);
+   
+    // Call the `refetch` function whenever the component loads
+    useEffect(() => {
+        refetch();
+    }, []);
 
     return (
         <div>

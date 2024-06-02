@@ -118,9 +118,11 @@ scalar DateTime
     editUser(username: String, role: String!): User
     editEquipment(equipmentId: ID, equipmentName: String): Equipment
     createReport(roomId: String, assignedBy: String, assignedStaff: String): Report
+    updateAssignedTo(reportId: ID!, assignedBy: String, assignedStaff: ID!): Report
     addLocation(clientId: ID, locationName: String, address: String, accessInstructions: String): Location
     addResult(reportId: ID!, equipmentId: ID!, result: Boolean!, comment: String): Result
     deleteReportResults(reportId: ID!): DeleteReportResultsResponse
+    deleteReport(reportId: ID!): Report
     submitReport(reportId: ID!, results: [ID]!, generalComments: String, inspectionDate: DateTime!, lastUpdated: DateTime, lastUpdatedBy: String): Report
     updateRoomLastInspectionDate(roomId: ID!, lastInspectionDate: DateTime!): Room
     addRoom(locationId: ID, roomName: String!, inspectionCycleLength: String, equipment: [String], location: String): Room
