@@ -38,8 +38,7 @@ const AddClientForm = () => {
   }
 
       return (
-        <div>
-
+        <div className='flex w-10/12' style={{flexDirection:"column"}} >
           { newClient === true ? <NewClientForm setNewClient={setNewClient} newClient={newClient} handleSetClientIdData={handleSetClientIdData}/> : null}
           { newClient === false? <ClientCard clientIdData={clientIdData} /> : null }
           { newClient === false?  <button type="button" className="btn btn-outline m-4 " onClick={()=>handleAddLocation()}>Add a Location</button>: null}

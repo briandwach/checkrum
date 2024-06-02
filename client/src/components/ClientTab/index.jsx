@@ -17,7 +17,7 @@ const ClientTab = () => {
                 <input type="radio" name="my_tabs_4" role="tab" className="tab" aria-label="Edit Clients" onChange={handleTabChange} />
                 <input type="radio" name="my_tabs_4" role="tab" className="tab" aria-label="Add Clients" onChange={handleTabChange} />
             </div>
-            <div style={{ display: "flex", justifyContent: "center"}}>
+            <div className="flex justify-center">
             {selectedOption === "Edit Clients" && <EditClient/>}
             {selectedOption === "Add Clients" && <AddClientForm />}
             </div>

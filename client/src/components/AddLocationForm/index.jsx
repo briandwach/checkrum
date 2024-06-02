@@ -54,7 +54,7 @@ const AddLocationForm = ({clientIdData, setLocationPresent, setAddLocationButton
                 <input {...register("accessInstructions", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </label>
             <button type="submit" className="btn btn-outline m-4" >Submit Location</button>
-            <button type="button" className="btn btn-outline m-4" onClick={(event)=>{handleCancelAdd(event)}}>Cancel Add Location</button>
+            <button type="button" className="btn btn-outline m-4" onClick={(event)=>{handleCancelAdd(event)}}>Cancel</button>
         </form>
     )
 

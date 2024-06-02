@@ -25,7 +25,7 @@ const ClientCard = ({clientIdData}) => {
 
     return (
         <>
-        <div className="card w-10/12 bg-primary text-primary-content m-4">
+        <div className=" flex card bg-primary text-primary-content m-4">
           <div className="card-body">
             <h2 className="card-title text-2xl"> {data.getClient.businessName}</h2>
             <p><b> Contact Name: </b>{data.getClient.contactName}</p>
