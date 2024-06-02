@@ -7,7 +7,7 @@ import RecentReportCard from '../RecentReportCard/index.jsx';
 
 const CompletedReports = () => {
 
-    const { loading, data } = useQuery(COMPLETED_REPORTS);
+    const { loading, data, refetch } = useQuery(COMPLETED_REPORTS);
    
     // Call the `refetch` function whenever the component loads
     useEffect(() => {
