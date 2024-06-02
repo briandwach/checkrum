@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_SINGLE_CLIENT } from '../../utils/queries';
-import { set } from "react-hook-form";
 
 
 const ClientCard = ({clientIdData}) => {
@@ -18,14 +17,14 @@ const ClientCard = ({clientIdData}) => {
       return <p>Loading...</p>
     }
 
-
+    //Updates clientIdData state
     const handleClientIdData = (val) => {
       setClientIdVal(val)
     }
 
     return (
         <>
-        <div className=" flex card bg-primary text-primary-content m-4">
+        <div className="flex card bg-primary text-primary-content m-4">
           <div className="card-body">
             <h2 className="card-title text-2xl"> {data.getClient.businessName}</h2>
             <p><b> Contact Name: </b>{data.getClient.contactName}</p>

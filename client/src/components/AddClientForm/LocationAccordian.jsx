@@ -47,12 +47,12 @@ const LocationAccordian = ({locationPresent}) => {
                    <div className="collapse-title text-xl font-medium" key={location.locationName}>
                     {location.locationName}
                     </div>
-                    <div className="flex flex-col flex-wrap content-start collapse-content" key={location._id}> 
-                        <b>Address: </b> {location.address} 
-                        <b>Access Instructions: </b> {location.accessInstructions}
-                        <button className="btn btn-outline m-4" onClick={(event)=>{handleAddClick(event)}}>Add a Room</button>
+                    <div className="flex  flex-col flex-wrap content-start collapse-content" key={location._id}> 
+                        <b>Address: </b> {location.address} <br />
+                        <b>Access Instructions: </b> {location.accessInstructions}<br />
+                        <button className="btn btn-outline m-4 w-48" onClick={(event)=>{handleAddClick(event)}}>Add a Room</button>
                         { addRoom === true? <AddRoomForm locationId={location._id} setRoomPresent={setRoomPresent} setAddRoom={setAddRoom} />: null}
-                        <h3 className="text-xl">Rooms in {location.locationName}: </h3><br />
+                        <h3 className="text-l">Rooms in {location.locationName}: </h3><br />
                         { roomPresent === true? <RoomCard locationList={locationList} roomPresent={roomPresent} locationId={location._id}/> : null}
 
                     </div>

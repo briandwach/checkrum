@@ -14,7 +14,7 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
       onCompleted({ addClient }){if (addClient){localStorage.setItem("clientId", addClient._id)}}
     });
 
-//Submit add mutation for new client
+    //Submit add mutation for new client
     const onSubmitClient = async (val) => {
         const clientObj = val;
         try {
@@ -23,7 +23,7 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
             });
             setNewClient(false);
        } catch (err){
-            console.log(err);
+            console.error(err);
         }
 
     }
@@ -43,23 +43,23 @@ const NewClientForm = ({setNewClient, newClient, handleSetClientIdData}) => {
             <div className="label">
                     <span className="label-text">Business Name:</span>
                 </div>
-              <input {...register("businessName", { required: true, minLength: 1 })} type="Business Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-              {errors.businessName?.type == "required" && ( <p className="text-error">Business name is required.</p>)}
+              <input {...register("businessName", { required: true, minLength: 1 })} type="text" placeholder="Business Name" className="input input-bordered w-full max-w-xs" />
+              {errors.businessName?.type == "required" && (<p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" />  Business name is required.</p>)}
 
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Name:</span>
                 </div>
-              <input {...register("contactName", { required: true, minLength: 1 })} type="Contact Name" placeholder="Type here" className="input input-bordered w-full max-w-xs" />  
-              {errors.contactName?.type == "required" && ( <p className="text-error">Contact name is required.</p>)}
+              <input {...register("contactName", { required: true, minLength: 1 })} type="text" placeholder="Contact Name" className="input input-bordered w-full max-w-xs" />  
+              {errors.contactName?.type == "required" && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Contact name is required.</p>)}
             </label>
             <label className="form-control w-full max-w-xs">
             <div className="label">
                     <span className="label-text">Contact Email Address:</span>
                 </div>
-              <input {...register("contactEmail", { required: true, minLength: 1, pattern: /.+@.+\..+/ })} type="Contact Email" placeholder="Type here" className="input input-bordered w-full max-w-xs"/>
-              {errors.contactEmail && ( <p className="text-error">Contact email is required.</p>)}
+              <input {...register("contactEmail", { required: true, minLength: 1, pattern: /.+@.+\..+/ })} type="email" placeholder="Contact Email" className="input input-bordered w-full max-w-xs"/>
+              {errors.contactEmail && ( <p className="m-1"><i className="fa-solid fa-triangle-exclamation text-error text-s" /> Contact email is required.</p>)}
             </label>
             {newClient === true? <button type="Submit" className="btn btn-outline m-4">Submit</button> : null} 
         </form>
