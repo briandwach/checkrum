@@ -25,7 +25,6 @@ const Staff = () => {
     const [selectedOption, setSelectedOption] = useState("Assigned Reports");
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    console.log("User's timezone: ", userTimeZone);
 
     const handleTabChange = (event) => {
         setSelectedOption(event.target.getAttribute("aria-label"));

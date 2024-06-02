@@ -4,9 +4,7 @@ import { differenceInHours } from 'date-fns';
 // Uses the NPM package date-fns-tz to convert the database UTC timestamp to a readable format
 // in the user's browser's local time
 export const dateToLocale = (time) => {
-  console.log(time);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(userTimeZone);
   const zonedDate = toZonedTime(time, userTimeZone);
   const formattedDate = format(zonedDate, 'P', { timeZone: userTimeZone });
 
