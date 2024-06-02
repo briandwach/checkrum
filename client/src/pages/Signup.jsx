@@ -52,7 +52,7 @@ const Signup = () => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
+                  className="form-input w-full py-2 px-4 rounded-lg border mb-2 bg-neutral"
                   placeholder="Your username"
                   name="username"
                   type="text"
@@ -60,7 +60,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
+                  className="form-input w-full py-2 px-4 rounded-lg border mb-2 bg-neutral"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -68,7 +68,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
+                  className="form-input w-full py-2 px-4 rounded-lg border mb-2 bg-neutral"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -76,7 +76,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <select
-                  className="form-select w-full py-2 px-4 rounded-lg border border-gray-300 mb-2"
+                  className="form-select w-full py-2 px-4 rounded-lg border mb-2 bg-neutral"
                   name="role"
                   value={formState.role}
                   onChange={handleChange}
@@ -92,6 +92,9 @@ const Signup = () => {
                 >
                   Submit
                 </button>
+                <div className='flex justify-center mt-2'>
+                  <Link to="/login"><a className="link">Already have an account?</a></Link>
+                </div>
               </form>
             )}
 
