@@ -53,7 +53,7 @@ const CreateReport = () => {
             ) : (
                 // inside this terenary operator is the form to select staff and location to search for rooms. Options for each dropdown are populated from the queries above  -dh
                 <div>
-                    <div className="flex" style={{flexDirection:"column", alignItems: "center"}}>
+                    <div className="flex" style={{ flexDirection: "column", alignItems: "center" }}>
                         <form >
                             <select
                                 className="select select-bordered"
@@ -70,29 +70,29 @@ const CreateReport = () => {
                                 ))}
                             </select>
 
-                        <select
-                            className="select select-bordered"
-                            id="location"
-                            name="location"
-                            value={selectedLocation}
-                            onChange={(e) => setSelectedLocation(e.target.value)}
-                        >
-                            <option value="">Choose a Location</option>
-                            {dataLocation.allLocations.map((location) => (
-                                <option key={location.id} value={location.id}>
-                                    {location.locationName}
-                                </option>
-                            ))}
-                        </select>
-                    </form>
+                            <select
+                                className="select select-bordered"
+                                id="location"
+                                name="location"
+                                value={selectedLocation}
+                                onChange={(e) => setSelectedLocation(e.target.value)}
+                            >
+                                <option value="">Choose a Location</option>
+                                {dataLocation.allLocations.map((location) => (
+                                    <option key={location.id} value={location.id}>
+                                        {location.locationName}
+                                    </option>
+                                ))}
+                            </select>
+                        </form>
 
-                    <button 
-                        className="btn btn-sm btn-primary m-2"
-                        onClick={handleSubmit}
-                        type="submit">Search for Rooms 
-                    </button>
-                    
-                </div>
+                        <button
+                            className="btn btn-sm btn-primary m-2"
+                            onClick={handleSubmit}
+                            type="submit">Search for Rooms
+                        </button>
+
+                    </div>
                 </div>
             )}
             {/* Section for rooms, loads after you hit "search for rooms" on the above form  -dh */}
@@ -107,26 +107,36 @@ const CreateReport = () => {
                                 <div key={room.id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
                                         <div className="flex p-3 justify-between">
-                                            {room.dateTimeProperties.inspectionStatus === 'Overdue' ? (
-                                                <div>
-                                                    <h2 className="font-bold">Room: {room.roomName}</h2>
-                                                    <p className="font-bold text-red-500">OVERDUE</p>
-                                                    <p><span className="font-bold">Since: </span>{dateToLocale(room.dateTimeProperties.initialMissedDate)}</p>
-                                                </div>
-                                            ) : (<div>
-                                                <h2 className="font-bold">Room: {room.roomName}</h2>
-                                                <p><span className="font-bold">Due: </span>{dateToLocale(room.dateTimeProperties.upcomingDueDate)}</p>
-                                                <p>(in {room.dateTimeProperties.timeToUpcomingDueDate})</p>
+                                            <div>
+                                                <h2 className="font-bold mb-2">Room: {room.roomName}</h2>
+                                                {room.dateTimeProperties.inspectionStatus === 'Current' &&
+                                                    <>
+                                                        <i className="fa-solid fa-clipboard-check fa-xl mr-3" style={{ color: "#63E6BE" }}></i>
+                                                        <p className="font-bold inline">Next Due</p>
+                                                        <p className="mt-2">{dateToLocale(room.dateTimeProperties.upcomingDueDate)}</p>
+                                                    </>}
+                                                {room.dateTimeProperties.inspectionStatus === 'Due' &&
+                                                    <>
+                                                        <i className="fa-regular fa-hourglass-half fa-xl mr-3" style={{ color: "#FFD43B" }}></i>
+                                                        <p className="font-bold inline">Due in {room.dateTimeProperties.timeToUpcomingDueDate}</p>
+                                                        <p className="mt-2"></p>
+                                                        <p>{dateToLocale(room.dateTimeProperties.upcomingDueDate)}</p>
+                                                    </>}
+                                                {room.dateTimeProperties.inspectionStatus === 'Overdue' &&
+                                                    <>
+                                                        <i class="fa-solid fa-triangle-exclamation fa-xl mr-3" style={{ color: "#a46a6a" }}></i>
+                                                        <p className="font-bold inline">OVERDUE</p>
+                                                        <p className="mt-2"><span className="font-bold">Since: </span>{dateToLocale(room.dateTimeProperties.initialMissedDate)}</p>
+                                                    </>}
                                             </div>
-                                            )}
                                             <input id={`checkbox-${room._id}`} type="checkbox" className="checkbox checkbox-success mt-auto mb-auto mr-4" />
 
                                         </div>
                                     </div>
                                 </div>
                             ))}
-                            <button 
-                            className="btn btn-sm btn-primary m-2"
+                            <button
+                                className="btn btn-sm btn-primary m-2"
                                 onClick={handleSendReports}>
                                 Create Report
                             </button>

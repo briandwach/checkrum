@@ -20,21 +20,31 @@ const OngoingReports = () => {
                                 <div key={report.roomId._id}>
                                     <div className="card w-96 m-2 bg-primary text-primary-content">
                                         <div className="flex p-3 justify-between">
-                                            {report.roomId.dateTimeProperties.inspectionStatus === 'Overdue' ? (
-                                                <div>
-                                                    <h2 className="font-bold">Room: {report.roomId.roomName}</h2>
-                                                    <p className="font-bold text-red-500">OVERDUE</p>
-                                                    <p><span className="font-bold">Since: </span>{dateToLocale(report.roomId.dateTimeProperties.initialMissedDate)}</p>
-                                                </div>
-                                            ) : (<div>
-                                                <h2 className="font-bold">Room: {report.roomId.roomName}</h2>
-                                                <p><span className="font-bold">Due: </span>{dateToLocale(report.roomId.dateTimeProperties.upcomingDueDate)}</p>
-                                                <p>(in {report.roomId.dateTimeProperties.timeToUpcomingDueDate})</p>
+                                        <div>
+                                                <h2 className="font-bold mb-2">Room: {report.roomId.roomName}</h2>
+                                                {report.roomId.dateTimeProperties.inspectionStatus === 'Current' &&
+                                                    <>
+                                                        <i className="fa-solid fa-clipboard-check fa-xl mr-3" style={{ color: "#63E6BE" }}></i>
+                                                        <p className="font-bold inline">Next Due</p>
+                                                        <p className="mt-2">{dateToLocale(report.roomId.dateTimeProperties.upcomingDueDate)}</p>
+                                                    </>}
+                                                {report.roomId.dateTimeProperties.inspectionStatus === 'Due' &&
+                                                    <>
+                                                        <i className="fa-regular fa-hourglass-half fa-xl mr-3" style={{ color: "#FFD43B" }}></i>
+                                                        <p className="font-bold inline">Due in {report.roomId.dateTimeProperties.timeToUpcomingDueDate}</p>
+                                                        <p className="mt-2"></p>
+                                                        <p>{dateToLocale(report.roomId.dateTimeProperties.upcomingDueDate)}</p>
+                                                    </>}
+                                                {report.roomId.dateTimeProperties.inspectionStatus === 'Overdue' &&
+                                                    <>
+                                                        <i class="fa-solid fa-triangle-exclamation fa-xl mr-3" style={{ color: "#a46a6a" }}></i>
+                                                        <p className="font-bold inline">OVERDUE</p>
+                                                        <p className="mt-2"><span className="font-bold">Since: </span>{dateToLocale(report.roomId.dateTimeProperties.initialMissedDate)}</p>
+                                                    </>}
                                             </div>
-                                            )}
                                             <div className="mt-auto mb-auto mr-4">
-                                                <p className="font-bold">Assigned to:</p>
-                                                <p>{report.assignedStaff.username}</p>
+                                                <p className="font-bold">Assigned To:</p>
+                                                <p>{report.assignedStaff.username}</p>                                            
                                             </div>
                                         </div>
                                     </div>

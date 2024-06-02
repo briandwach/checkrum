@@ -38,7 +38,7 @@ function AssignedReportCard({ id, name, client, location, address, cycle, lastIn
                         <p className="font-bold">Overdue since {dateToLocale(initialMissedDate)} :</p>
                         <p>{`Missed ${missedCycles} inspection cycle(s)`}</p>
                         <br></br>
-                        <i class="fa-solid fa-triangle-exclamation fa-2xl" style={{ color: "#a46a6a" }}></i>
+                        <i className="fa-solid fa-triangle-exclamation fa-2xl" style={{ color: "#a46a6a" }}></i>
                     </>}
                 {completed ? (
                     <div className="card-actions justify-end">
