@@ -7,7 +7,7 @@ import { QUERY_EQUIPMENT } from '../../utils/queries';
 import { EDIT_ROOM } from "../../utils/mutations";
 
 const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength, setEditRoom }) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: {errors} } = useForm();
     const { loading: loadingEquipment, data: dataEquipment } = useQuery(QUERY_EQUIPMENT);
     const [editRoom, { loading, error, data }] = useMutation(EDIT_ROOM);
     // Default item checkbox is an empty object
@@ -71,7 +71,6 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength, setEditR
 
         val.roomId = roomId;
         val.equipment = equipmentList;
-        console.log(val)
         const roomObj = val;
 
         try {
@@ -98,13 +97,15 @@ const EditRoom = ({ roomId, roomName, equipment, inspectionCycleLength, setEditR
                     <div className="label">
                         <span className="label-text">Room Name</span>
                     </div>
-                    <input {...register("roomName", { required: true })} type="text" defaultValue={roomName} className="input input-bordered w-full max-w-xs" />
+                    <input {...register("roomName", { required: true, minLength: 1 })} type="text" defaultValue={roomName} className="input input-bordered w-full max-w-xs" />
+                    {errors.roomName?.type == "required" && ( <p className="text-error">Room name is required.</p>)}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Inspection Cycle Length (Days)</span>
                     </div>
-                    <input {...register("inspectionCycleLength", { required: true })} type="text" defaultValue={inspectionCycleLength} className="input input-bordered w-full max-w-xs" />
+                    <input {...register("inspectionCycleLength", { required: true, minLength: 1})} type="text" defaultValue={inspectionCycleLength} className="input input-bordered w-full max-w-xs" />
+                    {errors.inspectionCycleLength?.type == "required" && ( <p className="text-error">Inspection cycle length is required.</p>)}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
