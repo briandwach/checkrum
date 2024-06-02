@@ -36,11 +36,11 @@ function Inspection() {
     const { id } = useParams();
 
     // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
-    const { loading: roomLoading, data: roomData } = useQuery(ROOM_INFO_BY_REPORT_ID, {
+    const { loading: roomLoading, data: roomData} = useQuery(ROOM_INFO_BY_REPORT_ID, {
         variables: { id: id }
     });
 
-    const { loading: resultLoading, data: resultData } = useQuery(RESULT_DATA_BY_REPORT_ID, {
+    const { loading: resultLoading, data: resultData, refetch } = useQuery(RESULT_DATA_BY_REPORT_ID, {
         variables: { id: id }
     });
 
@@ -293,7 +293,8 @@ function Inspection() {
             setErrorMessage('');
             setMessageStyle('mt-1 mb-3 border-2 border-red-500 rounded-md bg-red-200');
             setFormSubmit('editing');
-        }, 3000);
+            refetch();
+        }, 2000);
     };
 
     return (
