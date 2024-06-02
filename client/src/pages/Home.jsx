@@ -19,7 +19,7 @@ const Home = () => {
           <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content text-center text-neutral-content">
             <div className="max-w-md">
-              <h1 className="mb-5 text-5xl font-bold">CheckRum</h1>
+              <h1 className="mb-5 text-5xl font-bold">Checkrūm</h1>
               <p className="mb-5">A business-level application that simplifies your planning and strategic needs for keeping your properties in safe and working order.</p>
               {user === null ? (
                 <Link to="/login" className="btn btn-primary">Get Started</Link>

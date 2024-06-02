@@ -19,7 +19,7 @@ const Footer = () => {
           <DbButtons />
 
           <h4 className="text-white text-lg mb-3">
-            &copy; Checkrum 2024
+            &copy; Checkrūm 2024
           </h4>
         </div>
       </footer>
