@@ -7,8 +7,8 @@ import LocationRooms from './LocationRooms';
 import EditLocation from './EditLocation';
 import AddNewRoom from './AddNewRoom';
 
-const ClientLocations2 = ({selectedClientId}) => {
-    const { loading, data } = useQuery(QUERY_LOCATION_REVISED);
+const ClientLocations = ({selectedClientId}) => {
+    const { loading, data, refetch } = useQuery(QUERY_LOCATION_REVISED, {pollInterval: 2000});
     const [ locations, setLocations] = useState([]);
     const [currentLocation, setCurrentLocation] = useState();
     const [ editLocation, setEditLocation] = useState({
@@ -78,4 +78,4 @@ const ClientLocations2 = ({selectedClientId}) => {
     )
 }
 
-export default ClientLocations2
+export default ClientLocations

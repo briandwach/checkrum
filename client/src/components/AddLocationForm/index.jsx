@@ -33,7 +33,7 @@ const AddLocationForm = ({clientIdData, setLocationPresent, setAddLocationButton
    const { register, handleSubmit, formState: { errors } } = useForm();
 
     return (
-        <div className="card m-2">
+        <div className="card bg-primary m-2">
         <form className="new-location m-4" onSubmit={handleSubmit(onSubmitLocation)}>
         <h3>Add New Location</h3>
             <label className="form-control w-full max-w-xs">
