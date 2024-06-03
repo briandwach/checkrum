@@ -48,7 +48,7 @@ const LocationRooms = ({locations, locationId}) => {
                             <p><b>Inspection Cycle Length: </b>{room.inspectionCycleLength}</p>
                             <p><b>Equipment:</b> </p>
                             <ul className="m-1 list-disc">
-                                { room.equipment && room.equipment.map((item) => (<li key={item._id} className="text-slate-400">{item.equipmentName}</li>))}
+                                { room.equipment && room.equipment.map((item) => (<li key={item._id} >{item.equipmentName}</li>))}
                             </ul>
                                 <div className="card-actions justify-end m-4">
                                     <button type="button" className="btn btn-outline" onClick={(event)=>{handleEditClick(event, room)}}>Edit {room.roomName} <i className="fa-solid fa-pencil"></i></button>
