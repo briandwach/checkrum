@@ -34,6 +34,19 @@ const reportSchema = new Schema({
   lastUpdatedBy: {
     type: String
   }
+},
+{
+  toJSON: {
+    virtuals: true
+  },
+  id: false
+});
+
+reportSchema.virtual('failStatus').get(function () {
+  const resultsArray = this.results;
+  const hasFailed = resultsArray.some(result => result.result === false);
+
+  return hasFailed.toString();
 });
 
 const Report = model('Report', reportSchema);

@@ -52,6 +52,7 @@ scalar DateTime
     inspectionDate: DateTime
     lastUpdated: DateTime
     lastUpdatedBy: String
+    failStatus: String
   }
 
   type Result {

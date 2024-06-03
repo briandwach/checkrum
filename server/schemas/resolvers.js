@@ -32,7 +32,7 @@ const resolvers = {
     },
     allStaff: async (parent, args, context) => {
       if (context.user) {
-        return User.find().populate('username').populate('role').populate('email');
+        return User.find().populate('username').populate('role').populate('email').sort({ username: 1 });
       }
     },
     roomEquipment: async (parent, args, context) => {
@@ -69,7 +69,7 @@ const resolvers = {
     },
     completedReports: async (parent, args, context) => {
       if (context.user) {
-        return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } });
+        return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).sort({ inspectionDate: -1 });
       }
     },
     locations: async (parent, args, context) => {
@@ -84,7 +84,7 @@ const resolvers = {
     },
     completedReportsByStaff: async (parent, args, context) => {
       if (context.user) {
-        return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy');
+        return Report.find({ assignedStaff: args.assignedStaff, inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).populate('assignedStaff').populate('assignedBy').sort({ inspectionDate: -1 });
       }
     },
     roomInfoByReportId: async (parent, { id }, context) => {

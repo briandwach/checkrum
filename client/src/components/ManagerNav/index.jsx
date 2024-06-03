@@ -20,7 +20,7 @@ const ManagerNav = () => {
                         <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Maintain" onChange={handleTabChange} />
                     </div>
                     <div>
-                        <h1 className="ml-3 text-3xl font-bold text-center">Welcome, click one of the tabs to get started</h1>
+                        <h1 className="m-3 text-3xl font-bold text-center">Welcome, click one of the tabs to get started</h1>
                     </div>
                 </div>
             ) : (

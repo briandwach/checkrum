@@ -75,7 +75,7 @@ useEffect(() => {
           </label>
         </div>
         <div className="flex-1 px-2 mx-2">
-          <Link to="/">Checkrūm: Inspection Tracker</Link>
+          <Link to="/" className="font-bold sm:text-xl md:text-2xl lg:text-3xl">Checkrūm: Inspection Tracker</Link>
         </div>
         <div className="flex-none hidden lg:block">
           <ul className="menu menu-horizontal" style={{ alignItems: "center" }}>
