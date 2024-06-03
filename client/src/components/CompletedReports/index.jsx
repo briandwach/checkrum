@@ -18,6 +18,7 @@ const CompletedReports = () => {
     const [staffFilter, setStaffFilter] = useState('');
     const [clientFilter, setClientFilter] = useState('');
     const [monthFilter, setMonthFilter] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
     const [reportsArr, setReportsArr] = useState([]);
 
     // Call the `refetch` function whenever the component loads
@@ -38,7 +39,6 @@ const CompletedReports = () => {
     }
 
     const allReportsArr = data.completedReports;
-    console.log(allReportsArr);
 
     const reportsLength = allReportsArr.length;
     const monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
@@ -48,7 +48,8 @@ const CompletedReports = () => {
 
         const filters = [
             { property: 'roomId.location.client._id', value: e.target.value },
-            { property: 'assignedStaff._id', value: staffFilter }
+            { property: 'assignedStaff._id', value: staffFilter },
+            { property: 'failStatus', value: statusFilter }
         ];
 
         let filteredReports = allReportsArr;
@@ -80,7 +81,41 @@ const CompletedReports = () => {
 
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
-            { property: 'assignedStaff._id', value: e.target.value }
+            { property: 'assignedStaff._id', value: e.target.value },
+            { property: 'failStatus', value: statusFilter }
+        ];
+
+        let filteredReports = allReportsArr;
+
+        filters.forEach(filter => {
+            if (filter.value !== '') {
+                const properties = filter.property.split('.');
+                filteredReports = filteredReports.filter(item => {
+                    let valueToCompare = item;
+                    for (let prop of properties) {
+                        valueToCompare = valueToCompare[prop];
+                    }
+                    return valueToCompare === filter.value;
+                });
+            }
+        });
+
+        if (monthFilter !== '') {
+            filteredReports = filteredReports.filter(item => {
+                return (isSameMonth(monthFilter, item.inspectionDate));
+            });
+        }
+
+        setReportsArr(filteredReports);
+    };
+
+    const statusChange = (e) => {
+        setStatusFilter(e.target.value);
+
+        const filters = [
+            { property: 'roomId.location.client._id', value: clientFilter },
+            { property: 'assignedStaff._id', value: staffFilter },
+            { property: 'failStatus', value: e.target.value }
         ];
 
         let filteredReports = allReportsArr;
@@ -114,6 +149,7 @@ const CompletedReports = () => {
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
             { property: 'assignedStaff._id', value: staffFilter },
+            { property: 'failStatus', value: statusFilter }
         ];
 
         let filteredReports = allReportsArr;
@@ -144,6 +180,7 @@ const CompletedReports = () => {
         setClientFilter('');
         setStaffFilter('');
         setMonthFilter('');
+        setStatusFilter('');
         setReportsArr(allReportsArr);
     }
 
@@ -194,6 +231,17 @@ const CompletedReports = () => {
                                 {month}
                             </option>
                         ))}
+                    </select>
+                    <select
+                        className="select-sm select-bordered mb-2 mr-3"
+                        id="status"
+                        name="status"
+                        value={statusFilter}
+                        onChange={(e) => statusChange(e)}
+                    >
+                        <option value=''>All Statuses</option>
+                        <option key='Reported Fail' value='true'>Fail Reported</option>
+                        <option key='Pass' value='false'>Passing</option>
                     </select>
                 </div>
                 <button

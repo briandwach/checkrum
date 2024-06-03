@@ -45,7 +45,8 @@ const reportSchema = new Schema({
 reportSchema.virtual('failStatus').get(function () {
   const resultsArray = this.results;
   const hasFailed = resultsArray.some(result => result.result === false);
-  return hasFailed;
+
+  return hasFailed.toString();
 });
 
 const Report = model('Report', reportSchema);
