@@ -32,10 +32,7 @@ export default function DataAdmin (){
             <button type="button" className="m-1 btn" name="editClientButton" onClick={handleButtonChange}>Edit a client</button>
             <button type="button" className="btn btn-outline btn-accent" name="newClientButton" onClick={handleButtonChange}>Add a client</button>
             {newClientForm === true ? <AddClientForm /> : null}
-            {editClientForm === true ? <EditClientForm /> : null}
-
-            {console.log('Edit Client: ' + editClientForm + '; New Client: ' + newClientForm)}
-            
+            {editClientForm === true ? <EditClientForm /> : null}            
         </main>
     )
 }

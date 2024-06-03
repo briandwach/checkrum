@@ -126,7 +126,7 @@ roomSchema.virtual('dateTimeProperties').get(function () {
     
     if (nowAfterDueDate) {
       if (isAfter(startOfLatestCycle, lastInspected)) {
-        inspectionStatus = 'Ovderdue';
+        inspectionStatus = 'Overdue';
 
         for (let cycleStart = startOfLatestCycle; isAfter(cycleStart, lastInspected); (cycleStart = subMonths(cycleStart, 1))) {
           missedCycles++;
