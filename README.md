@@ -4,7 +4,7 @@
 
 ## Description
 
-Inspection tracker for audio video technologies in conference rooms.  Technical managers can keep track of client conference rooms and assign staff to perform inspections.  Application provides notice of overdue inspections and sequential failures of AV equipment.
+Inspection tracker for audio video technologies in conference rooms.  Technical managers can keep track of client conference rooms and assign staff to perform inspections.  Application provides notice of overdue inspections and catalogs inspection report data.
 
 [Deployed Application](https://checkrum.onrender.com)
 
@@ -31,7 +31,7 @@ Inspection tracker for audio video technologies in conference rooms.  Technical 
 
 [Code Repository](https://github.com/briandwach/checkrum)
 
-Checkrūm has workflow for both administrative users and staff users. 
+Checkrūm has workflows for both administrative users and staff users. 
 
 ### Administrative Users
 
@@ -61,6 +61,12 @@ Administrative users can maintain data, review the results of maintenance checks
 To update the user a report is assigned to, find the report you want to update, then select the new user to assign it to from the dropdown box. 
 
 To delete a report, find the report you want to delete, then click the trash can icon to delete the report. You will be prompted to confirm that you want to delete the report. Confirm if you want to delete the report. 
+
+#### Viewing Completed Reports
+
+Go to Reports, then to Completed.  As a manager, you can view all completed reports and update a report at anytime.  
+
+All previously completed reports will be viewable.  Four filters are available in order to find the reports you want.  You can filter by client, staff, month the report was submitted, and the status of the report (shows reports that include failed equipment checks).
 
 #### Managing User Roles
 
@@ -112,7 +118,7 @@ To complete an assigned report:
 
 3. The user has an option to enter an additional comment about the room. 
 
-4. When the user has completed the report, they can click the Submit button to submit the report. The report will then show as a completed report. If the user decides not to complete a report they have opened, they can select the Cancel button. 
+4. When the user has completed the report, they can click the Submit button to submit the report. The report will then show as a completed report. If the user decides not to complete a report they have opened, they can select the Go Back button. 
 
 ### Viewing a Completed Report and Updating a Completed Report
 
@@ -120,7 +126,7 @@ To complete an assigned report:
 
 To view completed reports, go to Recent Reports. Reports recently completed by the user will be visible for 48 hours after they are completed. 
 
-To update a report, click on the Update button, then update the form as necessary. Click the Save button to save when done. 
+To update a report, click on the Update button, then update the form as necessary. Click the Update button to save when done. 
 
 ## Installation
 
