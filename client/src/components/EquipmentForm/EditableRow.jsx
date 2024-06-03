@@ -18,7 +18,6 @@ const EditableRow = ({item, editFormData, setEditFormData, setEditEquipmentItem}
 
       //Handle form submit; reset editEquipmentItem state to close edit form
         const handleEditFormSubmit = async ({equipmentId, equipmentName}) => {
-            console.log('Editing Item')
             try {
               const { data } = await editEquipment({
                 variables: {
