@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
-import DbButtons from '../DbButtons';
-
 
 //footer component that is displayed at the bottom of the page. Icon/link to the apps github repo and contact page -dh
 const Footer = () => {
   return (
     <footer className="flex bg-secondary p-4" style={{justifyContent:"center"}}>
         <div className="container text-center">
-          <div className="mb-2">
+          <div className="mb-4">
             <Link to="/contact" className="text-white mr-2">
               <i className="fa-solid fa-envelope mr-2 fa-2xl"></i>
             </Link>
@@ -15,8 +13,6 @@ const Footer = () => {
               <i className="fa-brands fa-github ml-2 fa-2xl"></i>
             </a>
           </div>
-
-          <DbButtons />
 
           <h4 className="text-white text-lg mb-3">
             &copy; Checkrūm 2024

@@ -18,33 +18,63 @@
     "role": "admin"
   },
   {
-    "username": "Winnie Harlow",
-    "email": "wharlow@avinsights.com",
-    "password": "wharlow123",
+    "username": "Ron Bailey",
+    "email": "rbailey@avinsights.com",
+    "password": "rbailey123",
+    "role": "admin"
+  },
+  {
+    "username": "Morgan Riley",
+    "email": "mriley@avinsights.com",
+    "password": "mriley123",
+    "role": "admin"
+  },
+  {
+    "username": "Dustin Riedel",
+    "email": "driedel@avinsights.com",
+    "password": "driedel123",
+    "role": "admin"
+  },
+  {
+    "username": "Predro Gonzalez",
+    "email": "pgonzalez@avinsights.com",
+    "password": "pgonzalez123",
     "role": "staff"
   },
   {
-    "username": "Prince Bowie Scar",
-    "email": "pbscar@avinsights.com",
-    "password": "pbscar123",
+    "username": "Sarah Nalepa",
+    "email": "snalepa@avinsights.com",
+    "password": "snalepa123",
     "role": "staff"
   },
   {
-    "username": "Yoshi Dino",
-    "email": "ydino@avinsights.com",
-    "password": "ydino123",
+    "username": "Caryn Behnke",
+    "email": "cbehnke@avinsights.com",
+    "password": "cbehnke123",
     "role": "staff"
   },
   {
-    "username": "Princess Peach",
-    "email": "ppeach@avinsights.com",
-    "password": "ppeach123",
+    "username": "Anthony Rodriguez-Ortiz",
+    "email": "arodriguez-ortiz@avinsights.com",
+    "password": "arodriguez-ortiz123",
     "role": "staff"
   },
   {
-    "username": "Glitter Loaf",
-    "email": "gloaf@avinvestors.com",
-    "password": "gloaf123",
-    "role": "inactive"
+    "username": "Martin Miller",
+    "email": "mmiller@avinsights.com",
+    "password": "mmiller123",
+    "role": "staff"
+  },
+  {
+    "username": "Daisy Pena",
+    "email": "dpena@avinsights.com",
+    "password": "dpena123",
+    "role": "staff"
+  },
+  {
+    "username": "Silvia Nebel",
+    "email": "snebel@avinsights.com",
+    "password": "snebel123",
+    "role": "staff"
   }
 ]

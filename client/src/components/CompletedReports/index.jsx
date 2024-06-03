@@ -41,8 +41,13 @@ const CompletedReports = () => {
     const allReportsArr = data.completedReports;
 
     const reportsLength = allReportsArr.length;
-    const monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
 
+    let monthsArray = [];
+
+    if (reportsLength > 0) {
+    monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
+    };
+  
     const clientChange = (e) => {
         setClientFilter(e.target.value);
 

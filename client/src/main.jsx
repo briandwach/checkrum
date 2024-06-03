@@ -10,9 +10,9 @@ import Staff from './pages/Staff';
 import Manager from './pages/Manager';
 import Error from './pages/Error';
 import Equipment from './pages/Equipment.jsx';
-import Rooms from './pages/Rooms.jsx';
 import Inspection from './pages/Inspection.jsx';
 import Contact from './pages/Contact.jsx';
+import Seed from './pages/Seed.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,16 +41,16 @@ const router = createBrowserRouter([
         element: <Equipment />
       },
       {
-        path: '/rooms',
-        element: <Rooms />
-      }, 
-      {
         path: '/inspection/:id',
         element: <Inspection />
       }, 
       {
         path: '/contact',
         element: <Contact />
+      },
+      {
+        path: '/seed',
+        element: <Seed />
       }
     ]
   }

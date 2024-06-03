@@ -50,7 +50,7 @@ const cleanButton = async () => {
         <button className="btn btn-sm btn-info m-2" onClick={cleanButton}>
             Clear Collections
         </button>
-        {dbMessage && <p className="text-white">{dbMessage}</p>}
+        {dbMessage && <p className="text-white text-center">{dbMessage}</p>}
     </div>
 
     );
