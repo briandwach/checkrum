@@ -80,9 +80,47 @@ To add a client, go to Maintain, then Clients, then Add Client. The form will gu
 
 To edit a client, go to Maintain, then Clients, then Edit Client. Select the client you wish to edit. Their data will appear on the page after they are selected. Use the buttons to edit client, location, or room data as needed. Deletion of client data is not supported in Checkrūm at this time. 
 
+#### Adding, Editing, and Deleting Equipment
+
+![A gif of a user adding, editing, and deleting an equipment item](/client/src/assets/maintain-equipment.gif)
+
+To add, edit, or delete an equipment item, go to Maintain, then to Equipment. 
+
+New equipment items can be added at the bottom of the table by entering the name of the equipment item, then clicking the floppy disk icon to save. 
+
+Existing equipment items can be edited by clicking the edit pencil icon in the row for the equipment item, updating the name of the equipment item in the text box, then clicking the floppy disk icon to save. 
+
+Users can delete equipment icons by clicking the trash can icon next to the equipment item. 
+
+Please note that this functionality is for maintaining the list of equipment that can be assigned to rooms. To assign or remove equipment to rooms, please use the Edit Client component. 
+
 ### Staff Users
 
 Staff users can see what maintenance checks are assigned to them and reivew the results of recent maintenance checks. 
+
+#### Viewing and Completing Assigned Reports
+
+![a gif of a user accessing and completing a report](/client/src/assets/assigned-reports.gif)
+
+When logged into the staff side of Checkrūm, users default to seeing the outstanding reports assigned to them. Otherwise, they can access these reports by going to Assigned reports. 
+
+To complete an assigned report: 
+
+1. Click on the Inspect button for the report you want to complete. 
+
+2. Review the condition of each equipment item and indicate if it passes or fails inspection. If the inspection fails, the user must enter a comment. Users may enter comments on passing equipment items, but it is not required. 
+
+3. The user has an option to enter an additional comment about the room. 
+
+4. When the user has completed the report, they can click the Submit button to submit the report. The report will then show as a completed report. If the user decides not to complete a report they have opened, they can select the Cancel button. 
+
+### Viewing a Completed Report and Updating a Completed Report
+
+![a gif of a user viewing completed reports and updating a completed report](/client/src/assets/updating-completed-reports.gif)
+
+To view completed reports, go to Recent Reports. Reports recently completed by the user will be visible for 48 hours after they are completed. 
+
+To update a report, click on the Update button, then update the form as necessary. Click the Save button to save when done. 
 
 ## Installation
 
