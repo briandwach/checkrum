@@ -185,6 +185,8 @@ query Query {
       _id
       username
     }
+    lastUpdated 
+    lastUpdatedBy
     results {
       equipmentId {
         equipmentName

@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { COMPLETED_REPORTS, ALL_STAFF, QUERY_CLIENT } from "../../utils/queries";
 
 import { calculateMonths } from "../../utils/dateTimeTools";
+import { exportCsv }  from "../../utils/exportCSV";
 
 import { isSameMonth } from 'date-fns';
 
@@ -17,9 +18,16 @@ const CompletedReports = () => {
 
     const [staffFilter, setStaffFilter] = useState('');
     const [clientFilter, setClientFilter] = useState('');
-    const [monthFilter, setMonthFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
+    const [monthFilter, setMonthFilter] = useState('All Months');
+
+    const [staffName, setStaffName] = useState('All Staff');
+    const [clientName, setClientName] = useState('All Clients');
+    const [statusName, setStatusName] = useState('All Statuses');
+
     const [reportsArr, setReportsArr] = useState([]);
+    const [downloadCSV, setDownloadCSV] = useState('');
+    const [reportName, setReportName] = useState('');
 
     // Call the `refetch` function whenever the component loads
     useEffect(() => {
@@ -33,6 +41,14 @@ const CompletedReports = () => {
             setReportsArr(data.completedReports);
         }
     }, [data]);
+
+    useEffect(() => {
+       setReportName(clientName + '.' + monthFilter + '.' + staffName + '.' + statusName);
+    }, [clientName, monthFilter, staffName, statusName]);
+
+    useEffect(() => {
+        setDownloadCSV(exportCsv(reportsArr));
+     }, [reportsArr]);
 
     if (loading || staffLoading || clientLoading) {
         return <div>Loading...</div>;
@@ -50,6 +66,7 @@ const CompletedReports = () => {
   
     const clientChange = (e) => {
         setClientFilter(e.target.value);
+        setClientName(e.target.dataBusinessName);
 
         const filters = [
             { property: 'roomId.location.client._id', value: e.target.value },
@@ -72,7 +89,7 @@ const CompletedReports = () => {
             }
         });
 
-        if (monthFilter !== '') {
+        if (monthFilter !== 'All Months') {
             filteredReports = filteredReports.filter(item => {
                 return (isSameMonth(monthFilter, item.inspectionDate));
             });
@@ -83,6 +100,7 @@ const CompletedReports = () => {
 
     const staffChange = (e) => {
         setStaffFilter(e.target.value);
+        setStaffName(e.target.dataUsername);
 
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
@@ -105,7 +123,7 @@ const CompletedReports = () => {
             }
         });
 
-        if (monthFilter !== '') {
+        if (monthFilter !== 'All Months') {
             filteredReports = filteredReports.filter(item => {
                 return (isSameMonth(monthFilter, item.inspectionDate));
             });
@@ -116,6 +134,7 @@ const CompletedReports = () => {
 
     const statusChange = (e) => {
         setStatusFilter(e.target.value);
+        setStatusName(e.target.dataStatus);
 
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
@@ -138,7 +157,7 @@ const CompletedReports = () => {
             }
         });
 
-        if (monthFilter !== '') {
+        if (monthFilter !== 'All Months') {
             filteredReports = filteredReports.filter(item => {
                 return (isSameMonth(monthFilter, item.inspectionDate));
             });
@@ -172,7 +191,7 @@ const CompletedReports = () => {
             }
         });
 
-        if (e.target.value !== '') {
+        if (e.target.value !== 'All Months') {
             filteredReports = filteredReports.filter(item => {
                 return (isSameMonth(e.target.value, item.inspectionDate));
             });
@@ -202,9 +221,9 @@ const CompletedReports = () => {
                         value={clientFilter}
                         onChange={(e) => clientChange(e)}
                     >
-                        <option value=''>All Clients</option>
+                        <option value='' dataBusinessName='All Clients'>All Clients</option>
                         {clientData.clients.map((client) => (
-                            <option key={client._id} value={client._id}>
+                            <option key={client._id} value={client._id} dataBusinessName={client.businessName}>
                                 {client.businessName}
                             </option>
                         ))}
@@ -216,9 +235,9 @@ const CompletedReports = () => {
                         value={staffFilter}
                         onChange={(e) => staffChange(e)}
                     >
-                        <option value=''>All Staff</option>
+                        <option value='' dataUsername='All Staff'>All Staff</option>
                         {staffData.allStaff.map((staff) => (
-                            <option key={staff._id} value={staff._id}>
+                            <option key={staff._id} value={staff._id} dataUsername={staff.username}>
                                 {staff.username}
                             </option>
                         ))}
@@ -230,7 +249,7 @@ const CompletedReports = () => {
                         value={monthFilter}
                         onChange={(e) => monthChange(e)}
                     >
-                        <option value=''>All Months</option>
+                        <option value='All Months'>All Months</option>
                         {monthsArray.map((month) => (
                             <option key={month} value={month}>
                                 {month}
@@ -244,16 +263,24 @@ const CompletedReports = () => {
                         value={statusFilter}
                         onChange={(e) => statusChange(e)}
                     >
-                        <option value=''>All Statuses</option>
-                        <option key='Reported Fail' value='true'>Fail Reported</option>
-                        <option key='Pass' value='false'>Passing</option>
+                        <option value='' dataStatus='Status ALL'>All Statuses</option>
+                        <option key='Reported Fail' value='true' dataStatus='Status FAIL'>Fail Reported</option>
+                        <option key='Pass' value='false' dataStatus='Status PASS'>Passing</option>
                     </select>
                 </div>
+                <div className="mr-auto ml-auto">
                 <button
-                    className="btn btn-sm btn-primary m-2 w-fit mr-auto ml-auto"
+                    className="btn btn-sm btn-primary m-2"
                     onClick={clearFilters}>
                     Clear Filters
                 </button>
+                <a href={downloadCSV} download={`${reportName}.csv`}>
+                <button
+                    className="btn btn-sm btn-primary m-2">
+                    Export CSV File
+                </button>
+                </a>
+                </div>
             </div>
             <div>
                 {reportsArr < 1 ? (
