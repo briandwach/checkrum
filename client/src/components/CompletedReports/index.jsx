@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { COMPLETED_REPORTS, ALL_STAFF, QUERY_CLIENT } from "../../utils/queries";
 
 import { calculateMonths } from "../../utils/dateTimeTools";
-import { exportCsv }  from "../../utils/exportCSV";
+import { exportCsv } from "../../utils/exportCSV";
 
 import { isSameMonth } from 'date-fns';
 
@@ -43,12 +43,12 @@ const CompletedReports = () => {
     }, [data]);
 
     useEffect(() => {
-       setReportName(clientName + '.' + monthFilter + '.' + staffName + '.' + statusName);
+        setReportName(clientName + '.' + monthFilter + '.' + staffName + '.' + statusName);
     }, [clientName, monthFilter, staffName, statusName]);
 
     useEffect(() => {
         setDownloadCSV(exportCsv(reportsArr));
-     }, [reportsArr]);
+    }, [reportsArr]);
 
     if (loading || staffLoading || clientLoading) {
         return <div>Loading...</div>;
@@ -61,12 +61,13 @@ const CompletedReports = () => {
     let monthsArray = [];
 
     if (reportsLength > 0) {
-    monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
+        monthsArray = calculateMonths(allReportsArr[reportsLength - 1].inspectionDate);
     };
-  
+
     const clientChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
         setClientFilter(e.target.value);
-        setClientName(e.target.dataBusinessName);
+        setClientName(selectedOption.dataset.businessname);
 
         const filters = [
             { property: 'roomId.location.client._id', value: e.target.value },
@@ -99,8 +100,9 @@ const CompletedReports = () => {
     };
 
     const staffChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
         setStaffFilter(e.target.value);
-        setStaffName(e.target.dataUsername);
+        setStaffName(selectedOption.dataset.username);
 
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
@@ -134,7 +136,8 @@ const CompletedReports = () => {
 
     const statusChange = (e) => {
         setStatusFilter(e.target.value);
-        setStatusName(e.target.dataStatus);
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        setStatusName(selectedOption.dataset.status);
 
         const filters = [
             { property: 'roomId.location.client._id', value: clientFilter },
@@ -203,8 +206,13 @@ const CompletedReports = () => {
     const clearFilters = () => {
         setClientFilter('');
         setStaffFilter('');
-        setMonthFilter('');
+        setMonthFilter('All Months');
         setStatusFilter('');
+
+        setClientName('All Clients');
+        setStaffName('All Staff');
+        setStatusName('All Statuses');
+
         setReportsArr(allReportsArr);
     }
 
@@ -221,9 +229,9 @@ const CompletedReports = () => {
                         value={clientFilter}
                         onChange={(e) => clientChange(e)}
                     >
-                        <option value='' dataBusinessName='All Clients'>All Clients</option>
+                        <option value='' data-businessname='All Clients'>All Clients</option>
                         {clientData.clients.map((client) => (
-                            <option key={client._id} value={client._id} dataBusinessName={client.businessName}>
+                            <option key={client._id} value={client._id} data-businessname={client.businessName}>
                                 {client.businessName}
                             </option>
                         ))}
@@ -235,9 +243,9 @@ const CompletedReports = () => {
                         value={staffFilter}
                         onChange={(e) => staffChange(e)}
                     >
-                        <option value='' dataUsername='All Staff'>All Staff</option>
+                        <option value='' data-username='All Staff'>All Staff</option>
                         {staffData.allStaff.map((staff) => (
-                            <option key={staff._id} value={staff._id} dataUsername={staff.username}>
+                            <option key={staff._id} value={staff._id} data-username={staff.username}>
                                 {staff.username}
                             </option>
                         ))}
@@ -263,23 +271,23 @@ const CompletedReports = () => {
                         value={statusFilter}
                         onChange={(e) => statusChange(e)}
                     >
-                        <option value='' dataStatus='Status ALL'>All Statuses</option>
-                        <option key='Reported Fail' value='true' dataStatus='Status FAIL'>Fail Reported</option>
-                        <option key='Pass' value='false' dataStatus='Status PASS'>Passing</option>
+                        <option value='' data-status='Status ALL'>All Statuses</option>
+                        <option key='Reported Fail' value='true' data-status='Fail Reported'>Fail Reported</option>
+                        <option key='Pass' value='false' data-status='Passing'>Passing</option>
                     </select>
                 </div>
                 <div className="mr-auto ml-auto">
-                <button
-                    className="btn btn-sm btn-primary m-2"
-                    onClick={clearFilters}>
-                    Clear Filters
-                </button>
-                <a href={downloadCSV} download={`${reportName}.csv`}>
-                <button
-                    className="btn btn-sm btn-primary m-2">
-                    Export CSV File
-                </button>
-                </a>
+                    <button
+                        className="btn btn-sm btn-primary m-2"
+                        onClick={clearFilters}>
+                        Clear Filters
+                    </button>
+                    <a href={downloadCSV} download={`${reportName}.csv`}>
+                        <button
+                            className="btn btn-sm btn-primary m-2">
+                            Export CSV File
+                        </button>
+                    </a>
                 </div>
             </div>
             <div>
