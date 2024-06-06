@@ -20,7 +20,10 @@ export const exportCsv = (reportsArr) => {
     }
 
     const finalEquipmentNames = extractUniqueEquipmentNames(reportsArr);
-    headerRow.push(finalEquipmentNames);
+    headerRow.push(...finalEquipmentNames);
+
+    console.log('Header Row:');
+    console.log(headerRow);
 
     let finalExport = [];
     finalExport.push(headerRow);
@@ -37,6 +40,8 @@ export const exportCsv = (reportsArr) => {
     }
 
     for (let report of reportsArr) {
+        console.log('Report Data:');
+        console.log(report);
         let inspectionRow = [];
         inspectionRow[0] = report.roomId.location.client.businessName;
         inspectionRow[1] = report.roomId.location.locationName;
@@ -48,7 +53,26 @@ export const exportCsv = (reportsArr) => {
         inspectionRow[7] = issues(report.failStatus);
         inspectionRow[8] = report.generalComments;
 
-        
+        for (let i = 0; i < report.results.length; i++) {
+            const { equipmentId, result, comment } = report.results[i];
+            const { equipmentName } = equipmentId;
+            const column = headerRow.indexOf(equipmentName);
+
+            console.log('Column ' + column);
+            console.log(equipmentName);
+            console.log(result);
+            console.log(comment);
+
+            if (result) {
+                inspectionRow[column] = 'Pass';
+            } else {
+                inspectionRow[column] = 'Fail';
+            };
+
+            if (comment) {
+                inspectionRow[column + 1] = comment;
+            }
+        } 
 
         finalExport.push(inspectionRow);
     }
