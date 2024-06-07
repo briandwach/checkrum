@@ -69,7 +69,7 @@ const resolvers = {
     },
     completedReports: async (parent, args, context) => {
       if (context.user) {
-        return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate('assignedBy').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).sort({ inspectionDate: -1 });
+        return Report.find({ inspectionDate: { $ne: null } }).populate('assignedStaff').populate({ path: 'results', populate: { path: 'equipmentId' } }).populate({ path: 'roomId', populate: { path: 'location', populate: { path: 'client' } } }).sort({ inspectionDate: -1 });
       }
     },
     locations: async (parent, args, context) => {

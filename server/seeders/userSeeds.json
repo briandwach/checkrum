@@ -36,7 +36,7 @@
     "role": "admin"
   },
   {
-    "username": "Predro Gonzalez",
+    "username": "Pedro Gonzalez",
     "email": "pgonzalez@avinsights.com",
     "password": "pgonzalez123",
     "role": "staff"
@@ -75,6 +75,12 @@
     "username": "Silvia Nebel",
     "email": "snebel@avinsights.com",
     "password": "snebel123",
+    "role": "staff"
+  },
+  {
+    "username": "Dennis Angelov",
+    "email": "dangelov@avinsights.com",
+    "password": "dangelov123",
     "role": "staff"
   }
 ]
