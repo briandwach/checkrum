@@ -36,7 +36,7 @@ function Inspection() {
     const { id } = useParams();
 
     // graphQL query to pull data for single room: pulls objectIds for everything above in the data tree
-    const { loading: roomLoading, data: roomData} = useQuery(ROOM_INFO_BY_REPORT_ID, {
+    const { loading: roomLoading, data: roomData } = useQuery(ROOM_INFO_BY_REPORT_ID, {
         variables: { id: id }
     });
 
@@ -91,7 +91,7 @@ function Inspection() {
     const updateStatus = resultData.resultDataByReportId.results.length;
     const inspectionDate = resultData.resultDataByReportId.inspectionDate;
     const lastUpdated = resultData.resultDataByReportId.lastUpdated;
-    
+
 
     // Destructure data from QUERY_SINGLE_ROOM
     const { roomInfoByReportId } = roomData;
@@ -232,8 +232,8 @@ function Inspection() {
             }
         };
 
-        // Prepping to save time of 
-        let date = '';
+        // Prepping to save time of when report is submitted or updated so time is the same among different database documents
+        let date = Date.now();
 
         // Submits report by updating Report document with array of Result documents, generalComments, and inspectionDate
         try {
@@ -243,12 +243,11 @@ function Inspection() {
                         reportId: id,
                         results: resultIdsArr,
                         generalComments: generalComments,
-                        inspectionDate: Date.now(),
-                        lastUpdated: Date.now(),
+                        inspectionDate: date,
+                        lastUpdated: date,
                         lastUpdatedBy: assignedStaff
                     }
                 });
-                date = data.submitReport.inspectionDate;
             } else {
                 const { data } = await submitReport({
                     variables: {
@@ -256,7 +255,7 @@ function Inspection() {
                         results: resultIdsArr,
                         generalComments: generalComments,
                         inspectionDate: inspectionDate,
-                        lastUpdated: Date.now(),
+                        lastUpdated: date,
                         lastUpdatedBy: staff
                     }
                 });
@@ -264,6 +263,7 @@ function Inspection() {
         } catch (e) {
             console.error(e);
         };
+
 
         // Only updates room model with inspection date on first report submission
         if (!updateStatus) {
@@ -310,7 +310,7 @@ function Inspection() {
                         <p><span className="font-bold">Inspection Cycle: </span>{cycle}</p>
                         {!updateStatus ? (
                             <>
-                                
+
                                 <p><span className="font-bold">Last Inspected: </span>{dateTimeToLocale(lastInspected)}</p>
                                 <p><span className="font-bold">Assigned By: </span>{assignedBy}</p>
                                 <br></br>
